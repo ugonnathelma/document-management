@@ -1,44 +1,44 @@
-const User = require("../models/index.js").User;
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { User } from '../models/index';
+
+require('dotenv').config();
+
+
 class UserController {
 
   static login(req, res) {
-
-    let email = req.body.email;
-
     User.findOne({ where: { email: req.body.email } })
       .then((user) => {
         bcrypt.compare(req.body.password, user.password_digest, (err, same) => {
-
-          let token = jwt.sign({ user: user }, 'textbooksecret', { expiresIn: '1h' });
-          res.status(200).json({ success: same, token: token });
+          const token = jwt.sign({ user }, process.env.SECRET_KEY, { expiresIn: '1h' });
+          res.status(200).json({ success: same, token });
         });
       })
       .catch((err) => {
-        res.status(404).json({ error: "User email not found" });
-      })
+        res.status(404).json({ error: err.message });
+      });
   }
 
   static createUser(req, res) {
-
-    let user = User.build({
-      name: req.body.name,
+    User.create({
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      username: req.body.username,
       email: req.body.email,
       password: req.body.password,
       password_confirmation: req.body.password_confirmation,
       role_id: req.body.role_id
-    });
-    user.save()
+    })
       .then((user, err) => {
         if (err) {
-          res.status(500).json({ error: err.message })
+          res.status(400).json({ error: err.message });
         } else {
-          res.status(200, "User Created").json(user);
+          res.status(201).json({ user });
         }
       })
       .catch((err) => {
-        res.status(500).json({ error: err.message });
+        res.status(400).json({ error: err.message });
       });
   }
 
@@ -59,7 +59,7 @@ class UserController {
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
-      })
+      });
   }
 
   static findUser(req, res) {
@@ -67,35 +67,35 @@ class UserController {
       res.status(200).json(user);
     }).catch((err) => {
       res.status(404).json({ error: err.message });
-    })
+    });
   }
 
   static updateUserInfo(req, res) {
-    User.find({
-      where: {
-        id: req.params.id
-      }
-    })
-      .then((user, err) => {
+    if (req.decoded) {
+      User.find({
+        where: {
+          id: req.decoded.id
+        }
+      })
+      .then((user) => {
         if (user) {
           user.name = req.body.name;
           user.password = req.body.password;
           user.password_confirmation = req.body.password_confirmation;
           user.save()
-            .then((user, err) => {
+            .then((err) => {
               if (err) {
                 return res.status(500).json({ error: err.message });
-              } else {
-                //  "User Information Updated"
-                return res.status(200).json(req.body);
               }
+                //  "User Information Updated"
+              return res.status(200).json(req.body);
             })
             .catch((err) => {
               res.status(500).json({ error: err.message });
-            })
+            });
         }
-      })
-
+      });
+    }
   }
 
   static deleteUser(req, res) {
@@ -106,20 +106,19 @@ class UserController {
     })
       .then((user, err) => {
         if (err) {
-          res.status(500).json({ error: err.message })
+          res.status(500).json({ error: err.message });
         } else {
-          res.status(200, "User Deleted").json(user);
+          res.status(200, 'User Deleted').json(user);
         }
       });
   }
 
   static searchUsers(req, res) {
-    if(req.query.q)
-    {
+    if (req.query.q) {
       User.findAll({
         where: {
-          name : {
-            $iLike : `%${req.query.q}%`
+          name: {
+            $iLike: `%${req.query.q}%`
           }
         }
       })
@@ -127,13 +126,11 @@ class UserController {
         res.status(200).json(users);
       })
       .catch((err) => {
-        res.status(500).json({error: err.message});
-      })
+        res.status(500).json({ error: err.message });
+      });
+    } else {
+      res.status(500).json({ error: 'Search query not found' });
     }
-    else{
-      res.status(500).json({error: "Search query not found"})
-    }
-
   }
 }
 

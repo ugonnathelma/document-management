@@ -1,98 +1,127 @@
-const Document = require("../models/index.js").Document;
-class DocumentController {
+import { Document, Role } from '../models/index';
 
-  static createDocument(req, res) {
-    let document = Document.build({
+const PAGE_LIMIT = 10;
+const PAGE_OFFSET = 0;
+
+const DocumentController = {
+
+  createDocument: (req, res) => {
+    Document.create({
       title: req.body.title,
-      user_id: req.body.user_id,
+      user_id: req.decoded.id,
       content: req.body.content,
-      access: req.body.access
+      access: req.body.access || 'public'
     })
-    document.save()
-      .then((user, err) => {
-        if (err) {
-          res.status(500).json({ error: err.message });
-        }
-        else {
-          res.status(200, "Document Created").json(document);
-        }
-      })
-      .catch((err) => {
+    .then((document, err) => {
+      if (err) {
         res.status(500).json({ error: err.message });
-      })
-  }
-
-  static getDocuments(req, res) {
+      } else {
+        res.status(201).json(document);
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+  },
+  getDocuments: (req, res) => {
+    const orderDirection = req.query.order || 'DESC';
     let queryParams = {
-      limit: 10,
-      offset: 0
+      limit: req.query.limit || PAGE_LIMIT,
+      offset: req.query.offset || PAGE_OFFSET,
+      order: [['publish_date', orderDirection]]
     };
-    if (req.query.limit && req.query.offset) {
-      queryParams = {
-        limit: req.query.limit,
-        offset: req.query.offset
-      };
-    }
-    Document.all(queryParams)
+    Role.find({
+      where: {
+        id: req.decoded.role_id
+      }
+    })
+    .then((role) => {
+      if (role.title === 'admin' && req.query.roleid) {
+        queryParams = Object.assign({}, queryParams, {
+          where: {
+            role_id: req.query.role_id
+          }
+        });
+      }
+      Document.all(queryParams)
       .then((documents) => {
-        res.status(200).json(documents);
+        // eslint-disable-next-line arrow-body-style
+        const returnDocuments = documents.filter((document) => {
+          return (role.title === 'admin' || document.access === 'public' ||
+          (document.access === 'role' && document.role_id === req.decoded.role_id));
+        });
+        return res.status(200).json(returnDocuments.length ? returnDocuments : null);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
-      })
-  }
-
-  static findDocument(req, res) {
-    Document.findOne({ where: { id: req.params.id } }).then((document) => {
-      res.status(200).json(document);
-    }).catch((err) => {
-      res.status(404).json({ error: err.message });
+      });
+    });
+  },
+  findDocument: (req, res) => {
+    let queryParams = {};
+    Role.find({
+      where: {
+        id: req.decoded.role_id
+      }
     })
-  }
-
-  static updateDocumentInfo(req, res) {
+    .then((role) => {
+      queryParams = {
+        where: {
+          id: req.params.id
+        }
+      };
+      Document.findOne(queryParams).then((document) => {
+        if (role.title === 'admin' || document.access === 'public' ||
+        (document.access === 'role' && document.role_id === req.decoded.role_id)) {
+          return res.status(200).json(document);
+        }
+        return res.status(200).json(null);
+      }).catch((err) => {
+        res.status(400).json({ error: err.message });
+      });
+    });
+  },
+  updateDocumentInfo: (req, res) => {
     Document.find({
       where: {
         id: req.params.id
       }
     })
-      .then((document, err) => {
+      .then((document) => {
         if (document) {
-          document.title= req.body.title;
+          document.title = req.body.title;
           document.content = req.body.content;
           document.save()
-            .then((document, err) => {
+            .then((err) => {
               if (err) {
                 return res.status(500).json({ error: err.message });
-              } else {
-                //  "Document Information Updated"
-                return res.status(200).json(req.body);
               }
+                //  "Document Information Updated"
+              return res.status(200).json(req.body);
             })
             .catch((err) => {
               res.status(500).json({ error: err.message });
-            })
+            });
+        }
+      });
+  },
+  deleteDocument: (req, res) => {
+    if (req.decoded) {
+      Document.destroy({
+        where: {
+          id: req.params.id
         }
       })
-  }
-
-  static deleteDocument(req, res) {
-    Document.destroy({
-      where: {
-        id: req.params.id
-      }
-    })
       .then((document, err) => {
         if (err) {
-          res.status(500).json({ error: err.message })
+          res.status(500).json({ error: err.message });
         } else {
-          res.status(200, "Document Deleted").json(document);
+          res.status(200).json(document);
         }
-      })
-  }
-
-
-  static findUserDocuments(req, res) {
+      });
+    }
+  },
+  findUserDocuments: (req, res) => {
     Document.all({
       where: { user_id: req.params.id }
     }).then((documents) => {
@@ -100,16 +129,14 @@ class DocumentController {
     })
       .catch((err) => {
         res.status(500).json({ error: err.message });
-      })
-  }
-
-  static searchDocuments(req, res) {
-    if(req.query.q)
-    {
+      });
+  },
+  searchDocuments: (req, res) => {
+    if (req.query.q) {
       Document.findAll({
         where: {
-          title : {
-            $iLike : `%${req.query.q}%`
+          title: {
+            $iLike: `%${req.query.q}%`
           }
         }
       })
@@ -117,13 +144,12 @@ class DocumentController {
         res.status(200).json(documents);
       })
       .catch((err) => {
-        res.status(500).json({error: err.message});
-      })
-    }
-    else{
-      res.status(500).json({error: "Search query not found"})
+        res.status(500).json({ error: err.message });
+      });
+    } else {
+      res.status(500).json({ error: 'Search query not found' });
     }
   }
-}
+};
 
 module.exports = DocumentController;
