@@ -1,8 +1,12 @@
-const express = require('express'), app = express();
+import express from 'express';
+
+const app = express();
 const bodyParser = require('body-parser');
 const routes = require('./server/config/routes');
 
-const port = process.env.PORT || 3000;
+require('dotenv').config();
+
+const port = process.env.PORT;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -12,4 +16,6 @@ app.use(routes);
 
 app.listen(port);
 console.log('Jammin on port 3000...');
+
+export default app;
 
