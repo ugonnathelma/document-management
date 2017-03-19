@@ -58,7 +58,7 @@ describe('Role', () => {
     .send(roleFixtures.testRole)
     .set('authorization', `token ${adminToken}`)
     .end((err, res) => {
-      console.log(res.body, adminToken, roleFixtures.testRole);
+      console.log(res, adminToken, roleFixtures.testRole);
       expect(res.statusCode).to.equal(201);
       done();
     });
