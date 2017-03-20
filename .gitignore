@@ -1,11 +1,4 @@
-<<<<<<< HEAD
+.DS_Store
+.env
 node_modules
-.env
 dist
-.DS_Store
-=======
-.DS_Store
-.env
-node_modules/
-dist/
->>>>>>> chore(setup-database): update gitignore
