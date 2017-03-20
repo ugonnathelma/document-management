@@ -141,6 +141,9 @@ const DocumentController = {
         }
       })
       .then((documents) => {
+        documents = req.query.publish_date ? documents.filter((document) => {
+
+        }) : documents;
         res.status(200).json(documents);
       })
       .catch((err) => {
