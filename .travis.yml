@@ -3,11 +3,14 @@ dist: trusty
 language: node_js
 node_js:
   - "6"
+before_script:
+  - psql -c 'create database database_test;' -U postgres
+  - npm i -g sequelize-cli
+  - sequelize db:migrate
+  - sequelize db:seed
 script:
 - npm test
 after_script:
   - npm run coveralls
-before_script:
-  - psql -c 'create database database_test;' -U postgres
 services:
   - postgresql
