@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/andela-uofoegbu/invertindex.svg?branch=restructuring)](https://travis-ci.org/andela-uofoegbu/invertindex)
-[![Coverage Status](https://coveralls.io/repos/github/andela-uofoegbu/invertindex/badge.svg?branch=develop)](https://coveralls.io/github/andela-uofoegbu/invertindex?branch=restructuring)
-[![Code Climate](https://codeclimate.com/github/andela-uofoegbu/invertindex/badges/gpa.svg)](https://codeclimate.com/github/andela-uofoegbu/invertindex)
+[![Build Status](https://travis-ci.org/andela-uofoegbu/document-management.svg?branch=develop)](https://travis-ci.org/andela-uofoegbu/document-management)
+[![Coverage Status](https://coveralls.io/repos/github/andela-uofoegbu/invertindex/badge.svg?branch=develop)](https://coveralls.io/github/andela-uofoegbu/document-management?branch=develop)
+[![Code Climate](https://codeclimate.com/github/andela-uofoegbu/document-management/badges/gpa.svg)](https://codeclimate.com/github/andela-uofoegbu/document-management)
 
 ## document-management
 Document Management System allows a user to create, track, manage and store documents.
