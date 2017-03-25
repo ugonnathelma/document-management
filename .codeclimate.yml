@@ -1,0 +1,28 @@
+engines:
+  eslint:
+    enabled: true
+    channel: "eslint-2"
+    config:
+    extensions:
+    - .es6
+    - .js
+    - .jsx
+  duplication:
+    enabled: true
+    checks:
+      Similar code:
+        enabled: false
+      Identical code:
+        enabled: false
+    config:
+      languages:
+      - javascript
+ratings:
+  paths:
+  - src/*.js
+exclude_paths:
+- src/app.js
+- karma.conf.js
+- dist/
+- gulpfile.babel.js
+- node_modules/
