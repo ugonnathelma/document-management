@@ -6,8 +6,8 @@ node_js:
 before_script:
   - psql -c 'create database database_test;' -U postgres
   - npm i -g sequelize-cli
-  - sequelize db:migrate
-  - sequelize db:seed
+  - sequelize db:migrate --env=test
+  - sequelize db:seed --env=test
 script:
 - npm test
 after_script:
