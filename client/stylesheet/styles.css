@@ -1,0 +1,10 @@
+body, html {
+  background:url("../img/doc_background.jpg");
+  background-size:cover;
+}
+
+#loginForm {
+  background: white;
+  margin-top:10%;
+  min-height:450px !important;
+}
