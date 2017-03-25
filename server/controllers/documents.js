@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { Document, Role } from '../models/index';
 
 const PAGE_LIMIT = 10;
@@ -132,17 +133,17 @@ const DocumentController = {
       });
   },
   searchDocuments: (req, res) => {
-    if (req.query.q) {
+    if (req.query.query) {
       Document.findAll({
         where: {
           title: {
-            $iLike: `%${req.query.q}%`
+            $iLike: `%${req.query.query}%`
           }
         }
       })
       .then((documents) => {
         documents = req.query.publish_date ? documents.filter((document) => {
-
+          return moment(document.publish_date).diff(req.query.publish_date, 'days') === 0;
         }) : documents;
         res.status(200).json(documents);
       })
