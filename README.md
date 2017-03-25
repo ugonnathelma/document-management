@@ -7,7 +7,7 @@ Document Management System allows a user to create, track, manage and store docu
 
 ## Usage
 
-* Clone the repository git clone https://github.com/andela-uofoegbu/invertindex.git
+* Clone the repository git clone 
 * Run 'npm install' in terminal to install all the dependencies
 * To run the test, run 'npm test'
 * To use inverted index, run gulp and go to localhost://3000
