@@ -64,7 +64,7 @@ describe('Document', () => {
   it('should verify that a document created has a published date defined',
   (done) => {
     supertest(app)
-    .post('/documents')
+    .post('/api/v1/documents')
     .send(documentFixtures.publicDocument)
     .set('authorization', `token ${regularToken}`)
     .end((err, res) => {
@@ -77,7 +77,7 @@ describe('Document', () => {
 
   it('should verify that a document has a property “access” set as “public” by default', (done) => {
     supertest(app)
-    .post('/documents')
+    .post('/api/v1/documents')
     .send(documentFixtures.publicDocument)
     .set('authorization', `token ${regularToken}`)
     .end((err, res) => {
@@ -90,12 +90,12 @@ describe('Document', () => {
 
   it('should verify that the creator of a document can retrieve a file with “access” set as “private', (done) => {
     supertest(app)
-    .post('/documents')
+    .post('/api/v1/documents')
     .send(documentFixtures.privateDocument)
     .set('authorization', `token ${regularToken}`)
     .end((err, res) => {
       supertest(app)
-      .get(`/documents/${res.body.id}`)
+      .get(`/api/v1/documents/${res.body.id}`)
       .set('authorization', `token ${regularToken}`)
        .end((err, res) => {
          expect(res.statusCode).to.equal(200);
@@ -106,12 +106,12 @@ describe('Document', () => {
 
   it('should verify that a non creator of a document cannot retrieve a file with “access” set as “private', (done) => {
     supertest(app)
-    .post('/documents')
+    .post('/api/v1/documents')
     .send(documentFixtures.privateDocument)
     .set('authorization', `token ${regularToken}`)
     .end((err, res) => {
       supertest(app)
-      .get(`/documents/${res.body.id}`)
+      .get(`/api/v1/documents/${res.body.id}`)
       .set('authorization', `token ${secondRegularToken}`)
        .end((err, res) => {
          expect(res.body).to.equal(null);
@@ -136,7 +136,7 @@ describe('Document', () => {
           const modifiedToken = jwt.sign(Object.assign({},
           userFixtures.regularUser, { role_id: role.id }), JWT_SECRET);
           supertest(app)
-          .get(`/documents/${document.id}`)
+          .get(`/api/v1/documents/${document.id}`)
           .set('authorization', `token ${modifiedToken}`)
           .end((req, res) => {
             // eslint-disable-next-line no-unused-expressions
@@ -165,7 +165,7 @@ describe('Document', () => {
         { role_id: role.id }))
         .then((document) => {
           supertest(app)
-          .get(`/documents/${document.id}`)
+          .get(`/api/v1/documents/${document.id}`)
           .set('authorization', `token ${regularToken}`)
           .end((req, res) => {
             // eslint-disable-next-line no-unused-expressions
@@ -183,7 +183,7 @@ describe('Document', () => {
     models.Document.bulkCreate(documentFixtures.createNonRandomDocuments(users))
       .then(() => {
         supertest(app)
-        .get('/documents')
+        .get('/api/v1/documents')
         .query({ limit: 3 })
         .set('authorization', `token ${adminToken}`)
         .end((err, res) => {
@@ -199,7 +199,7 @@ describe('Document', () => {
     models.Document.bulkCreate(testDocuments)
     .then(() => {
       supertest(app)
-      .get('/documents')
+      .get('/api/v1/documents')
       .query({ limit: 2, offset: 2 })
       .set('authorization', `token ${adminToken}`)
       .end((err, res) => {

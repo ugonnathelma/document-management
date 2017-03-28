@@ -59,7 +59,7 @@ describe('Search', () => {
     models.Document.bulkCreate(testDocuments)
     .then(() => {
       supertest(app)
-      .get('/search/documents/')
+      .get('/api/v1/search/documents/')
       .query({ query: testDocuments[0].title })
       .set('authorization', `token ${adminToken}`)
       .end((err, res) => {
@@ -75,7 +75,7 @@ describe('Search', () => {
     models.Document.bulkCreate(testDocuments)
     .then(() => {
       supertest(app)
-      .get('/search/documents/')
+      .get('/api/v1/search/documents/')
       .query({ query: 'document', publish_date: new Date(), limit: 1 })
       .set('authorization', `token ${adminToken}`)
       .end((err, res) => {

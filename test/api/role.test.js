@@ -53,7 +53,7 @@ describe('Role', () => {
 
   it('should verify admins can create a role', (done) => {
     supertest(app)
-    .post('/roles')
+    .post('/api/v1/roles')
     .send(roleFixtures.testRole)
     .set('authorization', `token ${adminToken}`)
     .end((err, res) => {
@@ -64,7 +64,7 @@ describe('Role', () => {
 
   it('should verify regular users can not create a role', (done) => {
     supertest(app)
-    .post('/roles')
+    .post('/api/v1/roles')
     .send(roleFixtures.testRole)
     .set('authorization', `token ${regularToken}`)
     .end((err, res) => {
@@ -76,13 +76,13 @@ describe('Role', () => {
 
   it('should not create duplicate roles', (done) => {
     supertest(app)
-    .post('/roles')
+    .post('/api/v1/roles')
     .send(roleFixtures.otherTestRole)
     .set('authorization', `token ${adminToken}`)
     .end((err, res) => {
       expect(res.statusCode).to.equal(201);
       supertest(app)
-        .post('/roles')
+        .post('/api/v1/roles')
         .send(roleFixtures.otherTestRole)
         .set('authorization', `token ${adminToken}`)
         .end((err, res) => {
@@ -94,7 +94,7 @@ describe('Role', () => {
 
   it('should not create a role missing the title field', (done) => {
     supertest(app)
-    .post('/roles')
+    .post('/api/v1/roles')
     .send(roleFixtures.incompleteRole)
     .set('authorization', `token ${adminToken}`)
     .end((err, res) => {
@@ -105,7 +105,7 @@ describe('Role', () => {
 
   it('should verify that only the admin can view all roles', (done) => {
     supertest(app)
-      .get('/roles')
+      .get('/api/v1/roles')
       .set('authorization', `token ${adminToken}`)
       .end((err, res) => {
         expect(res.body).to.have.lengthOf(4);
@@ -115,7 +115,7 @@ describe('Role', () => {
 
   it('should verify that regular users can not view all roles', (done) => {
     supertest(app)
-      .get('/roles')
+      .get('/api/v1/roles')
       .set('authorization', `token ${regularToken}`)
       .end((err, res) => {
         expect(res.body.error).to.equal('Only an admin can perform this action');
