@@ -1,16 +1,26 @@
 'use strict';
 
+import { connect } from 'react-redux';
 import React, { Component } from 'react';
+import Header from './Header.jsx';
 
-export default class Home extends Component {
+
+export default class LoginPage extends Component {
   render() {
+    console.log(this.props);
     return (
       <div className="row">
-        <div className="col s4" />
-        <form className="col s4" method="post" id="loginForm">
+        <Header />
+        <div className="col s2 l4 " />
+        <form className="col s8 l4 loginForm">
           <div className="row">
             <div className="input-field col s12">
-              <input className="validate" type="email" name="email" id="email" />
+              <input
+                className="validate"
+                type="email"
+                name="email"
+                id="email"
+              />
               <label htmlFor="email">Enter your email</label>
             </div>
           </div>
@@ -25,7 +35,10 @@ export default class Home extends Component {
               />
               <label htmlFor="password">Enter your password</label>
             </div>
-            <a className="pink-text" href="#!"><b>Forgot Password?</b></a>
+
+            <div>
+              <span className="changeLogin">New User? <a href="#">Register Here</a></span>
+            </div>
           </div>
 
           <br />
@@ -34,6 +47,8 @@ export default class Home extends Component {
               <button
                 type="submit"
                 name="btn_login"
+                id="btn_login"
+                onClick={this.onSave}
                 className="col s12 btn btn-large waves-effect amber accent-2"
               >
                 Login
@@ -41,9 +56,9 @@ export default class Home extends Component {
             </div>
           </center>
         </form>
-        <div className="col s4" />
+        <div className="col s2 l4" />
       </div>
+
     );
   }
 }
-

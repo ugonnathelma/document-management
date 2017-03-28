@@ -28,16 +28,18 @@ class UserController {
       email: req.body.email,
       password: req.body.password,
       password_confirmation: req.body.password_confirmation,
-      role_id: req.body.role_id
+      role_id: req.body.role_id || 2
     })
       .then((user, err) => {
         if (err) {
+          console.log(err, 'Error1');
           res.status(400).json({ error: err.message });
         } else {
           res.status(201).json({ user });
         }
       })
       .catch((err) => {
+        console.log(err, 'Error2');
         res.status(400).json({ error: err.message });
       });
   }

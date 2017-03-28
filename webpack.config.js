@@ -13,14 +13,17 @@ module.exports = {
     path: path.resolve('dist'),
     filename: 'index_bundle.js'
   },
-  devServer: { inline: true },
+  devServer: {
+    inline: true,
+    port: 5000
+  },
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
-       { test: /\.css$/, loader: 'style-loader!css-loader' },
-       { test: /\.(jpg|png|svg|jpeg)$/, loader: 'url-loader' },
-       { test: /\.(ttf|eot|woff|woff2)$/, loader: 'file-loader' }
+      { test: /\.css$/, loader: 'style-loader!css-loader' },
+      { test: /\.(jpg|png|svg|jpeg)$/, loader: 'url-loader' },
+      { test: /\.(ttf|eot|woff|woff2)$/, loader: 'file-loader' }
     ]
   },
   plugins: [HtmlWebpackPluginConfig]
