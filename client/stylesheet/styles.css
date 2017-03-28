@@ -46,3 +46,16 @@ color:teal;
 .changeLogin a {
   color: teal;
 }
+
+#loggedinNav{
+  float: right;
+}
+#loggedinNav a{
+  color:teal;
+  font-weight: bold;
+}
+
+#loggedinNav a:hover{
+  background: transparent;
+  color:white;
+}

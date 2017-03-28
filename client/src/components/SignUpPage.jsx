@@ -1,9 +1,9 @@
-'use strict';
-
+import browserHistory from 'react-router';
 import { connect } from 'react-redux';
-import createEvent from '../actions/eventActions';
+import { createEvent } from '../actions/eventActions';
 import React, { Component } from 'react';
 import Header from '../components/Header.jsx';
+
 
 class SignUpPage extends Component {
 
@@ -28,10 +28,13 @@ class SignUpPage extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    createEvent(this.props.dispatch,this.state);
+    createEvent(this.props.dispatch, this.state);
   }
 
   render() {
+    if (window.localStorage.token) {
+      browserHistory.push('/dashboard');
+    }
     return (
       <div className="row">
         <Header />
@@ -114,7 +117,7 @@ class SignUpPage extends Component {
             </div>
 
             <div>
-              <span className="changeLogin">Existing User? <a href="#">Login Here</a></span>
+              <span className="changeLogin">Existing User? <a href="./">Login Here</a></span>
             </div>
           </div>
 
@@ -144,6 +147,5 @@ SignUpPage.PropTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({ dispatch });
-
 
 export default connect(null, mapDispatchToProps)(SignUpPage);

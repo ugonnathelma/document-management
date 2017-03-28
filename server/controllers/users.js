@@ -11,7 +11,8 @@ class UserController {
     User.findOne({ where: { email: req.body.email } })
       .then((user) => {
         bcrypt.compare(req.body.password, user.password_digest, (err, same) => {
-          const token = jwt.sign({ user }, process.env.SECRET_KEY, { expiresIn: '1h' });
+          const token = jwt.sign({ user }, process.env.SECRET_KEY,
+          { expiresIn: '1h' });
           res.status(200).json({ success: same, token });
         });
       })
@@ -32,14 +33,14 @@ class UserController {
     })
       .then((user, err) => {
         if (err) {
-          console.log(err, 'Error1');
           res.status(400).json({ error: err.message });
         } else {
-          res.status(201).json({ user });
+          const token = jwt.sign({ user },
+          process.env.SECRET_KEY, { expiresIn: '1h' });
+          res.status(201).json({ user, token });
         }
       })
       .catch((err) => {
-        console.log(err, 'Error2');
         res.status(400).json({ error: err.message });
       });
   }

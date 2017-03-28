@@ -1,18 +1,46 @@
-'use strict';
-
 import { connect } from 'react-redux';
+import jwtDecode from 'jwt-decode';
+import { browserHistory } from 'react-router';
 import React, { Component } from 'react';
+import { loginEvent } from '../actions/eventActions';
 import Header from './Header.jsx';
+import UserDashBoard from './UserDashBoard.jsx';
 
 
-export default class LoginPage extends Component {
+class LoginPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: ''
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    loginEvent(this.props.dispatch, this.state);
+  }
+
   render() {
-    console.log(this.props);
+    if (window.localStorage.getItem('token')) {
+      const decodedRole = jwtDecode(window.localStorage.getItem('token'))
+      .user.role_id;
+      if (decodedRole === 1) { browserHistory.push('/admin/dashboard'); } else {
+        browserHistory.push('/dashboard');
+      }
+    }
     return (
       <div className="row">
         <Header />
         <div className="col s2 l4 " />
-        <form className="col s8 l4 loginForm">
+        <form className="col s8 l4 loginForm" onSubmit={this.handleSubmit}>
           <div className="row">
             <div className="input-field col s12">
               <input
@@ -20,6 +48,7 @@ export default class LoginPage extends Component {
                 type="email"
                 name="email"
                 id="email"
+                onChange={this.handleChange}
               />
               <label htmlFor="email">Enter your email</label>
             </div>
@@ -32,12 +61,13 @@ export default class LoginPage extends Component {
                 type="password"
                 name="password"
                 id="password"
+                onChange={this.handleChange}
               />
               <label htmlFor="password">Enter your password</label>
             </div>
 
             <div>
-              <span className="changeLogin">New User? <a href="#">Register Here</a></span>
+              <span className="changeLogin">New User? <a href="./register">Register Here</a></span>
             </div>
           </div>
 
@@ -62,3 +92,12 @@ export default class LoginPage extends Component {
     );
   }
 }
+
+LoginPage.PropTypes = {
+  loginEvent: React.PropTypes.func.isRequired
+};
+
+const mapDispatchToProps = dispatch => ({ dispatch });
+
+
+export default connect(null, mapDispatchToProps)(LoginPage);
