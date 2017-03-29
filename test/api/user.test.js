@@ -28,7 +28,7 @@ describe('User', () => {
 
   it('should create a user', (done) => {
     supertest(app)
-    .post('/users')
+    .post('/api/v1/users')
     .send(userFixtures.adminUser)
     .end((err, res) => {
       expect(res.statusCode).to.equal(201);
@@ -38,12 +38,12 @@ describe('User', () => {
 
   it('should not create duplicate users', (done) => {
     supertest(app)
-    .post('/users')
+    .post('/api/v1/users')
     .send(userFixtures.adminUser)
     .end((err, res) => {
       expect(res.statusCode).to.equal(201);
       supertest(app)
-        .post('/users')
+        .post('/api/v1/users')
         .send(userFixtures.adminUser)
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
@@ -54,7 +54,7 @@ describe('User', () => {
 
   it('should not create a user missing required field', (done) => {
     supertest(app)
-    .post('/users')
+    .post('/api/v1/users')
     .send(userFixtures.incompleteUser)
     .end((err, res) => {
       expect(res.statusCode).to.equal(400);
@@ -66,7 +66,7 @@ describe('User', () => {
 
   it('should verify that a newly created user has a role defined', (done) => {
     supertest(app)
-    .post('/users')
+    .post('/api/v1/users')
     .send(userFixtures.regularUser)
     .end((err, res) => {
       // eslint-disable-next-line no-unused-expressions
@@ -77,7 +77,7 @@ describe('User', () => {
 
   it('should verify that a newly created user has first name and last name defined', (done) => {
     supertest(app)
-    .post('/users')
+    .post('/api/v1/users')
     .send(userFixtures.regularUser)
     .end((err, res) => {
       // eslint-disable-next-line no-unused-expressions
@@ -92,7 +92,7 @@ describe('User', () => {
     models.User.bulkCreate([userFixtures.existingAdminUser, userFixtures.existingRegularUser])
       .then(() => {
         supertest(app)
-          .get('/users')
+          .get('/api/v1/users')
           .set('authorization', `token ${adminToken}`)
           .end((err, res) => {
             expect(res.body).to.have.lengthOf(2);
@@ -105,7 +105,7 @@ describe('User', () => {
     models.User.bulkCreate([userFixtures.existingAdminUser, userFixtures.existingRegularUser])
       .then(() => {
         supertest(app)
-          .get('/users')
+          .get('/api/v1/users')
           .set('authorization', `token ${regularToken}`)
           .end((err, res) => {
             expect(res.statusCode).to.equal(403);

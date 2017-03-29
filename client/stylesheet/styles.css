@@ -1,0 +1,61 @@
+body, html {
+  background:url("../img/doc_background.jpg");
+  background-size:cover;
+}
+
+.loginForm {
+  background: white;
+  margin-top:5%;
+  min-height:370px !important;
+  min-width: 200px;
+}
+
+.loginForm .row {
+ margin-top:3% !important;
+}
+
+nav {
+  padding: 0px 15px 0px 15px !important;
+  background: #80cbc4 !important;
+}
+
+.forgot-password {
+float: right;
+padding-right:10px;
+color:teal;
+}
+
+.forgot-password:hover {
+  color:lightseagreen;
+}
+
+#btn_login {
+ color: white !important;
+ font-weight: bold;
+}
+
+#btn_login:hover {
+  background: teal !important;
+}
+
+.changeLogin {
+  float:right;
+  padding-right: 10px;
+}
+
+.changeLogin a {
+  color: teal;
+}
+
+#loggedinNav{
+  float: right;
+}
+#loggedinNav a{
+  color:teal;
+  font-weight: bold;
+}
+
+#loggedinNav a:hover{
+  background: transparent;
+  color:white;
+}
