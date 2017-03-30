@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import jwtDecode from 'jwt-decode';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import React, { Component } from 'react';
-import { loginEvent } from '../actions/eventActions';
+import loginAction from '../actions/loginAction';
 import Header from './Header.jsx';
 import UserDashBoard from './UserDashBoard.jsx';
 
@@ -25,13 +25,20 @@ class LoginPage extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    loginEvent(this.props.dispatch, this.state);
+    this.props.Login(this.state)
+      .then(() => {
+        const decodedRole = jwtDecode(window.localStorage.getItem('token'))
+          .user.role_id;
+        if (decodedRole === 1) { browserHistory.push('/admin/dashboard'); } else {
+          browserHistory.push('/dashboard');
+        }
+      });
   }
 
   render() {
     if (window.localStorage.getItem('token')) {
       const decodedRole = jwtDecode(window.localStorage.getItem('token'))
-      .user.role_id;
+        .user.role_id;
       if (decodedRole === 1) { browserHistory.push('/admin/dashboard'); } else {
         browserHistory.push('/dashboard');
       }
@@ -67,9 +74,10 @@ class LoginPage extends Component {
             </div>
 
             <div>
-              <span className="changeLogin">New User? <a href="./register">Register Here</a></span>
+              <span className="changeLogin">New User? <Link to="./register">Register Here</Link></span>
             </div>
           </div>
+          <label className="loginError" id="loginError"></label>
 
           <br />
           <center>
@@ -78,7 +86,7 @@ class LoginPage extends Component {
                 type="submit"
                 name="btn_login"
                 id="btn_login"
-                onClick={this.onSave}
+                onClick={this.handleSubmit}
                 className="col s12 btn btn-large waves-effect amber accent-2"
               >
                 Login
@@ -94,10 +102,23 @@ class LoginPage extends Component {
 }
 
 LoginPage.PropTypes = {
-  loginEvent: React.PropTypes.func.isRequired
+  user: React.PropTypes.object.isRequired,
+  loginThings: React.PropTypes.func.isRequired
 };
 
-const mapDispatchToProps = dispatch => ({ dispatch });
+LoginPage.contextTypes = {
+  router: React.PropTypes.object
+};
 
+const mapStoreToProps = (state) => {
+  return {
+    user: state.user
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    Login: credentials => dispatch(loginAction(credentials))
+  };
+};
 
-export default connect(null, mapDispatchToProps)(LoginPage);
+export default connect(mapStoreToProps, mapDispatchToProps)(LoginPage);

@@ -9,7 +9,7 @@ const DocumentController = {
   createDocument: (req, res) => {
     Document.create({
       title: req.body.title,
-      user_id: req.decoded.id,
+      user_id: req.decoded.user.id,
       content: req.body.content,
       access: req.body.access || 'public'
     })

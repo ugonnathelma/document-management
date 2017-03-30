@@ -25,5 +25,7 @@ router.post('/api/v1/roles', Authorization.isAuthorized, Authorization.isAdmin, 
 router.get('/api/v1/roles', Authorization.isAuthorized, Authorization.isAdmin, Roles.getRoles);
 router.delete('/api/v1/roles/:id', Authorization.isAuthorized, Authorization.isAdmin, Roles.deleteRole);
 
+router.get('/api/v1/tokenHealth', Authorization.isValidToken);
+
 
 module.exports = router;

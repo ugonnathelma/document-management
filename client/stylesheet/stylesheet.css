@@ -1,6 +1,10 @@
 body, html {
   background:url("../img/doc_background.jpg");
   background-size:cover;
+  padding:0px !important;
+  margin:0px !important;
+  overflow-y: scroll;
+  min-height: 548 px;
 }
 
 .loginForm {
@@ -58,4 +62,34 @@ color:teal;
 #loggedinNav a:hover{
   background: transparent;
   color:white;
+}
+
+.sidebar {
+
+}
+
+.workspace {
+  height:100vh;
+  padding:0px !important;
+  margin-bottom: 0px !important;
+  background:white;
+}
+
+.loginerror {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: bold;
+}
+
+.brand-logo img {
+  width:100px;
+  height:50px;
+  margin:6px;
+}
+
+.dashboardContainer {
+  padding:0px !important;
+}
+
+.dashboardContainer div {
+  padding: 0px !important;
 }

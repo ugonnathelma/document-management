@@ -13,7 +13,11 @@ class UserController {
         bcrypt.compare(req.body.password, user.password_digest, (err, same) => {
           const token = jwt.sign({ user }, process.env.SECRET_KEY,
           { expiresIn: '1h' });
-          res.status(200).json({ success: same, token });
+          if (same) {
+            res.status(200).json({ success: same, token });
+          } else {
+            res.status(500).json({ error: "Email and Password combination not correct" });
+          }
         });
       })
       .catch((err) => {
