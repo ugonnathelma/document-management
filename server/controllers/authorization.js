@@ -21,7 +21,8 @@ const AuthorizationController = {
        if (err) {
          return res.status(401).json({ err });
        }
-       req.decoded = decoded;
+       console.log(decoded);
+       req.decoded = decoded.user ? decoded.user : decoded;
        next();
      });
   },

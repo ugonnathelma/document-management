@@ -68,6 +68,7 @@ describe('Document', () => {
     .send(documentFixtures.publicDocument)
     .set('authorization', `token ${regularToken}`)
     .end((err, res) => {
+      console.log(res);
       expect(res.statusCode).to.equal(201);
       // eslint-disable-next-line no-unused-expressions
       expect(res.body.createdAt).to.not.be.undefined;

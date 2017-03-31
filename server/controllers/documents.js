@@ -7,9 +7,10 @@ const PAGE_OFFSET = 0;
 const DocumentController = {
 
   createDocument: (req, res) => {
+    console.log(req.decoded, req.body);
     Document.create({
       title: req.body.title,
-      user_id: req.decoded.user.id,
+      user_id: req.decoded.id,
       content: req.body.content,
       access: req.body.access || 'public'
     })
