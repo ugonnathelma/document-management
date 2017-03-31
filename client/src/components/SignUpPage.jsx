@@ -1,6 +1,6 @@
-import browserHistory from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
-import { createEvent } from '../actions/eventActions';
+import signupAction from '../actions/signUpAction';
 import React, { Component } from 'react';
 import Header from '../components/Header.jsx';
 
@@ -28,7 +28,10 @@ class SignUpPage extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    createEvent(this.props.dispatch, this.state);
+    this.props.Signup(this.state)
+      .then(() => {
+        browserHistory.push('/dashboard');
+      });
   }
 
   render() {
@@ -117,7 +120,7 @@ class SignUpPage extends Component {
             </div>
 
             <div>
-              <span className="changeLogin">Existing User? <a href="./">Login Here</a></span>
+              <span className="changeLogin">Existing User? <Link to="./">Login Here</Link></span>
             </div>
           </div>
 
@@ -143,9 +146,23 @@ class SignUpPage extends Component {
 }
 
 SignUpPage.PropTypes = {
-  createEvent: React.PropTypes.func.isRequired
+  user: React.PropTypes.object.isRequired,
+  loginThings: React.PropTypes.func.isRequired
 };
 
-const mapDispatchToProps = dispatch => ({ dispatch });
+SignUpPage.contextTypes = {
+  router: React.PropTypes.object
+};
 
-export default connect(null, mapDispatchToProps)(SignUpPage);
+const mapStoreToProps = (state) => {
+  return {
+    user: state.user
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    Signup: userDetails => dispatch(signupAction(userDetails))
+  };
+};
+
+export default connect(mapStoreToProps, mapDispatchToProps)(SignUpPage);
