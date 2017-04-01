@@ -19,6 +19,14 @@ module.exports = {
           key: 'id'
         },
       },
+      role_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Roles',
+          key: 'id'
+        },
+      },
       content: {
         type: Sequelize.STRING
       },

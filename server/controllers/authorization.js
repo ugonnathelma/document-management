@@ -16,12 +16,11 @@ const AuthorizationController = {
   },
 
   isAuthorized: (req, res, next) => {
-    jwt.verify(AuthorizationController.getToken(req, res), process.env.SECRET_KEY,
+    jwt.verify(AuthorizationController.getToken(req), process.env.SECRET_KEY,
      (err, decoded) => {
        if (err) {
          return res.status(401).json({ err });
        }
-       console.log(decoded);
        req.decoded = decoded.user ? decoded.user : decoded;
        next();
      });

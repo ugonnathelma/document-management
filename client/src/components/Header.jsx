@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import jwtDecode from 'jwt-decode';
 import { connect } from 'react-redux';
 import { browserHistory, Link } from 'react-router';
+import actionTypes from '../actions/actionTypes';
+import logoutAction from '../actions/logoutAction';
 
 const logoName = require('../../img/logo.png');
 
@@ -13,11 +15,14 @@ class Header extends Component {
     const token = (window.localStorage.getItem('token'));
     if (token) {
       this.state = { username: jwtDecode(token).user.username };
+      this.logout = this.logout.bind(this);
     }
+    console.log(this.props);
   }
 
   logout() {
     window.localStorage.removeItem('token');
+    this.props.logout();
     browserHistory.push('/');
   }
 
@@ -35,14 +40,13 @@ class Header extends Component {
         <div className="navbar-fixed">
           <nav>
             <div className="nav-wrapper">
-              <a href="./" className="brand-logo"><img src={logoName} alt="logo" /></a>
+              <Link to="/" className="brand-logo"><img src={logoName} alt="logo" /></Link>
               <ul id="loggedinNav">
                 <li> <a href="/profile">{this.state.username}</a></li>
                 <li><a onClick={this.logout}>Sign Out</a></li>
               </ul>
               <ul id="nav-mobile" className="right hide-on-med-and-down">
-                <li><a href="./">Home</a></li>
-                <li><a href="https://github.com/andela-uofoegbu">Contact Us</a></li>
+
               </ul>
             </div>
             <Link data-activates="slide-out" className="btn" id="collapse_btn">
@@ -56,7 +60,7 @@ class Header extends Component {
       <div className="navbar-fixed">
         <nav>
           <div className="nav-wrapper">
-            <a href="./" className="brand-logo"><img src={logoName} alt="logo" /></a>
+            <Link to="/" className="brand-logo"><img src={logoName} alt="logo" /></Link>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li><a href="./">Home</a></li>
               <li><a href="about.html">About Us</a></li>
@@ -69,15 +73,16 @@ class Header extends Component {
   }
 }
 
-// Header.propTypes = {
-//   user: React.PropTypes.object
-// }
-
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => dispatch(logoutAction())
+  };
+};
 const mapStoreToProps = (state) => {
   return {
     user: state.user
-  }
+  };
 };
 
-export default connect(mapStoreToProps)(Header);
+export default connect(mapStoreToProps, mapDispatchToProps)(Header);
 

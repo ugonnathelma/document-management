@@ -1,26 +1,35 @@
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
+import jwtDecode from 'jwt-decode';
 import React, { Component } from 'react';
 import Header from './Header.jsx';
 import Sidebar from './Sidebar.jsx';
+import DocumentList from '../components/DocumentList.jsx';
 import viewAllDocumentsAction from '../actions/viewAllDocuments.js';
-import checkTokenAction from '../actions/checkToken.js';
+import deleteDocumentAction from '../actions/deleteDocument.js';
 
 class ViewAllDocuments extends Component {
+
   componentWillMount() {
-    this.props.viewAllDocuments();
+    const token = window.localStorage.getItem('token');
+    console.log(jwtDecode(token));
+    if (token) {
+      this.setState({ userid: jwtDecode(token).user.id });
+      this.props.viewDocuments(token);
+    }
   }
+
   render() {
-    if (!window.localStorage.token) {
-      browserHistory.push('/login');
+    if (!window.localStorage.getItem('token')) {
+      browserHistory.push('/');
     }
     return (
       <div className="row dashboardContainer col s12">
         <Header />
         <Sidebar />
-        <div className="col s12 workspace">
+        <div className="col s12 workspace ">
           <div className="row workspace-header"><h4>All Your Documents</h4></div>
-
+          <DocumentList deleteDocument={this.props.deleteDocument} userid={this.state.userid} documents={this.props.documents || []} />
         </div>
       </div>
 
@@ -29,25 +38,20 @@ class ViewAllDocuments extends Component {
 }
 
 
-// viewAllDocuments.PropTypes = {
-//   document: React.PropTypes.object.isRequired,
-//   loginThings: React.PropTypes.func.isRequired,
-//   CheckToken: React.PropTypes.func
-// };
+ViewAllDocuments.PropTypes = {
+  documents: React.PropTypes.array.isRequired
+};
 
-// viewAllDocuments.contextTypes = {
-//   router: React.PropTypes.object
-// };
-
-const mapStoreToProps = (state) => {
+const mapStoreToProps = (state, ownProps) => {
   return {
-    documents: state.documents
+    documents: state.allDocumentsReducer.documents
   };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    viewAllDocuments: () => dispatch(viewAllDocumentsAction()),
-    CheckToken: () => dispatch(checkTokenAction())
+    deleteDocument: (usertoken, documentid) => dispatch(deleteDocumentAction(usertoken, documentid)),
+    viewDocuments: usertoken => dispatch(viewAllDocumentsAction(usertoken))
   };
 };
 

@@ -6,8 +6,10 @@ import UserProfile from './components/UserProfile.jsx';
 import AdminDashBoard from './components/AdminDashBoard.jsx';
 import UserDashBoard from './components/UserDashBoard.jsx';
 import CreateDocument from './components/CreateDocument.jsx';
+import EditDocument from './components/EditDocument.jsx';
 import SharedDocuments from './components/SharedDocuments.jsx';
 import SearchDocuments from './components/SearchDocuments.jsx';
+import ViewDocument from './components/ViewDocument.jsx';
 
 export default(
   <Route path="/">
@@ -19,6 +21,8 @@ export default(
     <Route path="/shared-documents" component={SharedDocuments} />
     <Route path="/search-documents" component={SearchDocuments} />
     <Route path="/create-document" component={CreateDocument} />
+    <Route path="/edit-document/:id" component={EditDocument} />
+    <Route path="/view-document/:id" component={ViewDocument} />
     <Route path="/profile" component={UserProfile} />
   </Route>
 );

@@ -2,18 +2,18 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import actionTypes from '../actions/actionTypes';
 
-export default function viewAllDocumentsAction(token) {
+export default function viewDocumentAction(token, documentid) {
   return function (dispatch) {
-    return axios.get('/api/v1/documents', {
+    return axios.get(`/api/v1/documents/${documentid}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
       .then((response) => {
-        console.log(response);
+        console.log(response, 'response');
         dispatch({
-          type: actionTypes.ALL_DOCUMENTS,
-          documents: response.data
+          type: actionTypes.VIEW_DOCUMENT,
+          document: response.data
         });
       }).catch((err) => {
         dispatch({

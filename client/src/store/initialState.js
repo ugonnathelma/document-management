@@ -1,3 +1,7 @@
-const initialState = { user: {}, documents: [] };
+const initialState = {
+  signUpReducer: { user: {} },
+  loginReducer: { user: {} },
+  allDocumentsReducer: { documents: [] },
+  newDocumentReducer: {} };
 
 export default initialState;

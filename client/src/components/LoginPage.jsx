@@ -4,7 +4,6 @@ import { browserHistory, Link } from 'react-router';
 import React, { Component } from 'react';
 import loginAction from '../actions/loginAction';
 import Header from './Header.jsx';
-import UserDashBoard from './UserDashBoard.jsx';
 
 
 class LoginPage extends Component {
@@ -74,7 +73,7 @@ class LoginPage extends Component {
             </div>
 
             <div>
-              <span className="changeLogin">New User? <Link to="./register">Register Here</Link></span>
+              <span className="changeLogin">New User? <Link to="/register">Register Here</Link></span>
             </div>
           </div>
           <label className="loginError" id="loginError"></label>

@@ -35,7 +35,7 @@ class SignUpPage extends Component {
   }
 
   render() {
-    if (window.localStorage.token) {
+    if (window.localStorage.getItem('token')) {
       browserHistory.push('/dashboard');
     }
     return (
@@ -120,7 +120,7 @@ class SignUpPage extends Component {
             </div>
 
             <div>
-              <span className="changeLogin">Existing User? <Link to="./">Login Here</Link></span>
+              <span className="changeLogin">Existing User? <Link to="/">Login Here</Link></span>
             </div>
           </div>
 
