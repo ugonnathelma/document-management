@@ -3,12 +3,14 @@ import loginReducer from './loginReducer';
 import signUpReducer from './signUpReducer';
 import newDocumentReducer from './newDocumentReducer';
 import allDocumentsReducer from './allDocumentsReducer';
+import viewDocumentReducer from './viewDocumentReducer';
 
 const rootReducer = combineReducers({
   loginReducer,
   signUpReducer,
   newDocumentReducer,
-  allDocumentsReducer
+  allDocumentsReducer,
+  viewDocumentReducer
 });
 
 export default rootReducer;

@@ -5,7 +5,7 @@ export const documentCreated = document => ({ type: 'DOCUMENT_CREATED', document
 const token = window.localStorage.getItem('token');
 
 const redirect = () => {
-  browserHistory.push('/login');
+  browserHistory.push('/');
 };
 
 

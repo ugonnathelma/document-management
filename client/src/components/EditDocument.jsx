@@ -1,23 +1,26 @@
 import { connect } from 'react-redux';
+import jwtDecode from 'jwt-decode';
 import { browserHistory } from 'react-router';
 import React, { Component, PropTypes } from 'react';
 import Header from './Header.jsx';
 import Sidebar from './Sidebar.jsx';
-import newDocument from '../actions/newDocument.js';
+import viewDocument from '../actions/viewDocument.js';
 import checkTokenAction from '../actions/checkToken.js';
+import editDocument from '../actions/editDocument.js';
+
 
 
 const ResponseMessage = (props) => {
   if (props.status === 'success') {
     return (
       <div>
-        Document Created
+        Document Updated
       </div>
     );
   } else if (props.status === 'failed') {
     return (
       <div>
-        Document not Created
+        Document not Updated
       </div>
     );
   } else {
@@ -26,7 +29,7 @@ const ResponseMessage = (props) => {
 };
 
 
-class CreateDocument extends Component {
+class EditDocument extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,11 +44,26 @@ class CreateDocument extends Component {
     this.props.CheckToken();
   }
 
-  componentDidMount(){
-     $(this.refs.access).material_select(this.handleChange.bind(this));
+  componentWillMount() {
+    const token = window.localStorage.getItem('token');
+    if (token) {
+      this.setState({ userid: jwtDecode(token).user.id });
+      this.props.viewDocument(token, this.props.params.id);
+    }
+  }
+
+  componentDidMount() {
+    $(this.refs.access).material_select(this.handleChange.bind(this));
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setState({
+      title: nextProps.document.title,
+      access: nextProps.document.access,
+      content: nextProps.document.content
+    });
+    $('#access').val(nextProps.document.access);
+
     if (nextProps.status === 'success') {
       browserHistory.push('/dashboard');
     }
@@ -56,8 +74,9 @@ class CreateDocument extends Component {
   }
 
   handleSubmit(event) {
+    const token = localStorage.getItem('token');
     event.preventDefault();
-    this.props.CreateDocument(this.state);
+    this.props.editDocument(this.state, token, this.props.params.id);
   }
 
   render() {
@@ -69,7 +88,7 @@ class CreateDocument extends Component {
         <Header />
         <Sidebar />
         <div className="col s12 workspace">
-          <div className="row workspace-header"><h4>Create A Document</h4></div>
+          <div className="row workspace-header"><h4></h4></div>
           <form onSubmit={this.handleSubmit} className="panel">
             <div className="field row">
               <div className="col m9 s12 document-name-field">
@@ -78,6 +97,7 @@ class CreateDocument extends Component {
                   id="title"
                   onChange={this.handleChange}
                   placeholder="Name of Document"
+                  value={this.state.title}
                 />
               </div>
               <div className="col m3 s12">
@@ -101,6 +121,7 @@ class CreateDocument extends Component {
                 id="content"
                 onChange={this.handleChange}
                 placeholder="Type your content here..."
+                value={this.state.content}
               />
             </div>
             <div className="field row">
@@ -116,27 +137,31 @@ class CreateDocument extends Component {
 }
 
 
-CreateDocument.PropTypes = {
+EditDocument.PropTypes = {
   document: PropTypes.object.isRequired,
   CheckToken: PropTypes.func
 };
 
-CreateDocument.contextTypes = {
+EditDocument.contextTypes = {
   router: PropTypes.object
 };
 
-const mapStoreToProps = (state) => {
+const mapStoreToProps = (state, ownProps) => {
   return {
-    status: state.newDocumentReducer.status
+    document: state.viewDocumentReducer.document,
+    status: state.viewDocumentReducer.status
 
   };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    CreateDocument: documentDetails => dispatch(newDocument(documentDetails)),
+    viewDocument: (token, documentid) => dispatch(viewDocument(token, documentid)),
+    editDocument: (documentDetails, token, documentid) =>
+    dispatch(editDocument(documentDetails, token, documentid)),
     CheckToken: () => dispatch(checkTokenAction())
   };
 };
 
-export default connect(mapStoreToProps, mapDispatchToProps)(CreateDocument);
+export default connect(mapStoreToProps, mapDispatchToProps)(EditDocument);
 

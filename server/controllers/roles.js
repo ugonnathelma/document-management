@@ -6,16 +6,12 @@ const RoleController = {
     Role.create({
       title: req.body.title
     })
-    .then((role, err) => {
-      if (err) {
-        res.status(500).json({ error: err.message });
-      } else {
+      .then((role) => {
         res.status(201).json(role);
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err.message });
-    });
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
   },
 
   deleteRole: (req, res) => {
@@ -24,23 +20,19 @@ const RoleController = {
         id: req.params.id
       }
     })
-    .then((role, err) => {
-      if (err) {
-        res.status(500).json({ error: err.message });
-      } else {
+      .then((role) => {
         res.status(200, 'Role Deleted').json(role);
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err.message });
-    });
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
   },
 
   getRoles: (req, res) => {
     Role.all()
-     .then((roles) => {
-       res.status(200).json(roles);
-     })
+      .then((roles) => {
+        res.status(200).json(roles);
+      })
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });

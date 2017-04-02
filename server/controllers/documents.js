@@ -7,23 +7,25 @@ const PAGE_OFFSET = 0;
 const DocumentController = {
 
   createDocument: (req, res) => {
-    console.log(req.decoded, req.body);
+    let roleId;
+    if (req.body.access !== 'role') {
+      roleId = null;
+    } else {
+      roleId = req.decoded.role_id;
+    }
     Document.create({
       title: req.body.title,
       user_id: req.decoded.id,
       content: req.body.content,
-      access: req.body.access || 'public'
+      access: req.body.access || 'public',
+      role_id: roleId
     })
-    .then((document, err) => {
-      if (err) {
-        res.status(500).json({ error: err.message });
-      } else {
+      .then((document) => {
         res.status(201).json(document);
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err.message });
-    });
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
   },
   getDocuments: (req, res) => {
     const orderDirection = req.query.order || 'DESC';
@@ -37,51 +39,59 @@ const DocumentController = {
         id: req.decoded.role_id
       }
     })
-    .then((role) => {
-      if (role.title === 'admin' && req.query.roleid) {
-        queryParams = Object.assign({}, queryParams, {
-          where: {
-            role_id: req.query.role_id
-          }
-        });
-      }
-      Document.all(queryParams)
-      .then((documents) => {
-        // eslint-disable-next-line arrow-body-style
-        const returnDocuments = documents.filter((document) => {
-          return (role.title === 'admin' || document.access === 'public' ||
-          (document.access === 'role' && document.role_id === req.decoded.role_id));
-        });
-        return res.status(200).json(returnDocuments.length ? returnDocuments : null);
-      })
-      .catch((err) => {
-        res.status(500).json({ error: err.message });
+      .then((role) => {
+        if (role.title === 'admin' && req.query.role_id) {
+          queryParams = Object.assign({}, queryParams, {
+            where: {
+              role_id: req.query.role_id
+            }
+          });
+        }
+        Document.all(queryParams)
+          .then((documents) => {
+            // eslint-disable-next-line arrow-body-style
+            const returnDocuments = documents.filter((document) => {
+              return (role.title === 'admin' ||
+                document.access === 'public' ||
+                (document.access === 'role'
+                  && document.role_id === req.decoded.role_id)
+                || (document.access === 'private'
+                  && document.user_id === req.decoded.id));
+            });
+            return res.status(200).json(returnDocuments.length ? returnDocuments : []);
+          })
+          .catch((err) => {
+            res.status(500).json({ error: err.message });
+          });
       });
-    });
   },
   findDocument: (req, res) => {
+    console.log(req.params.id, 'param id');
     let queryParams = {};
     Role.find({
       where: {
         id: req.decoded.role_id
       }
     })
-    .then((role) => {
-      queryParams = {
-        where: {
-          id: req.params.id
-        }
-      };
-      Document.findOne(queryParams).then((document) => {
-        if (role.title === 'admin' || document.access === 'public' ||
-        (document.access === 'role' && document.role_id === req.decoded.role_id)) {
-          return res.status(200).json(document);
-        }
-        return res.status(200).json(null);
-      }).catch((err) => {
-        res.status(400).json({ error: err.message });
+      .then((role) => {
+        queryParams = {
+          where: {
+            id: req.params.id
+          }
+        };
+        Document.findOne(queryParams).then((document) => {
+          if (role.title === 'admin' || document.access === 'public' ||
+            (document.access === 'role' && document.role_id === req.decoded.role_id
+            ) || (document.access === 'private'
+              && document.user_id === req.decoded.id)
+          ) {
+            return res.status(200).json(document);
+          }
+          return res.status(200).json(null);
+        }).catch((err) => {
+          res.status(400).json({ error: err.message });
+        });
       });
-    });
   },
   updateDocumentInfo: (req, res) => {
     Document.find({
@@ -93,15 +103,13 @@ const DocumentController = {
         if (document) {
           document.title = req.body.title;
           document.content = req.body.content;
+          document.access = req.body.access;
           document.save()
-            .then((err) => {
-              if (err) {
-                return res.status(500).json({ error: err.message });
-              }
-                //  "Document Information Updated"
-              return res.status(200).json(req.body);
+            .then(() => {
+              res.status(200).json(req.body);
             })
             .catch((err) => {
+              console.log(err);
               res.status(500).json({ error: err.message });
             });
         }
@@ -114,13 +122,12 @@ const DocumentController = {
           id: req.params.id
         }
       })
-      .then((document, err) => {
-        if (err) {
-          res.status(500).json({ error: err.message });
-        } else {
+        .then((document) => {
           res.status(200).json(document);
-        }
-      });
+        })
+        .catch((err) => {
+          res.status(500).json({ error: err.message });
+        });
     }
   },
   findUserDocuments: (req, res) => {
@@ -142,15 +149,15 @@ const DocumentController = {
           }
         }
       })
-      .then((documents) => {
-        documents = req.query.publish_date ? documents.filter((document) => {
-          return moment(document.publish_date).diff(req.query.publish_date, 'days') === 0;
-        }) : documents;
-        res.status(200).json(documents);
-      })
-      .catch((err) => {
-        res.status(500).json({ error: err.message });
-      });
+        .then((documents) => {
+          documents = req.query.publish_date ? documents.filter((document) => {
+            return moment(document.publish_date).diff(req.query.publish_date, 'days') === 0;
+          }) : documents;
+          res.status(200).json(documents);
+        })
+        .catch((err) => {
+          res.status(500).json({ error: err.message });
+        });
     } else {
       res.status(500).json({ error: 'Search query not found' });
     }

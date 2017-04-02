@@ -12,7 +12,7 @@ class UserController {
       .then((user) => {
         bcrypt.compare(req.body.password, user.password_digest, (err, same) => {
           const token = jwt.sign({ user }, process.env.SECRET_KEY,
-          { expiresIn: '1h' });
+            { expiresIn: '1h' });
           if (same) {
             res.status(200).json({ success: same, token });
           } else {
@@ -35,14 +35,10 @@ class UserController {
       password_confirmation: req.body.password_confirmation,
       role_id: req.body.role_id || 2
     })
-      .then((user, err) => {
-        if (err) {
-          res.status(400).json({ error: err.message });
-        } else {
-          const token = jwt.sign({ user },
+      .then((user) => {
+        const token = jwt.sign({ user },
           process.env.SECRET_KEY, { expiresIn: '1h' });
-          res.status(201).json({ user, token });
-        }
+        res.status(201).json({ user, token });
       })
       .catch((err) => {
         res.status(400).json({ error: err.message });
@@ -84,24 +80,24 @@ class UserController {
           id: req.decoded.id
         }
       })
-      .then((user) => {
-        if (user) {
-          user.name = req.body.name;
-          user.password = req.body.password;
-          user.password_confirmation = req.body.password_confirmation;
-          user.save()
-            .then((err) => {
-              if (err) {
-                return res.status(500).json({ error: err.message });
-              }
+        .then((user) => {
+          if (user) {
+            user.name = req.body.name;
+            user.password = req.body.password;
+            user.password_confirmation = req.body.password_confirmation;
+            user.save()
+              .then((err) => {
+                if (err) {
+                  return res.status(500).json({ error: err.message });
+                }
                 //  "User Information Updated"
-              return res.status(200).json(req.body);
-            })
-            .catch((err) => {
-              res.status(500).json({ error: err.message });
-            });
-        }
-      });
+                return res.status(200).json(req.body);
+              })
+              .catch((err) => {
+                res.status(500).json({ error: err.message });
+              });
+          }
+        });
     }
   }
 
@@ -111,12 +107,11 @@ class UserController {
         id: req.params.id
       }
     })
-      .then((user, err) => {
-        if (err) {
-          res.status(500).json({ error: err.message });
-        } else {
-          res.status(200, 'User Deleted').json(user);
-        }
+      .then((user) => {
+        res.status(200, 'User Deleted').json(user);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
       });
   }
 
@@ -129,12 +124,12 @@ class UserController {
           }
         }
       })
-      .then((users) => {
-        res.status(200).json(users);
-      })
-      .catch((err) => {
-        res.status(500).json({ error: err.message });
-      });
+        .then((users) => {
+          res.status(200).json(users);
+        })
+        .catch((err) => {
+          res.status(500).json({ error: err.message });
+        });
     } else {
       res.status(500).json({ error: 'Search query not found' });
     }
