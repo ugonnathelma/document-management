@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Document, Role } from '../models/index';
+import { Document, Role, sequelize } from '../models/index';
 
 const PAGE_LIMIT = 10;
 const PAGE_OFFSET = 0;
@@ -29,7 +29,7 @@ const DocumentController = {
   },
   getDocuments: (req, res) => {
     const orderDirection = req.query.order || 'DESC';
-    let queryParams = {
+    const queryParams = {
       limit: req.query.limit || PAGE_LIMIT,
       offset: req.query.offset || PAGE_OFFSET,
       order: [['publish_date', orderDirection]]
@@ -40,29 +40,26 @@ const DocumentController = {
       }
     })
       .then((role) => {
-        if (role.title === 'admin' && req.query.role_id) {
-          queryParams = Object.assign({}, queryParams, {
-            where: {
-              role_id: req.query.role_id
-            }
+        if (role.title === 'admin') {
+          Document.findAndCountAll(queryParams)
+          .then((result) => {
+            return res.status(200).json(result.rows.length ? { documents: result.rows, pageCount: result.count } : { documents: [], pageCount: 0 });
           });
-        }
-        Document.all(queryParams)
-          .then((documents) => {
-            // eslint-disable-next-line arrow-body-style
-            const returnDocuments = documents.filter((document) => {
-              return (role.title === 'admin' ||
-                document.access === 'public' ||
-                (document.access === 'role'
-                  && document.role_id === req.decoded.role_id)
-                || (document.access === 'private'
-                  && document.user_id === req.decoded.id));
+        } else {
+          sequelize.query(`SELECT *, COUNT(*) OVER () FROM "Documents"
+            WHERE access = 'public'
+            OR (access = 'role' AND role_id = ${role.id})
+            OR (access = 'private' AND user_id = ${req.decoded.id})
+            ORDER BY publish_date ${orderDirection}
+            LIMIT ${queryParams.limit} OFFSET ${queryParams.offset};`,
+            { type: sequelize.QueryTypes.SELECT }
+            )
+            .then((results) => {
+              const pageCount = Math.ceil(results[0].count / queryParams.limit);
+              console.log(results.length, pageCount, 'number of results');
+              return res.status(200).json(results.length ? { documents: results, pageCount } : { documents: [], pageCount: 0 });
             });
-            return res.status(200).json(returnDocuments.length ? returnDocuments : []);
-          })
-          .catch((err) => {
-            res.status(500).json({ error: err.message });
-          });
+        }
       });
   },
   findDocument: (req, res) => {

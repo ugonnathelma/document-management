@@ -12,5 +12,7 @@ export default keymirror({
   DOCUMENT_CREATE_FAILED: null,
   VIEW_DOCUMENT: null,
   DOCUMENT_DELETED: null,
-  DOCUMENT_DELETION_FAILED: null
+  DOCUMENT_DELETION_FAILED: null,
+  PAGINATED_DOCUMENTS: null,
+  CLEAR_ALL: null
 });

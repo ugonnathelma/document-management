@@ -1,5 +1,4 @@
 import axios from 'axios';
-import jwtDecode from 'jwt-decode';
 import actionTypes from '../actions/actionTypes';
 
 export default function viewAllDocumentsAction(token) {
@@ -12,8 +11,9 @@ export default function viewAllDocumentsAction(token) {
       .then((response) => {
         console.log(response);
         dispatch({
-          type: actionTypes.ALL_DOCUMENTS,
-          documents: response.data
+          type: actionTypes.PAGINATED_DOCUMENTS,
+          documents: response.data.documents,
+          pageCount: response.data.pageCount
         });
       }).catch((err) => {
         dispatch({

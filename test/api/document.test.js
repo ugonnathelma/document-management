@@ -187,7 +187,7 @@ describe('Document', () => {
         .query({ limit: 3 })
         .set('authorization', `token ${adminToken}`)
         .end((err, res) => {
-          expect(res.body).to.have.lengthOf(3);
+          expect(res.body.documents).to.have.lengthOf(3);
           expect(res.statusCode).to.equal(200);
           done();
         });
@@ -203,9 +203,9 @@ describe('Document', () => {
       .query({ limit: 2, offset: 2 })
       .set('authorization', `token ${adminToken}`)
       .end((err, res) => {
-        expect(res.body).to.have.lengthOf(2);
-        expect(moment(res.body[0].publish_date).isBefore(res.body[1].publish_date)).to.equal(false);
-        expect(moment(res.body[1].publish_date).isBefore(res.body[0].publish_date)).to.equal(true);
+        expect(res.body.documents).to.have.lengthOf(2);
+        expect(moment(res.body.documents[0].publish_date).isBefore(res.body.documents[1].publish_date)).to.equal(false);
+        expect(moment(res.body.documents[1].publish_date).isBefore(res.body.documents[0].publish_date)).to.equal(true);
         expect(res.statusCode).to.equal(200);
         done();
       });
