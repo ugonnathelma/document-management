@@ -4,9 +4,10 @@ import actionTypes from './actionTypes';
 
 export default function loginAction() {
   return function (dispatch) {
-     dispatch({
-       type: actionTypes.CLEAR_ALL,
-     });
+    dispatch({
+      type: actionTypes.CLEAR_ALL,
+      documents: []
+    });
   };
 }
 

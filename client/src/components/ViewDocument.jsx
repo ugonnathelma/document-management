@@ -30,7 +30,9 @@ class ViewDocument extends Component {
         {(this.props.document) ?
           <div className="col s12 workspace ">
             <div className="row workspace-header"><h4>{ this.props.document.title || ''}</h4></div>
-            <div>{ this.props.document.content || '' }</div>
+            <div className="col s8 doc_list panel">
+              <div>{ this.props.document.content || '' }</div>
+            </div>
           </div>
           :
           <div>
