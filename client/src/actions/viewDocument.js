@@ -10,7 +10,6 @@ export default function viewDocumentAction(token, documentid) {
       }
     })
       .then((response) => {
-        console.log(response, 'response');
         dispatch({
           type: actionTypes.VIEW_DOCUMENT,
           document: response.data

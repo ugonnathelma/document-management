@@ -1,16 +1,17 @@
 import axios from 'axios';
-import actionTypes from '../actions/actionTypes';
+import actionTypes from './actionTypes';
 
-export default function paginateDocumentAction(token, offset, limit) {
+export default function searchDocumentAction(token, documentName) {
   return function (dispatch) {
-    return axios.get(`/api/v1/documents?limit=${limit}&offset=${offset}`, {
+    return axios.get(`/api/v1/search/documents?query=${documentName}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
       .then((response) => {
+        console.log(response);
         dispatch({
-          type: actionTypes.PAGINATED_DOCUMENTS,
+          type: actionTypes.FIND_DOCUMENT,
           documents: response.data.documents,
           pageCount: response.data.pageCount
         });
@@ -23,4 +24,3 @@ export default function paginateDocumentAction(token, offset, limit) {
       });
   };
 }
-

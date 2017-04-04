@@ -1,22 +1,22 @@
 import axios from 'axios';
 import actionTypes from '../actions/actionTypes';
 
-export default function paginateDocumentAction(token, offset, limit) {
+export default function viewAllUsersAction(token) {
   return function (dispatch) {
-    return axios.get(`/api/v1/documents?limit=${limit}&offset=${offset}`, {
+    return axios.get('/api/v1/users', {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
       .then((response) => {
         dispatch({
-          type: actionTypes.PAGINATED_DOCUMENTS,
-          documents: response.data.documents,
+          type: actionTypes.PAGINATED_USERS,
+          users: response.data.documents,
           pageCount: response.data.pageCount
         });
       }).catch((err) => {
         dispatch({
-          type: actionTypes.DOCUMENT_RETRIEVAL_FAILED,
+          type: actionTypes.USER_RETRIEVAL_FAILED,
           status: 'failed',
           error: err.message
         });

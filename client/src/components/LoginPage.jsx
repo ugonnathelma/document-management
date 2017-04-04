@@ -28,7 +28,7 @@ class LoginPage extends Component {
       .then(() => {
         const decodedRole = jwtDecode(window.localStorage.getItem('token'))
           .user.role_id;
-        if (decodedRole === 1) { browserHistory.push('/admin/dashboard'); } else {
+        if (decodedRole === 1) { browserHistory.push('/admindashboard'); } else {
           browserHistory.push('/dashboard');
         }
       });
@@ -38,7 +38,7 @@ class LoginPage extends Component {
     if (window.localStorage.getItem('token')) {
       const decodedRole = jwtDecode(window.localStorage.getItem('token'))
         .user.role_id;
-      if (decodedRole === 1) { browserHistory.push('/admin/dashboard'); } else {
+      if (decodedRole === 1) { browserHistory.push('/admindashboard'); } else {
         browserHistory.push('/dashboard');
       }
     }

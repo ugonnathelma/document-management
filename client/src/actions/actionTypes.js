@@ -14,5 +14,6 @@ export default keymirror({
   DOCUMENT_DELETED: null,
   DOCUMENT_DELETION_FAILED: null,
   PAGINATED_DOCUMENTS: null,
-  CLEAR_ALL: null
+  CLEAR_ALL: null,
+  FIND_DOCUMENT: null
 });

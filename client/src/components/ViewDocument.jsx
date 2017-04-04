@@ -52,7 +52,6 @@ ViewDocument.propTypes = {
 };
 
 const mapStoreToProps = (state, ownProps) => {
-  console.log(state);
   return {
     document: state.viewDocumentReducer.document
   };
