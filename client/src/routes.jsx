@@ -6,8 +6,6 @@ import AdminDashBoard from './components/AdminDashBoard.jsx';
 import UserDashBoard from './components/UserDashBoard.jsx';
 import CreateDocument from './components/CreateDocument.jsx';
 import EditDocument from './components/EditDocument.jsx';
-import SharedDocuments from './components/SharedDocuments.jsx';
-import SearchDocuments from './components/SearchDocuments.jsx';
 import ViewDocument from './components/ViewDocument.jsx';
 
 export default(
@@ -16,9 +14,7 @@ export default(
     <Route path="/login" component={LoginPage} />
     <Route path="/register" component={SignUpPage} />
     <Route path="/dashboard" component={UserDashBoard} />
-    <Route path="/admin/dashboard" component={AdminDashBoard} />
-    <Route path="/shared-documents" component={SharedDocuments} />
-    <Route path="/search-documents" component={SearchDocuments} />
+    <Route path="/admindashboard" component={UserDashBoard} />
     <Route path="/create-document" component={CreateDocument} />
     <Route path="/edit-document/:id" component={EditDocument} />
     <Route path="/view-document/:id" component={ViewDocument} />

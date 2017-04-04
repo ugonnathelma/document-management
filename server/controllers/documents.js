@@ -43,7 +43,11 @@ const DocumentController = {
         if (role.title === 'admin') {
           Document.findAndCountAll(queryParams)
           .then((result) => {
-            return res.status(200).json(result.rows.length ? { documents: result.rows, pageCount: result.count } : { documents: [], pageCount: 0 });
+            return res.status(200)
+            .json(result.rows.length ? {
+              documents: result.rows,
+              pageCount: Math.ceil(result.count / queryParams.limit)
+            } : { documents: [], pageCount: 0 });
           });
         } else {
           sequelize.query(`SELECT *, COUNT(*) OVER () FROM "Documents"
@@ -55,8 +59,9 @@ const DocumentController = {
             { type: sequelize.QueryTypes.SELECT }
             )
             .then((results) => {
-              const pageCount = Math.ceil(results[0].count / queryParams.limit);
-              return res.status(200).json(results.length ? { documents: results, pageCount } : { documents: [], pageCount: 0 });
+              return res.status(200).json(results.length ?
+              { documents: results, pageCount: Math.ceil(results[0].count / queryParams.limit) } :
+              { documents: [], pageCount: 0 });
             });
         }
       });
@@ -76,7 +81,8 @@ const DocumentController = {
         };
         Document.findOne(queryParams).then((document) => {
           if (role.title === 'admin' || document.access === 'public' ||
-            (document.access === 'role' && document.role_id === req.decoded.role_id
+            (document.access === 'role' && document.role_id ===
+            req.decoded.role_id
             ) || (document.access === 'private'
               && document.user_id === req.decoded.id)
           ) {
@@ -135,27 +141,46 @@ const DocumentController = {
       });
   },
   searchDocuments: (req, res) => {
-    if (req.query.query) {
-      Document.findAll({
-        where: {
-          title: {
-            $iLike: `%${req.query.query}%`
-          }
+    const title = req.query.query;
+    const orderDirection = req.query.order || 'DESC';
+    const queryParams = {
+      limit: req.query.limit || PAGE_LIMIT,
+      offset: req.query.offset || PAGE_OFFSET,
+      order: [['publish_date', orderDirection]]
+    };
+    Role.find({
+      where: {
+        id: req.decoded.role_id
+      }
+    })
+      .then((role) => {
+        if (role.title === 'admin') {
+          Document.findAndCountAll(Object.assign({}, { where: { title: { $iLike: `%${title}%` } } }, queryParams))
+          .then((result) => {
+            return res.status(200)
+            .json(result.rows.length ? {
+              documents: result.rows,
+              pageCount: Math.ceil(result.count / queryParams.limit)
+            } : { documents: [], pageCount: 0 });
+          });
+        } else {
+          sequelize.query(`SELECT *, COUNT(*) OVER () FROM "Documents"
+            WHERE title ILIKE '%${title}%'
+            AND (access = 'public'
+            OR (access = 'role' AND role_id = ${role.id})
+            OR (access = 'private' AND user_id = ${req.decoded.id}))
+            ORDER BY publish_date ${orderDirection}
+            LIMIT ${queryParams.limit} OFFSET ${queryParams.offset};`,
+            { type: sequelize.QueryTypes.SELECT }
+            )
+            .then((results) => {
+              return res.status(200).json(results.length ?
+              { documents: results, pageCount: Math.ceil(results[0].count / queryParams.limit) } :
+              { documents: [], pageCount: 0 });
+            });
         }
-      })
-        .then((documents) => {
-          documents = req.query.publish_date ? documents.filter((document) => {
-            return moment(document.publish_date).diff(req.query.publish_date, 'days') === 0;
-          }) : documents;
-          res.status(200).json(documents);
-        })
-        .catch((err) => {
-          res.status(500).json({ error: err.message });
-        });
-    } else {
-      res.status(500).json({ error: 'Search query not found' });
-    }
-  }
+      });
+  },
 };
 
 module.exports = DocumentController;

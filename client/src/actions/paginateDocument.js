@@ -11,7 +11,8 @@ export default function paginateDocumentAction(token, offset, limit) {
       .then((response) => {
         dispatch({
           type: actionTypes.PAGINATED_DOCUMENTS,
-          documents: response.data
+          documents: response.data.documents,
+          pageCount: response.data.pageCount
         });
       }).catch((err) => {
         dispatch({

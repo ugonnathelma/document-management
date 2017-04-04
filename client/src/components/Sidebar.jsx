@@ -25,7 +25,6 @@ export default class Sidebar extends Component {
               <p className="col s10 action_desc">Create A Document</p>
               </Link>
           </li>
-          </li>
         </ul>
 
       </div >

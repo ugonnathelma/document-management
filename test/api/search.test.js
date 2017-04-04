@@ -63,7 +63,7 @@ describe('Search', () => {
       .query({ query: testDocuments[0].title })
       .set('authorization', `token ${adminToken}`)
       .end((err, res) => {
-        expect(res.body[0].content).to.equal(testDocuments[0].content);
+        expect(res.body.documents[0].content).to.equal(testDocuments[0].content);
         expect(res.statusCode).to.equal(200);
         done();
       });
@@ -79,9 +79,9 @@ describe('Search', () => {
       .query({ query: 'document', publish_date: new Date(), limit: 1 })
       .set('authorization', `token ${adminToken}`)
       .end((err, res) => {
-        expect(res.body[0].title).to.equal(testDocuments[4].title);
-        expect(res.body[0].content).to.equal(testDocuments[4].content);
-        expect(res.body).to.have.lengthOf(1);
+        expect(res.body.documents[0].title).to.equal(testDocuments[4].title);
+        expect(res.body.documents[0].content).to.equal(testDocuments[4].content);
+        expect(res.body.documents).to.have.lengthOf(1);
         expect(res.statusCode).to.equal(200);
         done();
       });
