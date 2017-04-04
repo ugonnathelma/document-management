@@ -13,16 +13,7 @@ export default class Sidebar extends Component {
               <center className="circle useractions">
                 <i className="material-icons">view_list</i></center>
             </div>
-              <p className="col s10 action_desc">All Your Documents</p>
-            </Link>
-          </li>
-          <li>
-            <Link to="/shared-documents" className="col s12 menu_link">
-              <div className="col s2">
-                <center className="circle useractions">
-                  <i className="material-icons">call_split</i></center>
-              </div>
-              <p className="col s10 action_desc ">Shared with you</p>
+              <p className="col s10 action_desc">All Documents</p>
             </Link>
           </li>
           <li>
@@ -34,14 +25,6 @@ export default class Sidebar extends Component {
               <p className="col s10 action_desc">Create A Document</p>
               </Link>
           </li>
-          <li>
-            <Link to="/search-documents" className="col s12 menu_link">
-              <div className="col s2">
-                <center className="circle useractions">
-                  <i className="material-icons">search</i></center>
-              </div>
-              <p className="col s10 action_desc">Search for Document(s)</p>
-            </Link>
           </li>
         </ul>
 

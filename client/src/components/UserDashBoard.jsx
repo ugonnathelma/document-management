@@ -47,7 +47,7 @@ class ViewAllDocuments extends Component {
         <Header />
         <Sidebar />
         <div className="col s12 workspace ">
-          <div className="row workspace-header"><h4 className="col s8">All Your Documents</h4><div className="col s4">
+          <div className="row workspace-header"><h4 className="col s8">All Documents</h4><div className="col s4">
             <input
               className="col s10"
               type="text"
