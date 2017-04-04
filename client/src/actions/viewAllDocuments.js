@@ -9,7 +9,6 @@ export default function viewAllDocumentsAction(token) {
       }
     })
       .then((response) => {
-        console.log(response);
         dispatch({
           type: actionTypes.PAGINATED_DOCUMENTS,
           documents: response.data.documents,

@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import SignUpPage from './components/SignUpPage.jsx';
 import LoginPage from './components/LoginPage.jsx';
-import UserProfile from './components/UserProfile.jsx';
 import AdminDashBoard from './components/AdminDashBoard.jsx';
 import UserDashBoard from './components/UserDashBoard.jsx';
 import CreateDocument from './components/CreateDocument.jsx';
@@ -23,6 +22,5 @@ export default(
     <Route path="/create-document" component={CreateDocument} />
     <Route path="/edit-document/:id" component={EditDocument} />
     <Route path="/view-document/:id" component={ViewDocument} />
-    <Route path="/profile" component={UserProfile} />
   </Route>
 );

@@ -42,7 +42,7 @@ class Header extends Component {
             <div className="nav-wrapper">
               <Link to="/" className="brand-logo"><img src={logoName} alt="logo" /></Link>
               <ul id="loggedinNav">
-                <li> <a href="/profile">{this.state.username}</a></li>
+                <li>{this.state.username}</li>
                 <li><a onClick={this.logout}>Sign Out</a></li>
               </ul>
               <ul id="nav-mobile" className="right hide-on-med-and-down">

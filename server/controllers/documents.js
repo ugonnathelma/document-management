@@ -56,14 +56,12 @@ const DocumentController = {
             )
             .then((results) => {
               const pageCount = Math.ceil(results[0].count / queryParams.limit);
-              console.log(results.length, pageCount, 'number of results');
               return res.status(200).json(results.length ? { documents: results, pageCount } : { documents: [], pageCount: 0 });
             });
         }
       });
   },
   findDocument: (req, res) => {
-    console.log(req.params.id, 'param id');
     let queryParams = {};
     Role.find({
       where: {
@@ -106,7 +104,6 @@ const DocumentController = {
               res.status(200).json(req.body);
             })
             .catch((err) => {
-              console.log(err);
               res.status(500).json({ error: err.message });
             });
         }

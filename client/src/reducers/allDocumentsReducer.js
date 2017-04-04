@@ -7,6 +7,8 @@ export default function allDocumentsReducer(state = initialState, action) {
       return { ...state, documents: action.documents };
     case actionTypes.PAGINATED_DOCUMENTS:
       return { ...state, documents: action.documents.documents, pageCount: action.documents.pageCount };
+    case actionTypes.FIND_DOCUMENT:
+      return { ...state, documents: action.documents, pageCount: action.documents.pageCount };
     case actionTypes.DOCUMENT_RETRIEVAL_FAILED:
       return [...state, Object.assign({}, action.status)];
     case actionTypes.DOCUMENT_DELETED:
