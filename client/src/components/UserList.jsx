@@ -28,7 +28,7 @@ const UserList = ({ users, userid, deleteUser, saveUserRole, roles, updateUserRo
                 { user.role_id !== 1 ?
                   <select
                     className="userRoleSelect browser-default"
-                    onChange={event => updateUserRole(event.target.value, user.role_id)}
+                    onChange={event => updateUserRole(event.target.value, user.id)}
                   >
                     {roles.map(role =>
                       <option key={role.id} value={role.id} selected={user.role_id === role.id}>{role.title}</option>

@@ -18,7 +18,8 @@ const UserController = {
           if (same) {
             res.status(200).json({ success: same, token });
           } else {
-            res.status(500).json({ error: 'Email and Password combination not correct' });
+            res.status(500)
+            .json({ error: 'Email and Password combination not correct' });
           }
         });
       })
@@ -79,7 +80,7 @@ const UserController = {
     if (req.decoded) {
       User.find({
         where: {
-          id: req.decoded.id
+          id: req.params.id
         }
       })
         .then((user) => {
@@ -87,17 +88,14 @@ const UserController = {
             const bodyKeys = Object.keys(req.body);
 
             bodyKeys.forEach((key) => {
-              if (req.body[key] && key !== 'password' && key !== 'password_confirmation') {
+              if (req.body[key] && key !== 'password' && key
+              !== 'password_confirmation') {
                 user[key] = req.body[key];
               }
             });
 
             user.save()
-              .then((err) => {
-                if (err) {
-                  return res.status(500).json({ error: err.message });
-                }
-                //  "User Information Updated"
+              .then(() => {
                 return res.status(200).json(req.body);
               })
               .catch((err) => {

@@ -19,9 +19,13 @@ export default keymirror({
   PAGINATED_USERS: null,
   USER_RETRIEVAL_FAILED: null,
   USER_UPDATED: null,
+  USER_UPDATE_FAILED: null,
   FIND_USER: null,
   USER_DELETED: null,
   ALL_ROLES: null,
   FIND_ROLE: null,
-  ROLE_RETRIEVAL_FAILED: null
+  ROLE_RETRIEVAL_FAILED: null,
+  ROLE_CREATED: null,
+  ROLE_DELETED: null,
+  ROLE_DELETION_FAILED: null
 });

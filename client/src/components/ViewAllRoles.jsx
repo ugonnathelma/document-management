@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { browserHistory, Link } from 'react-router';
-import { Pagination } from 'react-materialize';
 import jwtDecode from 'jwt-decode';
 import React, { Component } from 'react';
 import Header from './Header.jsx';
@@ -8,8 +7,6 @@ import Sidebar from './Sidebar.jsx';
 import RoleList from '../components/RoleList.jsx';
 import viewAllRolesAction from '../actions/roleManagement/viewAllRoles.js';
 import deleteRoleAction from '../actions/roleManagement/deleteRole.js';
-import paginateRoleAction from '../actions/roleManagement/paginateRole.js';
-import searchRoleAction from '../actions/roleManagement/searchRole.js';
 
 class ViewAllRoles extends Component {
   constructor(props) {
@@ -28,7 +25,7 @@ class ViewAllRoles extends Component {
     if (this.state.token) {
       this.setState({ userid: jwtDecode(this.state.token).user.id });
       const offset = 0;
-      this.props.paginateRoles(this.state.token, offset, this.state.limit);
+      this.props.viewRoles(this.state.token);
     }
   }
   handleChange(event) {
@@ -53,27 +50,13 @@ class ViewAllRoles extends Component {
         <Header />
         <Sidebar />
         <div className="col s12 workspace ">
-          <div className="row workspace-header"><h4 className="col s8">All Users</h4><div className="col s4">
-            <input
-              className="col s10"
-              type="text"
-              id="searchTerms"
-              name="searchTerms"
-              placeholder="Search..."
-              onChange={this.handleChange}
-            /><button className="btn col s2" onClick={this.searchRole}><i className="material-icons">search</i></button></div></div>
-            <div className="col m10"></div><div className="col m2"><Link onClick={this.refreshRoles}><i className="material-icons  refresh-list-btn">settings_backup_restore</i></Link></div>
-          <RoleList deleteRole={this.props.deleteRole} userid={this.state.userid} roles={this.props.paginated || this.props.roles} />
-          <center>
-            <Pagination
-              items={this.props.pageCount}
-              onSelect={(page) => {
-                const token = window.localStorage.getItem('token');
-                const offset = (page - 1) * this.state.limit;
-                this.props.paginateRoles(token, offset, this.state.limit);
-              }}
-            />
-          </center>
+          <div className="row workspace-header">
+            <h4 className="col s8">All Roles</h4></div>
+          <RoleList
+            deleteRole={this.props.deleteRole}
+            roles={this.props.roles || []}
+            token={this.state.token}
+          />
         </div>
       </div>
     );
@@ -97,9 +80,7 @@ const mapStoreToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteRole: (usertoken, roleid) => dispatch(deleteRoleAction(usertoken, roleid)),
-    viewRoles: usertoken => dispatch(viewAllRolesAction(usertoken)),
-    paginateRoles: (usertoken, offset, limit) => dispatch(paginateRoleAction(usertoken, offset, limit)),
-    searchRole: (usertoken, roleName) => dispatch(searchRoleAction(usertoken, roleName))
+    viewRoles: usertoken => dispatch(viewAllRolesAction(usertoken))
   };
 };
 

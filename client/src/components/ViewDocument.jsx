@@ -30,7 +30,7 @@ class ViewDocument extends Component {
         {(this.props.document) ?
           <div className="col s12 workspace ">
             <div className="row workspace-header"><h4>{ this.props.document.title || ''}</h4></div>
-            <div className="col s8 doc_list panel">
+            <div className="doc_list z-depth-4 panel doc_content">
               <div>{ this.props.document.content || '' }</div>
             </div>
           </div>
@@ -47,7 +47,6 @@ class ViewDocument extends Component {
 
 
 ViewDocument.propTypes = {
-  document: PropTypes.object.isRequired,
   viewDocument: PropTypes.func
 };
 

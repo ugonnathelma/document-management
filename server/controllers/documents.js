@@ -1,5 +1,4 @@
-import moment from 'moment';
-import { Document, Role, sequelize } from '../models/index';
+import { Document, Role, sequelize, User } from '../models/index';
 
 const PAGE_LIMIT = 10;
 const PAGE_OFFSET = 0;
@@ -105,6 +104,11 @@ const DocumentController = {
           document.title = req.body.title;
           document.content = req.body.content;
           document.access = req.body.access;
+          if (document.access === 'role') {
+            User.findOne({ where: { id: document.user_id } }).then((user) => {
+              document.role_id = user.role_id;
+            });
+          }
           document.save()
             .then(() => {
               res.status(200).json(req.body);
