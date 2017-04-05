@@ -11,7 +11,7 @@ export default function viewAllUsersAction(token) {
       .then((response) => {
         dispatch({
           type: actionTypes.PAGINATED_USERS,
-          users: response.data.documents,
+          users: response.data.users,
           pageCount: response.data.pageCount
         });
       }).catch((err) => {

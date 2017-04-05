@@ -6,7 +6,6 @@ import React, { Component } from 'react';
 import Header from './Header.jsx';
 import Sidebar from './Sidebar.jsx';
 import DocumentList from '../components/DocumentList.jsx';
-import viewAllDocumentsAction from '../actions/viewAllDocuments.js';
 import deleteDocumentAction from '../actions/deleteDocument.js';
 import paginateDocumentAction from '../actions/paginateDocument.js';
 import searchDocumentAction from '../actions/searchDocument.js';

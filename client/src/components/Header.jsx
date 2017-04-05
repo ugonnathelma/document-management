@@ -17,7 +17,6 @@ class Header extends Component {
       this.state = { username: jwtDecode(token).user.username };
       this.logout = this.logout.bind(this);
     }
-    console.log(this.props);
   }
 
   logout() {

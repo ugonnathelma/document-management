@@ -9,7 +9,6 @@ export default function searchDocumentAction(token, documentName) {
       }
     })
       .then((response) => {
-        console.log(response);
         dispatch({
           type: actionTypes.FIND_DOCUMENT,
           documents: response.data.documents,
