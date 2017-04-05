@@ -1,5 +1,7 @@
 import axios from 'axios';
+import { browserHistory } from 'react-router';
 import actionTypes from '../actionTypes';
+
 
 export default function editUserAction(token, userData, userid) {
   return function (dispatch) {
@@ -8,11 +10,11 @@ export default function editUserAction(token, userData, userid) {
         Authorization: `Bearer ${token}`
       }
     })
-      .then((response) => {
+      .then(() => {
         dispatch({
-          type: actionTypes.USER_UPDATED,
-          document: response.data
+          type: actionTypes.USER_UPDATED
         });
+        browserHistory.push('/users');
       }).catch((err) => {
         dispatch({
           type: actionTypes.USER_UPDATE_FAILED,

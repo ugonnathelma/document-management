@@ -27,5 +27,6 @@ export default keymirror({
   ROLE_RETRIEVAL_FAILED: null,
   ROLE_CREATED: null,
   ROLE_DELETED: null,
-  ROLE_DELETION_FAILED: null
+  ROLE_DELETION_FAILED: null,
+  ROLE_CREATE_FAILED: null
 });

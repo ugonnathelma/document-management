@@ -16,7 +16,7 @@ export default function deleteUserAction(userid) {
           userid,
           status: 'success'
         });
-        browserHistory.push('/');
+        browserHistory.push('/users');
       }).catch((err) => {
         dispatch({
           type: actionTypes.USER_DELETION_FAILED,

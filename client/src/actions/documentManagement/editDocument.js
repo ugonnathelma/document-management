@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 import actionTypes from '../actionTypes';
-export const documentCreated = document => ({ type: 'DOCUMENT_CREATED', document });
 
 export default function editDocumentAction(details, token, documentid) {
   return function (dispatch) {
@@ -20,7 +19,6 @@ export default function editDocumentAction(details, token, documentid) {
       }).catch((err) => {
         dispatch({
           type: actionTypes.DOCUMENT_UPDATE_FAILED,
-          document,
           status: 'failed',
           error: err.message
         });

@@ -11,7 +11,7 @@ export default function allRolesReducer(state = initialState, action) {
       return {
         ...state,
         roles: state.roles.filter((role) => {
-          return role.id !== action.roleid;
+          return role.id !== action.roleId;
         })
       };
     case actionTypes.CLEAR_ALL:

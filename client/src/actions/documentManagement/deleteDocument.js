@@ -13,14 +13,12 @@ export default function deleteDocumentAction(documentid) {
       .then(() => {
         dispatch({
           type: actionTypes.DOCUMENT_DELETED,
-          documentid,
           status: 'success'
         });
         browserHistory.push('/');
       }).catch((err) => {
         dispatch({
           type: actionTypes.DOCUMENT_DELETION_FAILED,
-          document,
           status: 'failed',
           error: err.message
         });

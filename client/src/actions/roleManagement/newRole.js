@@ -16,7 +16,7 @@ export default function createRoleAction(details) {
           role,
           status: 'success'
         });
-        browserHistory.push('/');
+        browserHistory.push('/roles');
       }).catch((err) => {
         dispatch({
           type: actionTypes.ROLE_CREATE_FAILED,

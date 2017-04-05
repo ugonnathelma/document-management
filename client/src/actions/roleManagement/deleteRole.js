@@ -12,9 +12,9 @@ export default function deleteRoleAction(token, roleId) {
       .then(() => {
         dispatch({
           type: actionTypes.ROLE_DELETED,
+          roleId,
           status: 'success'
         });
-        browserHistory.push('/');
       }).catch((err) => {
         dispatch({
           type: actionTypes.ROLE_DELETION_FAILED,
