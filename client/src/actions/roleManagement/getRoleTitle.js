@@ -1,9 +1,10 @@
 import axios from 'axios';
-import actionTypes from './actionTypes';
+import actionTypes from '../actionTypes';
 
-export default function searchRoleAction(token, roleName) {
+export default function getRoleTitleAction(roleid) {
+  const token = window.localStorage.getItem('token');
   return function (dispatch) {
-    return axios.get(`/api/v1/search/roles?query=${roleName}`, {
+    return axios.get(`/api/v1/roles/${roleid}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -11,8 +12,7 @@ export default function searchRoleAction(token, roleName) {
       .then((response) => {
         dispatch({
           type: actionTypes.FIND_ROLE,
-          roles: response.data.roles,
-          pageCount: response.data.pageCount
+          roles: response.data.roles
         });
       }).catch((err) => {
         dispatch({

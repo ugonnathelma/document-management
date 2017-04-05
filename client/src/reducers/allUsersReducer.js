@@ -9,6 +9,8 @@ export default function allUsersReducer(state = initialState, action) {
       return { ...state, users: action.users, pageCount: action.pageCount };
     case actionTypes.USER_RETRIEVAL_FAILED:
       return [...state, Object.assign({}, action.status)];
+    case actionTypes.USER_UPDATED:
+      return [...state, Object.assign({}, action.status)];
     case actionTypes.USER_DELETED:
       return {
         ...state,

@@ -1,18 +1,18 @@
 import axios from 'axios';
-import actionTypes from '../actions/actionTypes';
+import jwtDecode from 'jwt-decode';
+import actionTypes from '../actionTypes';
 
-export default function viewAllDocumentsAction(token) {
+export default function viewDocumentAction(token, documentid) {
   return function (dispatch) {
-    return axios.get('/api/v1/documents', {
+    return axios.get(`/api/v1/documents/${documentid}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
       .then((response) => {
         dispatch({
-          type: actionTypes.PAGINATED_DOCUMENTS,
-          documents: response.data.documents,
-          pageCount: response.data.pageCount
+          type: actionTypes.VIEW_DOCUMENT,
+          document: response.data
         });
       }).catch((err) => {
         dispatch({

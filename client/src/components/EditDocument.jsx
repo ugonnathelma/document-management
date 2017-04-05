@@ -4,9 +4,9 @@ import { browserHistory } from 'react-router';
 import React, { Component, PropTypes } from 'react';
 import Header from './Header.jsx';
 import Sidebar from './Sidebar.jsx';
-import viewDocument from '../actions/viewDocument.js';
-import checkTokenAction from '../actions/checkToken.js';
-import editDocument from '../actions/editDocument.js';
+import viewDocument from '../actions/documentManagement/viewDocument.js';
+import checkTokenAction from '../actions/authorizationManagement/checkToken.js';
+import editDocument from '../actions/documentManagement/editDocument.js';
 
 
 

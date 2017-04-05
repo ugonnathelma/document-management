@@ -6,10 +6,10 @@ import React, { Component } from 'react';
 import Header from './Header.jsx';
 import Sidebar from './Sidebar.jsx';
 import RoleList from '../components/RoleList.jsx';
-import viewAllRolesAction from '../actions/viewAllRoles.js';
-import deleteRoleAction from '../actions/deleteRole.js';
-import paginateRoleAction from '../actions/paginateRole.js';
-import searchRoleAction from '../actions/searchRole.js';
+import viewAllRolesAction from '../actions/roleManagement/viewAllRoles.js';
+import deleteRoleAction from '../actions/roleManagement/deleteRole.js';
+import paginateRoleAction from '../actions/roleManagement/paginateRole.js';
+import searchRoleAction from '../actions/roleManagement/searchRole.js';
 
 class ViewAllRoles extends Component {
   constructor(props) {

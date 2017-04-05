@@ -4,7 +4,7 @@ import jwtDecode from 'jwt-decode';
 import React, { Component, PropTypes } from 'react';
 import Header from './Header.jsx';
 import Sidebar from './Sidebar.jsx';
-import viewDocumentAction from '../actions/viewDocument.js';
+import viewDocumentAction from '../actions/documentManagement/viewDocument.js';
 
 class ViewDocument extends Component {
   constructor(props) {

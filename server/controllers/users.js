@@ -84,9 +84,14 @@ const UserController = {
       })
         .then((user) => {
           if (user) {
-            user.name = req.body.name;
-            user.password = req.body.password;
-            user.password_confirmation = req.body.password_confirmation;
+            const bodyKeys = Object.keys(req.body);
+
+            bodyKeys.forEach((key) => {
+              if (req.body[key] && key !== 'password' && key !== 'password_confirmation') {
+                user[key] = req.body[key];
+              }
+            });
+
             user.save()
               .then((err) => {
                 if (err) {

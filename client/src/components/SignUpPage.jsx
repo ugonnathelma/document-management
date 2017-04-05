@@ -1,6 +1,6 @@
 import { browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
-import signupAction from '../actions/signUpAction';
+import signupAction from '../actions/authorizationManagement/signUpAction';
 import React, { Component } from 'react';
 import Header from '../components/Header.jsx';
 

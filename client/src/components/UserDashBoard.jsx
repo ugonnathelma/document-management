@@ -6,9 +6,9 @@ import React, { Component } from 'react';
 import Header from './Header.jsx';
 import Sidebar from './Sidebar.jsx';
 import DocumentList from '../components/DocumentList.jsx';
-import deleteDocumentAction from '../actions/deleteDocument.js';
-import paginateDocumentAction from '../actions/paginateDocument.js';
-import searchDocumentAction from '../actions/searchDocument.js';
+import deleteDocumentAction from '../actions/documentManagement/deleteDocument.js';
+import paginateDocumentAction from '../actions/documentManagement/paginateDocument.js';
+import searchDocumentAction from '../actions/documentManagement/searchDocument.js';
 
 class ViewAllDocuments extends Component {
   constructor(props) {

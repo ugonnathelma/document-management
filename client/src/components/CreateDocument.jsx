@@ -3,8 +3,8 @@ import { browserHistory } from 'react-router';
 import React, { Component, PropTypes } from 'react';
 import Header from './Header.jsx';
 import Sidebar from './Sidebar.jsx';
-import newDocument from '../actions/newDocument.js';
-import checkTokenAction from '../actions/checkToken.js';
+import newDocument from '../actions/documentManagement/newDocument.js';
+import checkTokenAction from '../actions/authorizationManagement/checkToken.js';
 
 
 const ResponseMessage = (props) => {

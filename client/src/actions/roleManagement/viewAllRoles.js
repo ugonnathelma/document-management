@@ -1,5 +1,5 @@
 import axios from 'axios';
-import actionTypes from '../actions/actionTypes';
+import actionTypes from '../actionTypes';
 
 export default function viewAllRolesAction(token) {
   return function (dispatch) {
@@ -10,8 +10,8 @@ export default function viewAllRolesAction(token) {
     })
       .then((response) => {
         dispatch({
-          type: actionTypes.PAGINATED_ROLES,
-          roles: response.data.roles,
+          type: actionTypes.ALL_ROLES,
+          roles: response.data,
           pageCount: response.data.pageCount
         });
       }).catch((err) => {

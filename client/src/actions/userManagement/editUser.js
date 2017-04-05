@@ -1,22 +1,21 @@
 import axios from 'axios';
-import actionTypes from '../actions/actionTypes';
+import actionTypes from '../actionTypes';
 
-export default function viewAllUsersAction(token) {
+export default function editUserAction(token, userData, userid) {
   return function (dispatch) {
-    return axios.get('/api/v1/users', {
+    return axios.put(`/api/v1/users/${userid}`, userData, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
       .then((response) => {
         dispatch({
-          type: actionTypes.PAGINATED_USERS,
-          users: response.data.users,
-          pageCount: response.data.pageCount
+          type: actionTypes.USER_UPDATED,
+          document: response.data
         });
       }).catch((err) => {
         dispatch({
-          type: actionTypes.USER_RETRIEVAL_FAILED,
+          type: actionTypes.USER_UPDATE_FAILED,
           status: 'failed',
           error: err.message
         });

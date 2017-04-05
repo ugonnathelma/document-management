@@ -1,26 +1,25 @@
 import axios from 'axios';
-import actionTypes from '../actions/actionTypes';
+import actionTypes from '../actionTypes';
 
-export default function paginateRoleAction(token, offset, limit) {
+export default function searchRoleAction(token, roleName) {
   return function (dispatch) {
-    return axios.get(`/api/v1/roles?limit=${limit}&offset=${offset}`, {
+    return axios.get(`/api/v1/search/roles?query=${roleName}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
       .then((response) => {
         dispatch({
-          type: actionTypes.PAGINATED_ROLES,
+          type: actionTypes.FIND_ROLE,
           roles: response.data.roles,
           pageCount: response.data.pageCount
         });
       }).catch((err) => {
         dispatch({
-          type: actionTypes.ROLES_RETRIEVAL_FAILED,
+          type: actionTypes.ROLE_RETRIEVAL_FAILED,
           status: 'failed',
           error: err.message
         });
       });
   };
 }
-

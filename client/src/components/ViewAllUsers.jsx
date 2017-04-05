@@ -6,10 +6,14 @@ import React, { Component } from 'react';
 import Header from './Header.jsx';
 import Sidebar from './Sidebar.jsx';
 import UserList from '../components/UserList.jsx';
-import viewAllUsersAction from '../actions/viewAllUsers.js';
-import deleteUserAction from '../actions/deleteUser.js';
-import paginateUserAction from '../actions/paginateUser.js';
-import searchUserAction from '../actions/searchUser.js';
+import viewAllUsersAction from '../actions/userManagement/viewAllUsers.js';
+import viewAllRolesAction from '../actions/roleManagement/viewAllRoles.js';
+import deleteUserAction from '../actions/userManagement/deleteUser.js';
+import paginateUserAction from '../actions/userManagement/paginateUser.js';
+import searchUserAction from '../actions/userManagement/searchUser.js';
+import editUserRoleAction from '../actions/userManagement/editUser.js';
+
+
 
 class ViewAllUsers extends Component {
   constructor(props) {
@@ -22,6 +26,7 @@ class ViewAllUsers extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.searchUser = this.searchUser.bind(this);
     this.refreshUsers = this.refreshUsers.bind(this);
+    this.updateUserRole = this.updateUserRole.bind(this);
   }
 
   componentWillMount() {
@@ -29,11 +34,16 @@ class ViewAllUsers extends Component {
       this.setState({ userid: jwtDecode(this.state.token).user.id });
       const offset = 0;
       this.props.paginateUsers(this.state.token, offset, this.state.limit);
+      this.props.getRoles(this.state.token);
     }
   }
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
+
+updateUserRole (newRoleId, userId) {
+  this.props.editUserRole(this.state.token, { role_id: newRoleId }, userId);
+}
 
   searchUser() {
     this.props.searchUser(this.state.token, this.state.searchTerms);
@@ -66,11 +76,13 @@ class ViewAllUsers extends Component {
                 <i className="material-icons">search</i></button></div></div>
           <div className="col m10" /><div className="col m2">
             <Link onClick={this.refreshUsers}>
-              <i className="material-icons  refresh-list-btn">
+              <i className="material-icons refresh-list-btn">
                 settings_backup_restore</i></Link></div>
           <UserList
             deleteUser={this.props.deleteUser}
             userid={this.state.userid} users={this.props.users || []}
+            roles={this.props.roles || []}
+            updateUserRole={this.updateUserRole}
           />
           <center>
             <Pagination
@@ -91,14 +103,16 @@ class ViewAllUsers extends Component {
 
 ViewAllUsers.PropTypes = {
   users: React.PropTypes.array.isRequired,
-  paginateUsers: React.PropTypes.func.isRequired
+  paginateUsers: React.PropTypes.func.isRequired,
+  roles: React.PropTypes.array.isRequired
 };
 
 const mapStoreToProps = (state) => {
   return {
     users: state.allUsersReducer.users,
     pageCount: state.allUsersReducer.pageCount,
-    paginated: state.allUsersReducer.paginated
+    paginated: state.allUsersReducer.paginated,
+    roles: state.allRolesReducer.roles
   };
 };
 
@@ -107,7 +121,9 @@ const mapDispatchToProps = (dispatch) => {
     deleteUser: (usertoken, userid) => dispatch(deleteUserAction(usertoken, userid)),
     viewUsers: usertoken => dispatch(viewAllUsersAction(usertoken)),
     paginateUsers: (usertoken, offset, limit) => dispatch(paginateUserAction(usertoken, offset, limit)),
-    searchUser: (usertoken, userNames) => dispatch(searchUserAction(usertoken, userNames))
+    searchUser: (usertoken, userNames) => dispatch(searchUserAction(usertoken, userNames)),
+    editUserRole: (usertoken, userData, userId) => dispatch(editUserRoleAction(usertoken, userData, userId)),
+    getRoles: usertoken => dispatch(viewAllRolesAction(usertoken)),
   };
 };
 

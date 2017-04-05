@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import actionTypes from '../actions/actionTypes';
+import actionTypes from '../actionTypes';
 export const documentCreated = document => ({ type: 'DOCUMENT_CREATED', document });
 const token = window.localStorage.getItem('token');
 
