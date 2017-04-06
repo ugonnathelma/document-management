@@ -108,6 +108,7 @@ ViewAllUsers.PropTypes = {
 };
 
 const mapStoreToProps = (state) => {
+  console.log(state.allUsersReducer.users, 'Users');
   return {
     users: state.allUsersReducer.users,
     pageCount: state.allUsersReducer.pageCount,

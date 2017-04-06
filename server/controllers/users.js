@@ -13,12 +13,20 @@ const UserController = {
     User.findOne({ where: { email: req.body.email } })
       .then((user) => {
         bcrypt.compare(req.body.password, user.password_digest, (err, same) => {
-          const token = jwt.sign({ user }, process.env.SECRET_KEY,
+          const userData = {
+            id: user.dataValues.id,
+            username: user.dataValues.username,
+            first_name: user.dataValues.first_name,
+            last_name: user.dataValues.last_name,
+            email: user.dataValues.email,
+            role_id: user.dataValues.role_id
+          };
+          const token = jwt.sign({ user: userData }, process.env.SECRET_KEY,
             { expiresIn: '1h' });
           if (same) {
             res.status(200).json({ success: same, token });
           } else {
-            res.status(500)
+            res.status(401)
             .json({ error: 'Email and Password combination not correct' });
           }
         });
@@ -38,9 +46,17 @@ const UserController = {
       role_id: req.body.role_id || 2
     })
       .then((user) => {
-        const token = jwt.sign({ user },
+        const userData = {
+          id: user.dataValues.id,
+          username: user.dataValues.username,
+          first_name: user.dataValues.first_name,
+          last_name: user.dataValues.last_name,
+          email: user.dataValues.email,
+          role_id: user.dataValues.role_id
+        };
+        const token = jwt.sign({ user: userData },
           process.env.SECRET_KEY, { expiresIn: '1h' });
-        res.status(201).json({ user, token });
+        res.status(201).json({ user: userData, token });
       })
       .catch((err) => {
         res.status(400).json({ error: err.message });
@@ -157,7 +173,7 @@ const UserController = {
           res.status(500).json({ error: err.message });
         });
     } else {
-      res.status(500).json({ error: 'Search query not found' });
+      res.status(400).json({ error: 'Search query not found' });
     }
   }
 };

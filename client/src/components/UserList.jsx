@@ -3,7 +3,50 @@ import { Link } from 'react-router';
 import moment from 'moment';
 // import { Pagination } from 'react-materialize';
 
+const confirmDeletion = (callback, userId) => {
+  swal({
+    title: 'Are you sure?',
+    text: 'Would you like to delete this user?',
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#DD6B55',
+    confirmButtonText: 'Yes, delete it!',
+    closeOnConfirm: false,
+    closeOnCancel: false
+  },
+  (deletionConfirmed) => {
+    if (deletionConfirmed) {
+      callback(userId);
+      swal('Deleted!', 'The user has been deleted.', 'success');
+    } else {
+      swal('Cancelled!', 'The user was not deleted.', 'error');
+    }
+  });
+};
+
+const confirmUpdateRole = (callback, roleId, userId) => {
+  swal({
+    title: 'Are you sure?',
+    text: 'Would you like to change this user\'s role?',
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#DD6B55',
+    confirmButtonText: 'Yes, update it!',
+    closeOnConfirm: false,
+    closeOnCancel: false
+  },
+  (deletionConfirmed) => {
+    if (deletionConfirmed) {
+      callback(roleId, userId);
+      swal('Updated!', 'The user\'s role has been updated.', 'success');
+    } else {
+      swal('Cancelled!', 'The user\'s role was not changed.', 'error');
+    }
+  });
+};
+
 const UserList = ({ users, userid, deleteUser, saveUserRole, roles, updateUserRole }) => {
+  console.log('renders');
   return (
       <table className="highlight doc_list z-depth-4 panel pagination">
         <thead>
@@ -28,10 +71,11 @@ const UserList = ({ users, userid, deleteUser, saveUserRole, roles, updateUserRo
                 { user.role_id !== 1 ?
                   <select
                     className="userRoleSelect browser-default"
-                    onChange={event => updateUserRole(event.target.value, user.id)}
+                    onChange={event => confirmUpdateRole(updateUserRole, event.target.value, user.id)}
+                    value={user.role_id}
                   >
                     {roles.map(role =>
-                      <option key={role.id} value={role.id} selected={user.role_id === role.id}>{role.title}</option>
+                      <option key={role.id} value={role.id}>{role.title}</option>
                     )}
                   </select>
                 : <span />
@@ -40,7 +84,7 @@ const UserList = ({ users, userid, deleteUser, saveUserRole, roles, updateUserRo
               <td>{moment(user.publish_date).format('L')}</td>
 
               { user.role_id !== 1 ?
-                <td><Link onClick={() => deleteUser(user.id)}>
+                <td><Link onClick={() => confirmDeletion(deleteUser, user.id)}>
                   <i className="small material-icons">delete</i></Link></td>
                 : <td />
               }

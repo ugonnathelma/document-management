@@ -7,6 +7,9 @@
     "mocha": true,
     "browser": true
   },
+  "globals": {
+    "swal": false
+  },
   "rules": {
     "arrow-body-style":0,
     "strict":0,

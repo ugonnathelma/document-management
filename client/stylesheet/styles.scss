@@ -215,3 +215,17 @@ padding-top:50px !important;
 .doc_content div {
 	padding:25px !important;
 }
+
+.login-feedback{
+	text-align: center;
+	font-weight: bolder;
+	padding: 10px 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	&.error{
+		background-color: rgba(243 ,0, 0,0.2);
+	}
+	&.success {
+		background-color: rgba(0 ,255, 0,0.2);
+	}
+}
