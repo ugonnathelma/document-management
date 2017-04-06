@@ -1,22 +1,21 @@
 import axios from 'axios';
-import jwtDecode from 'jwt-decode';
-import actionTypes from '../actions/actionTypes';
+import actionTypes from '../actionTypes';
 
-export default function viewDocumentAction(token, documentid) {
+export default function viewUserAction(token, userid) {
   return function (dispatch) {
-    return axios.get(`/api/v1/documents/${documentid}`, {
+    return axios.get(`/api/v1/users/${userid}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
       .then((response) => {
         dispatch({
-          type: actionTypes.VIEW_DOCUMENT,
+          type: actionTypes.VIEW_USER,
           document: response.data
         });
       }).catch((err) => {
         dispatch({
-          type: actionTypes.DOCUMENT_RETRIEVAL_FAILED,
+          type: actionTypes.USER_RETRIEVAL_FAILED,
           status: 'failed',
           error: err.message
         });

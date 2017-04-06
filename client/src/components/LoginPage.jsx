@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 import { browserHistory, Link } from 'react-router';
 import React, { Component } from 'react';
-import loginAction from '../actions/loginAction';
+import loginAction from '../actions/authorizationManagement/loginAction';
 import Header from './Header.jsx';
 
 

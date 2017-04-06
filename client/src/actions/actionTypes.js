@@ -14,6 +14,19 @@ export default keymirror({
   DOCUMENT_DELETED: null,
   DOCUMENT_DELETION_FAILED: null,
   PAGINATED_DOCUMENTS: null,
+  FIND_DOCUMENT: null,
   CLEAR_ALL: null,
-  FIND_DOCUMENT: null
+  PAGINATED_USERS: null,
+  USER_RETRIEVAL_FAILED: null,
+  USER_UPDATED: null,
+  USER_UPDATE_FAILED: null,
+  FIND_USER: null,
+  USER_DELETED: null,
+  ALL_ROLES: null,
+  FIND_ROLE: null,
+  ROLE_RETRIEVAL_FAILED: null,
+  ROLE_CREATED: null,
+  ROLE_DELETED: null,
+  ROLE_DELETION_FAILED: null,
+  ROLE_CREATE_FAILED: null
 });

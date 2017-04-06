@@ -1,17 +1,18 @@
 import axios from 'axios';
-import actionTypes from '../actions/actionTypes';
+import actionTypes from '../actionTypes';
 
-export default function viewUserAction(token, userid) {
+export default function paginateUserAction(token, offset, limit) {
   return function (dispatch) {
-    return axios.get(`/api/v1/users/${userid}`, {
+    return axios.get(`/api/v1/users?limit=${limit}&offset=${offset}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
       .then((response) => {
         dispatch({
-          type: actionTypes.VIEW_USER,
-          document: response.data
+          type: actionTypes.PAGINATED_USERS,
+          users: response.data.users,
+          pageCount: response.data.pageCount
         });
       }).catch((err) => {
         dispatch({

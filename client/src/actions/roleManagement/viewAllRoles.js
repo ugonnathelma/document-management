@@ -1,26 +1,26 @@
 import axios from 'axios';
-import actionTypes from './actionTypes';
+import actionTypes from '../actionTypes';
 
-export default function searchDocumentAction(token, documentName) {
+export default function viewAllRolesAction(token) {
   return function (dispatch) {
-    return axios.get(`/api/v1/search/documents?query=${documentName}`, {
+    return axios.get('/api/v1/roles', {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
       .then((response) => {
-        console.log(response);
         dispatch({
-          type: actionTypes.FIND_DOCUMENT,
-          documents: response.data.documents,
+          type: actionTypes.ALL_ROLES,
+          roles: response.data,
           pageCount: response.data.pageCount
         });
       }).catch((err) => {
         dispatch({
-          type: actionTypes.DOCUMENT_RETRIEVAL_FAILED,
+          type: actionTypes.ROLE_RETRIEVAL_FAILED,
           status: 'failed',
           error: err.message
         });
       });
   };
 }
+

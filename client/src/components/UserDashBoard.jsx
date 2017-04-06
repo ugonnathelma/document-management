@@ -6,10 +6,9 @@ import React, { Component } from 'react';
 import Header from './Header.jsx';
 import Sidebar from './Sidebar.jsx';
 import DocumentList from '../components/DocumentList.jsx';
-import viewAllDocumentsAction from '../actions/viewAllDocuments.js';
-import deleteDocumentAction from '../actions/deleteDocument.js';
-import paginateDocumentAction from '../actions/paginateDocument.js';
-import searchDocumentAction from '../actions/searchDocument.js';
+import deleteDocumentAction from '../actions/documentManagement/deleteDocument.js';
+import paginateDocumentAction from '../actions/documentManagement/paginateDocument.js';
+import searchDocumentAction from '../actions/documentManagement/searchDocument.js';
 
 class ViewAllDocuments extends Component {
   constructor(props) {
@@ -53,17 +52,26 @@ class ViewAllDocuments extends Component {
         <Header />
         <Sidebar />
         <div className="col s12 workspace ">
-          <div className="row workspace-header"><h4 className="col s8">All Documents</h4><div className="col s4">
-            <input
-              className="col s10"
-              type="text"
-              id="searchTerms"
-              name="searchTerms"
-              placeholder="Search..."
-              onChange={this.handleChange}
-            /><button className="btn col s2" onClick={this.searchDocument}><i className="material-icons">search</i></button></div></div>
-            <div className="col m10"></div><div className="col m2"><Link onClick={this.refreshDocuments}><i className="material-icons  refresh-list-btn">settings_backup_restore</i></Link></div>
-          <DocumentList deleteDocument={this.props.deleteDocument} userid={this.state.userid} documents={this.props.paginated || this.props.documents} />
+          <div className="row workspace-header">
+            <h4 className="col s8">All Documents</h4><div className="col s4">
+              <input
+                className="col s10"
+                type="text"
+                id="searchTerms"
+                name="searchTerms"
+                placeholder="Search..."
+                onChange={this.handleChange}
+              /><button className="btn col s2" onClick={this.searchDocument}>
+                <i className="material-icons">search</i></button></div></div>
+          <div className="col m10" /><div className="col m2">
+            <Link onClick={this.refreshDocuments}>
+              <i className="material-icons  refresh-list-btn">
+                settings_backup_restore</i></Link></div>
+          <DocumentList
+            deleteDocument={this.props.deleteDocument}
+            userid={this.state.userid}
+            documents={this.props.paginated || this.props.documents}
+          />
           <center>
             <Pagination
               items={this.props.pageCount}
@@ -96,10 +104,12 @@ const mapStoreToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteDocument: (usertoken, documentid) => dispatch(deleteDocumentAction(usertoken, documentid)),
-    viewDocuments: usertoken => dispatch(viewAllDocumentsAction(usertoken)),
-    paginateDocuments: (usertoken, offset, limit) => dispatch(paginateDocumentAction(usertoken, offset, limit)),
-    searchDocument: (usertoken, documentName) => dispatch(searchDocumentAction(usertoken, documentName))
+    deleteDocument: (usertoken, documentid) =>
+    dispatch(deleteDocumentAction(usertoken, documentid)),
+    paginateDocuments: (usertoken, offset, limit) =>
+    dispatch(paginateDocumentAction(usertoken, offset, limit)),
+    searchDocument: (usertoken, documentName) =>
+    dispatch(searchDocumentAction(usertoken, documentName))
   };
 };
 

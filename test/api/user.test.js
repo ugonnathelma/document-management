@@ -5,7 +5,7 @@ import supertest from 'supertest';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import models from '../../server/models';
-import userFixtures from './user-fixtures';
+import userFixtures from '../user-fixtures';
 import app from '../../server';
 
 dotenv.config();
@@ -95,7 +95,7 @@ describe('User', () => {
           .get('/api/v1/users')
           .set('authorization', `token ${adminToken}`)
           .end((err, res) => {
-            expect(res.body).to.have.lengthOf(2);
+            expect(res.body.users).to.have.lengthOf(2);
             done();
           });
       });

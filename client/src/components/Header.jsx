@@ -4,8 +4,7 @@ import React, { Component } from 'react';
 import jwtDecode from 'jwt-decode';
 import { connect } from 'react-redux';
 import { browserHistory, Link } from 'react-router';
-import actionTypes from '../actions/actionTypes';
-import logoutAction from '../actions/logoutAction';
+import logoutAction from '../actions/authorizationManagement/logoutAction';
 
 const logoName = require('../../img/logo.png');
 
@@ -17,7 +16,6 @@ class Header extends Component {
       this.state = { username: jwtDecode(token).user.username };
       this.logout = this.logout.bind(this);
     }
-    console.log(this.props);
   }
 
   logout() {

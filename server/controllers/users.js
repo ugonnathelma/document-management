@@ -4,10 +4,12 @@ import { User } from '../models/index';
 
 require('dotenv').config();
 
+const PAGE_LIMIT = 10;
+const PAGE_OFFSET = 0;
 
-class UserController {
+const UserController = {
 
-  static login(req, res) {
+  login(req, res) {
     User.findOne({ where: { email: req.body.email } })
       .then((user) => {
         bcrypt.compare(req.body.password, user.password_digest, (err, same) => {
@@ -16,16 +18,16 @@ class UserController {
           if (same) {
             res.status(200).json({ success: same, token });
           } else {
-            res.status(500).json({ error: "Email and Password combination not correct" });
+            res.status(500)
+            .json({ error: 'Email and Password combination not correct' });
           }
         });
       })
       .catch((err) => {
         res.status(404).json({ error: err.message });
       });
-  }
-
-  static createUser(req, res) {
+  },
+  createUser(req, res) {
     User.create({
       first_name: req.body.first_name,
       last_name: req.body.last_name,
@@ -43,9 +45,9 @@ class UserController {
       .catch((err) => {
         res.status(400).json({ error: err.message });
       });
-  }
+  },
 
-  static getUsers(req, res) {
+  getUsers(req, res) {
     let queryParams = {
       limit: 10,
       offset: 0
@@ -56,41 +58,44 @@ class UserController {
         offset: req.query.offset
       };
     }
-    User.all(queryParams)
+    User.findAndCountAll(queryParams)
       .then((users) => {
-        res.status(200).json(users);
+        res.status(200).json({ users: users.rows,
+          pageCount: Math.ceil(users.count / queryParams.limit) });
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });
-  }
+  },
 
-  static findUser(req, res) {
+  findUser(req, res) {
     User.findOne({ where: { id: req.params.id } }).then((user) => {
       res.status(200).json(user);
     }).catch((err) => {
       res.status(404).json({ error: err.message });
     });
-  }
+  },
 
-  static updateUserInfo(req, res) {
+  updateUserInfo(req, res) {
     if (req.decoded) {
       User.find({
         where: {
-          id: req.decoded.id
+          id: req.params.id
         }
       })
         .then((user) => {
           if (user) {
-            user.name = req.body.name;
-            user.password = req.body.password;
-            user.password_confirmation = req.body.password_confirmation;
+            const bodyKeys = Object.keys(req.body);
+
+            bodyKeys.forEach((key) => {
+              if (req.body[key] && key !== 'password' && key
+              !== 'password_confirmation') {
+                user[key] = req.body[key];
+              }
+            });
+
             user.save()
-              .then((err) => {
-                if (err) {
-                  return res.status(500).json({ error: err.message });
-                }
-                //  "User Information Updated"
+              .then(() => {
                 return res.status(200).json(req.body);
               })
               .catch((err) => {
@@ -99,9 +104,9 @@ class UserController {
           }
         });
     }
-  }
+  },
 
-  static deleteUser(req, res) {
+  deleteUser(req, res) {
     User.destroy({
       where: {
         id: req.params.id
@@ -113,19 +118,40 @@ class UserController {
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });
-  }
+  },
 
-  static searchUsers(req, res) {
-    if (req.query.q) {
-      User.findAll({
+  searchUsers(req, res) {
+    const queryParams = {
+      limit: req.query.limit || PAGE_LIMIT,
+      offset: req.query.offset || PAGE_OFFSET
+    };
+    if (req.query.query) {
+      User.findAndCountAll({
         where: {
-          name: {
-            $iLike: `%${req.query.q}%`
-          }
-        }
+          $or: [
+            {
+              first_name: {
+                $iLike: `%${req.query.query}%`
+              }
+            },
+            {
+              last_name: {
+                $iLike: `%${req.query.query}%`
+              }
+            },
+            {
+              username: {
+                $iLike: `%${req.query.query}%`
+              }
+            }
+          ]
+        },
+        limit: queryParams.limit,
+        offset: queryParams.offset
       })
         .then((users) => {
-          res.status(200).json(users);
+          res.status(200).json({ users: users.rows || [],
+            pageCount: Math.ceil(users.count / queryParams.limit) || 0 });
         })
         .catch((err) => {
           res.status(500).json({ error: err.message });
@@ -134,6 +160,6 @@ class UserController {
       res.status(500).json({ error: 'Search query not found' });
     }
   }
-}
+};
 
 module.exports = UserController;

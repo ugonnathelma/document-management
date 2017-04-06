@@ -1,26 +1,24 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import actionTypes from '../actions/actionTypes';
+import actionTypes from '../actionTypes';
 
-export default function deleteDocumentAction(documentid) {
-  const token = window.localStorage.getItem('token');
+export default function editDocumentAction(details, token, documentid) {
   return function (dispatch) {
-    return axios.delete(`/api/v1/documents/${documentid}`, {
+    return axios.put(`/api/v1/documents/${documentid}`, details, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
       .then(() => {
         dispatch({
-          type: actionTypes.DOCUMENT_DELETED,
-          documentid,
+          type: actionTypes.DOCUMENT_UPDATED,
+          document,
           status: 'success'
         });
         browserHistory.push('/');
       }).catch((err) => {
         dispatch({
-          type: actionTypes.DOCUMENT_DELETION_FAILED,
-          document,
+          type: actionTypes.DOCUMENT_UPDATE_FAILED,
           status: 'failed',
           error: err.message
         });
