@@ -8,9 +8,20 @@ before_script:
   - npm i -g sequelize-cli
   - sequelize db:migrate --env=test
   - sequelize db:seed --env=test --seed server/seeders/20170315183651-roles-seeder.js
+  - sequelize db:seed --env=test --seed server/seeders/20170330083112-users-seeder.js
 script:
 - npm test
 after_script:
   - npm run coveralls
 services:
   - postgresql
+before_deploy:
+ - npm run bundle
+deploy:
+ provider: heroku
+ api_key:
+   secure: 364f3165-4a82-4952-ad4d-68cdae015f0f
+ app: manage-document
+ skip_cleanup: true
+ on:
+   all_branches: true
