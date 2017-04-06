@@ -4,6 +4,7 @@ export default keymirror({
   SIGNUP: null,
   LOGIN: null,
   LOGIN_SUCCESSFUL: null,
+  LOGIN_ERROR: null,
   DOCUMENT_CREATED: null,
   DOCUMENT_UPDATED: null,
   ALL_DOCUMENTS: null,

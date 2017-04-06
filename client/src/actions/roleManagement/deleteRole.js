@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { browserHistory } from 'react-router';
 import actionTypes from '../actionTypes';
 
-export default function deleteRoleAction(token, roleId) {
-  return function (dispatch) {
+export default (roleId) => {
+  const token = window.localStorage.getItem('token');
+  return (dispatch) => {
     return axios.delete(`/api/v1/roles/${roleId}`, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -23,5 +23,6 @@ export default function deleteRoleAction(token, roleId) {
         });
       });
   };
-}
+};
+
 

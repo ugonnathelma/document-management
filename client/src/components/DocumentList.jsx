@@ -3,6 +3,27 @@ import { Link } from 'react-router';
 import moment from 'moment';
 // import { Pagination } from 'react-materialize';
 
+const confirmDeletion = (callback, documentId) => {
+  swal({
+    title: 'Are you sure?',
+    text: 'Would you like to delete this document?',
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#DD6B55',
+    confirmButtonText: 'Yes, delete it!',
+    closeOnConfirm: false,
+    closeOnCancel: false
+  },
+  (deletionConfirmed) => {
+    if (deletionConfirmed) {
+      callback(documentId);
+      swal('Deleted!', 'Your document has been deleted.', 'success');
+    } else {
+      swal('Cancelled!', 'Your document  was not deleted.', 'error');
+    }
+  });
+};
+
 const DocumentList = ({ documents, userid, deleteDocument }) => {
   return (
       <table className="highlight doc_list z-depth-4 panel pagination">
@@ -28,7 +49,7 @@ const DocumentList = ({ documents, userid, deleteDocument }) => {
                 )}
               {
                 (userid === document.user_id ?
-                  <td><Link onClick={() => deleteDocument(document.id)}>
+                  <td><Link onClick={() => confirmDeletion(deleteDocument, document.id)}>
                     <i className="small material-icons">delete</i></Link></td>
                   : <td />
                 )}
@@ -41,7 +62,9 @@ const DocumentList = ({ documents, userid, deleteDocument }) => {
 
 
 DocumentList.propTypes = {
-  documents: React.PropTypes.array.isRequired
+  documents: React.PropTypes.array.isRequired,
+  userid: React.PropTypes.number,
+  deleteDocument: React.PropTypes.func
 };
 
 export default DocumentList;

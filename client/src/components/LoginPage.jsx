@@ -5,48 +5,88 @@ import React, { Component } from 'react';
 import loginAction from '../actions/authorizationManagement/loginAction';
 import Header from './Header.jsx';
 
+const ADMIN_ROLE_ID = 1;
 
 class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      error: null,
+      success: null
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.redirectIfLoggedIn = this.redirectIfLoggedIn.bind(this);
   }
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    this.props.Login(this.state)
-      .then(() => {
-        const decodedRole = jwtDecode(window.localStorage.getItem('token'))
-          .user.role_id;
-        if (decodedRole === 1) { browserHistory.push('/admindashboard'); } else {
-          browserHistory.push('/dashboard');
-        }
-      });
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    this.state.error = nextProps.error;
+    this.state.success = nextProps.success;
+    if (nextProps.token) {
+      window.localStorage.setItem('token', nextProps.token);
+    }
+    setTimeout(() => {
+      this.redirectIfLoggedIn();
+    }, 1000);
   }
 
-  render() {
-    if (window.localStorage.getItem('token')) {
-      const decodedRole = jwtDecode(window.localStorage.getItem('token'))
-        .user.role_id;
-      if (decodedRole === 1) { browserHistory.push('/admindashboard'); } else {
+  componentWillMount() {
+    this.redirectIfLoggedIn();
+  }
+
+  redirectIfLoggedIn (){
+    const token = window.localStorage.getItem('token');
+    if (token) {
+      const decodedUser = jwtDecode(token);
+      const roleId = decodedUser.role_id;
+      if (roleId === ADMIN_ROLE_ID) {
+        browserHistory.push('/admindashboard');
+      } else {
         browserHistory.push('/dashboard');
       }
     }
+  }
+
+  handleSubmit(event) {
+    // prevent default submit action
+    event.preventDefault();
+
+    // clear any error or success messages showing
+    this.setState({
+      success: null,
+      error: null
+    });
+
+    this.props.login(this.state);
+  }
+
+  render() {
     return (
       <div className="row">
         <Header />
         <div className="col s2 l4 " />
         <form className="col s8 l4 loginForm" onSubmit={this.handleSubmit}>
+          { this.state.error ?
+            <div className="login-feedback error">
+              { this.state.error }
+            </div>
+            : <span />
+          }
+
+          { this.state.success ?
+            <div className="login-feedback success">
+              { this.state.success }
+            </div>
+            : <span />
+          }
           <div className="row">
             <div className="input-field col s12">
               <input
@@ -111,12 +151,15 @@ LoginPage.contextTypes = {
 
 const mapStoreToProps = (state) => {
   return {
-    user: state.user
+    user: state.loginReducer.user,
+    success: state.loginReducer.success,
+    error: state.loginReducer.error,
+    token: state.loginReducer.token
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    Login: credentials => dispatch(loginAction(credentials))
+    login: credentials => dispatch(loginAction(credentials))
   };
 };
 

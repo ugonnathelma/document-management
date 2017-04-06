@@ -55,7 +55,6 @@ class ViewAllRoles extends Component {
           <RoleList
             deleteRole={this.props.deleteRole}
             roles={this.props.roles || []}
-            token={this.state.token}
           />
         </div>
       </div>
@@ -79,7 +78,7 @@ const mapStoreToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteRole: (usertoken, roleid) => dispatch(deleteRoleAction(usertoken, roleid)),
+    deleteRole: roleid => dispatch(deleteRoleAction(roleid)),
     viewRoles: usertoken => dispatch(viewAllRolesAction(usertoken))
   };
 };

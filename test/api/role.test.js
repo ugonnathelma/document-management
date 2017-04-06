@@ -19,7 +19,8 @@ const regularToken = jwt.sign(userFixtures.existingRegularUser, JWT_SECRET);
 
 describe('Role', () => {
   before((done) => {
-    models.User.bulkCreate([userFixtures.existingAdminUser, userFixtures.existingRegularUser])
+    models.User.bulkCreate([userFixtures.existingAdminUser,
+    userFixtures.existingRegularUser])
     .then(() => {
       done();
     });
@@ -42,10 +43,17 @@ describe('Role', () => {
     });
   });
 
-  it('should verify that admin and regular roles exist in the database', (done) => {
+  it('should verify that admin role exist in the database', (done) => {
     models.Role.findAll()
     .then((roles) => {
       expect(roles[0].title).to.equal('admin');
+      done();
+    });
+  });
+
+  it('should verify that regular role exist in the database', (done) => {
+    models.Role.findAll()
+    .then((roles) => {
       expect(roles[1].title).to.equal('regular');
       done();
     });

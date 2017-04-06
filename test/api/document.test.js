@@ -70,7 +70,49 @@ describe('Document', () => {
     .end((err, res) => {
       expect(res.statusCode).to.equal(201);
       // eslint-disable-next-line no-unused-expressions
-      expect(res.body.createdAt).to.not.be.undefined;
+      expect(res.body.publish_date).to.not.be.undefined;
+      done();
+    });
+  });
+
+  it('should verify that a document created has a title defined',
+  (done) => {
+    supertest(app)
+    .post('/api/v1/documents')
+    .send(documentFixtures.publicDocument)
+    .set('authorization', `token ${regularToken}`)
+    .end((err, res) => {
+      expect(res.statusCode).to.equal(201);
+      // eslint-disable-next-line no-unused-expressions
+      expect(res.body.title).to.not.be.undefined;
+      done();
+    });
+  });
+
+  it('should verify that a document created has access defined',
+  (done) => {
+    supertest(app)
+    .post('/api/v1/documents')
+    .send(documentFixtures.publicDocument)
+    .set('authorization', `token ${regularToken}`)
+    .end((err, res) => {
+      expect(res.statusCode).to.equal(201);
+      // eslint-disable-next-line no-unused-expressions
+      expect(res.body.access).to.not.be.undefined;
+      done();
+    });
+  });
+
+  it('should verify that a document created has a user id defined',
+  (done) => {
+    supertest(app)
+    .post('/api/v1/documents')
+    .send(documentFixtures.publicDocument)
+    .set('authorization', `token ${regularToken}`)
+    .end((err, res) => {
+      expect(res.statusCode).to.equal(201);
+      // eslint-disable-next-line no-unused-expressions
+      expect(res.body.user_id).to.not.be.undefined;
       done();
     });
   });

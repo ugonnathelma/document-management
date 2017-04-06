@@ -104,8 +104,8 @@ const mapStoreToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteDocument: (usertoken, documentid) =>
-    dispatch(deleteDocumentAction(usertoken, documentid)),
+    deleteDocument: documentid =>
+    dispatch(deleteDocumentAction(documentid)),
     paginateDocuments: (usertoken, offset, limit) =>
     dispatch(paginateDocumentAction(usertoken, offset, limit)),
     searchDocument: (usertoken, documentName) =>
