@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/andela-uofoegbu/document-management.svg?branch=develop)](https://travis-ci.org/andela-uofoegbu/document-management?branch=develop)
+[![Build Status](https://travis-ci.org/andela-uofoegbu/document-management.svg?branch=develop)](https://travis-ci.org/andela-uofoegbu/document-management.svg?branch=develop)
 [![Coverage Status](https://coveralls.io/repos/github/andela-uofoegbu/invertindex/badge.svg?branch=develop)](https://coveralls.io/github/andela-uofoegbu/document-management?branch=develop)
 
 ## document-management
