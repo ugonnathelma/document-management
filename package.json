@@ -8,7 +8,7 @@
     "test": "NODE_ENV=test mocha --compilers js:babel-core/register test/**/*.test.js",
     "bundle": "webpack --watch",
     "build:client": "webpack-dev-server --progress --inline",
-    "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress"
+    "heroku-postbuild": "npm start"
   },
   "author": "",
   "license": "ISC",
