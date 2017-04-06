@@ -7,7 +7,8 @@
     "start:dev": "concurrently \"npm run bundle\" \"babel-watch server\"",
     "test": "NODE_ENV=test mocha --compilers js:babel-core/register test/**/*.test.js",
     "bundle": "webpack --watch",
-    "build:client": "webpack-dev-server --progress --inline"
+    "build:client": "webpack-dev-server --progress --inline",
+    "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress"
   },
   "author": "",
   "license": "ISC",
