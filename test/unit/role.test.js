@@ -43,17 +43,25 @@ describe('Roles Model', () => {
 
     it('created new role should have title', (done) => {
       expect(role.title).to.defined;
-       expect(role.title).to.be.ok;
+      expect(role.title).to.be.ok;
       done();
     });
+  });
 
-
-    describe('Role Validation', () => {
-      it('requires all required fields to create role', (done) => {
-        expect(Role.create(roleFixtures.incompleteRole)).to.be.defined;
-        expect(Role.create(roleFixtures.incompleteRole)).to.be.ok;
-        done();
-      });
+  describe('Role Validation', () => {
+    it('requires title field to create a role', (done) => {
+      Role.create()
+          .catch((error) => {
+            expect(/notNull Violation/.test(error.message)).toBeTruthy;
+            done();
+          });
+    });
+    it('ensures a role can only be created once(unique)', (done) => {
+      Role.create(role)
+          .catch((error) => {
+            expect(/SequelizeUniqueConstraintError/.test(error.name)).toBeTruthy;
+            done();
+          });
     });
   });
 });

@@ -75,15 +75,35 @@ describe('User', () => {
     });
   });
 
-  it('should verify that a newly created user has first name and last name defined', (done) => {
+  it('should verify that a newly created user has last name defined', (done) => {
+    supertest(app)
+    .post('/api/v1/users')
+    .send(userFixtures.regularUser)
+    .end((err, res) => {
+      // eslint-disable-next-line no-unused-expressions
+      expect(res.body.user.last_name).to.not.be.undefined;
+      done();
+    });
+  });
+
+  it('should verify that a newly created user has first name defined', (done) => {
     supertest(app)
     .post('/api/v1/users')
     .send(userFixtures.regularUser)
     .end((err, res) => {
       // eslint-disable-next-line no-unused-expressions
       expect(res.body.user.first_name).to.not.be.undefined;
+      done();
+    });
+  });
+
+  it('should verify that a newly created user has username defined', (done) => {
+    supertest(app)
+    .post('/api/v1/users')
+    .send(userFixtures.regularUser)
+    .end((err, res) => {
       // eslint-disable-next-line no-unused-expressions
-      expect(res.body.user.last_name).to.not.be.undefined;
+      expect(res.body.user.username).to.not.be.undefined;
       done();
     });
   });
