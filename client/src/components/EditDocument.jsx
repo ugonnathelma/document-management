@@ -56,7 +56,6 @@ class EditDocument extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps, nextProps);
     this.setState({
       title: nextProps.document.title,
       access: nextProps.document.access,
@@ -81,7 +80,6 @@ class EditDocument extends Component {
 
   render() {
     if (!window.localStorage.getItem('token')) {
-      console.log("no token");
       browserHistory.push('/');
     }
     return (
@@ -149,9 +147,8 @@ EditDocument.contextTypes = {
 
 const mapStoreToProps = (state, ownProps) => {
   return {
-    document: state.viewDocumentReducer.document,
-    status: state.viewDocumentReducer.status
-
+    document: state.allDocumentsReducer.document,
+    status: state.allDocumentsReducer.status
   };
 };
 

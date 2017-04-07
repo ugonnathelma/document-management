@@ -62,5 +62,13 @@ export default {
     password: regularPassword,
     password_confirmation: regularPassword,
     role_id: 2
+  },
+  invalidUser: {
+    first_name: faker.name.firstName(),
+    username: '     ',
+    email: 'incomplete@user.com',
+    password: regularPassword,
+    password_confirmation: regularPassword,
+    role_id: 2
   }
 };

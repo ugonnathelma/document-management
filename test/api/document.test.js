@@ -162,6 +162,7 @@ describe('Document', () => {
     });
   });
 
+
   it('should verify that users with the same role as the creator, can access documents with property “access” set to “role”', (done) => {
     models.Role.create(roleFixtures.testRole)
     .then((role) => {

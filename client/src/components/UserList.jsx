@@ -46,7 +46,6 @@ const confirmUpdateRole = (callback, roleId, userId) => {
 };
 
 const UserList = ({ users, userid, deleteUser, saveUserRole, roles, updateUserRole }) => {
-  console.log('renders');
   return (
       <table className="highlight doc_list z-depth-4 panel pagination">
         <thead>

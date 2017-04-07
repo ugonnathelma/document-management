@@ -17,6 +17,12 @@ export default function allDocumentsReducer(state = initialState, action) {
           return document.id !== action.documentid;
         })
       };
+    case actionTypes.VIEW_DOCUMENT:
+      return { ...state, document: action.document };
+    case actionTypes.DOCUMENT_CREATED:
+      return { ...state, createStatus: action.status, documents: action.documents };
+    case actionTypes.DOCUMENT_CREATE_FAILED:
+      return { ...state, status: action.status };
     case actionTypes.CLEAR_ALL:
       return { ...state,
         documents: action.documents

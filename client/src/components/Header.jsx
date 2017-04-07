@@ -61,7 +61,7 @@ class Header extends Component {
             <Link to="/" className="brand-logo"><img src={logoName} alt="logo" /></Link>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li><a href="./">Home</a></li>
-              <li><a href="about.html">About Us</a></li>
+              <li><Link to="/about">About Us</Link></li>
               <li><a href="https://github.com/andela-uofoegbu">Contact Us</a></li>
             </ul>
           </div>

@@ -61,7 +61,7 @@ class ViewAllDocuments extends Component {
                 name="searchTerms"
                 placeholder="Search..."
                 onChange={this.handleChange}
-              /><button className="btn col s2" onClick={this.searchDocument}>
+              /><button className="btn col s2" id="searchBtn" onClick={this.searchDocument}>
                 <i className="material-icons">search</i></button></div></div>
           <div className="col m10" /><div className="col m2">
             <Link onClick={this.refreshDocuments}>
@@ -70,7 +70,7 @@ class ViewAllDocuments extends Component {
           <DocumentList
             deleteDocument={this.props.deleteDocument}
             userid={this.state.userid}
-            documents={this.props.paginated || this.props.documents}
+            documents={this.props.paginated || this.props.documents || []}
           />
           <center>
             <Pagination
@@ -97,8 +97,7 @@ ViewAllDocuments.PropTypes = {
 const mapStoreToProps = (state) => {
   return {
     documents: state.allDocumentsReducer.documents,
-    pageCount: state.allDocumentsReducer.pageCount,
-    paginated: state.allDocumentsReducer.paginated
+    pageCount: state.allDocumentsReducer.pageCount
   };
 };
 

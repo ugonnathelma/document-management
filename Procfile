@@ -1,1 +1,1 @@
-web: babel-node bin/distServer
+web: node_modules/.bin/babel-node server.js
