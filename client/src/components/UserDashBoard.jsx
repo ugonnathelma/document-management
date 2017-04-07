@@ -70,7 +70,7 @@ class ViewAllDocuments extends Component {
           <DocumentList
             deleteDocument={this.props.deleteDocument}
             userid={this.state.userid}
-            documents={this.props.paginated || this.props.documents}
+            documents={this.props.paginated || []}
           />
           <center>
             <Pagination
