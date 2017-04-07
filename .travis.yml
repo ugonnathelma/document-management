@@ -8,10 +8,9 @@ before_script:
   - npm i -g sequelize-cli
   - sequelize db:migrate --env=test
   - sequelize db:seed:all --env=test
-
 script:
 - npm test
-after_script:
+after_success:
   - npm run coveralls
 services:
   - postgresql
