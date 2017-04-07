@@ -6,11 +6,12 @@
     "start": "concurrently \"npm run bundle\" \"babel-watch server\"",
     "start:dev": "concurrently \"npm run bundle\" \"babel-watch server\"",
     "test": "NODE_ENV=test mocha --compilers js:babel-core/register test/**/*.test.js",
-    "bundle": "webpack",
+    "bundle": "webpack --watch",
+    "bundle:prod": "webpack",
     "build:client": "webpack-dev-server --progress --inline",
     "e2e-setup": "node_modules/selenium-standalone/bin/selenium-standalone install",
     "e2e-test": "node_modules/.bin/nightwatch --config nightwatch.conf.js",
-    "postinstall": "npm run bundle"
+    "postinstall": "npm run bundle:prod"
   },
   "author": "",
   "license": "ISC",
