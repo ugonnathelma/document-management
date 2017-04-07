@@ -12,7 +12,7 @@ $url_0: url(../img/doc_background.jpg);
 //original selectors
 //body, html
 %extend_1 {
-	background: white;
+	background: $url_0;
 	background-size: cover;
 	padding: 0 !important;
 	margin: 0 !important;
