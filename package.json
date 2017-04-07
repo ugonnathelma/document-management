@@ -16,6 +16,7 @@
   "description": "",
   "dependencies": {
     "axios": "^0.15.3",
+    "babel-cli": "^6.24.0",
     "babel-core": "^6.24.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-react-hmre": "^1.1.1",
