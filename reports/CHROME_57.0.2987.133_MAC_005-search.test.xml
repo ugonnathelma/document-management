@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="1">
+
+  <testsuite name="005-search.test"
+    errors="0" failures="0" hostname="" id="" package="005-search.test" skipped="0"
+    tests="1" time="9.790" timestamp="Fri, 07 Apr 2017 11:58:13 GMT">
+  
+    <testcase name="Search Document" classname="005-search.test" time="9.790" assertions="16">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+  
+  </testsuite>
+</testsuites>

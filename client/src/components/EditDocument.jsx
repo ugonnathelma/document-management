@@ -56,7 +56,6 @@ class EditDocument extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps, nextProps);
     this.setState({
       title: nextProps.document.title,
       access: nextProps.document.access,
@@ -81,7 +80,6 @@ class EditDocument extends Component {
 
   render() {
     if (!window.localStorage.getItem('token')) {
-      console.log("no token");
       browserHistory.push('/');
     }
     return (

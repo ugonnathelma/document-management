@@ -27,7 +27,6 @@ class LoginPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     this.state.error = nextProps.loginError;
     this.state.success = nextProps.loginSuccess;
     setTimeout(() => {
