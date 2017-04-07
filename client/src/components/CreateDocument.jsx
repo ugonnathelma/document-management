@@ -115,9 +115,7 @@ class CreateDocument extends Component {
   }
 }
 
-
 CreateDocument.propTypes = {
-  document: PropTypes.object.isRequired,
   CheckToken: PropTypes.func
 };
 
@@ -127,7 +125,7 @@ CreateDocument.contextTypes = {
 
 const mapStoreToProps = (state) => {
   return {
-    status: state.newDocumentReducer.status
+    status: state.allDocumentsReducer.createStatus
   };
 };
 

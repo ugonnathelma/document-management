@@ -149,9 +149,8 @@ EditDocument.contextTypes = {
 
 const mapStoreToProps = (state, ownProps) => {
   return {
-    document: state.viewDocumentReducer.document,
-    status: state.viewDocumentReducer.status
-
+    document: state.allDocumentsReducer.document,
+    status: state.allDocumentsReducer.status
   };
 };
 

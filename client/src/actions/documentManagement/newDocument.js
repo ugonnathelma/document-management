@@ -2,9 +2,8 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 import actionTypes from '../actionTypes';
 
-const token = window.localStorage.getItem('token');
-
 export default (details) => {
+  const token = window.localStorage.getItem('token');
   return (dispatch) => {
     return axios.post('/api/v1/documents', details, {
       headers: {

@@ -70,7 +70,7 @@ class ViewAllDocuments extends Component {
           <DocumentList
             deleteDocument={this.props.deleteDocument}
             userid={this.state.userid}
-            documents={this.props.paginated || []}
+            documents={this.props.paginated || this.props.documents || []}
           />
           <center>
             <Pagination
@@ -97,8 +97,7 @@ ViewAllDocuments.PropTypes = {
 const mapStoreToProps = (state) => {
   return {
     documents: state.allDocumentsReducer.documents,
-    pageCount: state.allDocumentsReducer.pageCount,
-    paginated: state.allDocumentsReducer.paginated
+    pageCount: state.allDocumentsReducer.pageCount
   };
 };
 
