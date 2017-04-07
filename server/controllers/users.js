@@ -63,7 +63,7 @@ const UserController = {
         res.status(201).json({ user: userData, token });
       })
       .catch((err) => {
-        res.status(400).json({ error: err.message });
+        res.status(500).json({ error: err.message });
       });
   },
 

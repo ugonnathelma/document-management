@@ -11,7 +11,7 @@
     "build:client": "webpack-dev-server --progress --inline",
     "e2e-setup": "node_modules/selenium-standalone/bin/selenium-standalone install",
     "e2e-test": "node_modules/.bin/nightwatch --config nightwatch.conf.js",
-    "postinstall": "npm run bundle:prod"
+    "postinstall": "npm run bundle:prod && sequelize db:migrate && sequelize:db:seed:all"
   },
   "author": "",
   "license": "ISC",
