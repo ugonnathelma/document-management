@@ -9,6 +9,7 @@ import ViewDocument from './components/ViewDocument.jsx';
 import ViewAllRoles from './components/ViewAllRoles.jsx';
 import ViewAllUsers from './components/ViewAllUsers.jsx';
 import CreateRole from './components/CreateRole.jsx';
+import About from './components/About.jsx';
 
 export default(
   <Route path="/">
@@ -23,5 +24,6 @@ export default(
     <Route path="/create-role" component={CreateRole} />
     <Route path="/users" component={ViewAllUsers} />
     <Route path="/roles" component={ViewAllRoles} />
+    <Route path="/about" component={About} />
   </Route>
 );
