@@ -46,7 +46,7 @@ describe('User', () => {
           .post('/api/v1/users')
           .send(userFixtures.adminUser)
           .end((err, res) => {
-            expect(res.statusCode).to.equal(400);
+            expect(res.statusCode).to.equal(500);
             done();
           });
       });
@@ -57,7 +57,7 @@ describe('User', () => {
       .post('/api/v1/users')
       .send(userFixtures.incompleteUser)
       .end((err, res) => {
-        expect(res.statusCode).to.equal(400);
+        expect(res.statusCode).to.equal(500);
         done();
       });
   });
@@ -67,7 +67,7 @@ describe('User', () => {
       .post('/api/v1/users')
       .send(userFixtures.invalidUser)
       .end((err, res) => {
-        expect(res.statusCode).to.equal(400);
+        expect(res.statusCode).to.equal(500);
         done();
       });
   });
