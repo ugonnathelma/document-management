@@ -1,7 +1,7 @@
 import axios from 'axios';
 import actionTypes from '../actionTypes';
 
-export default function searchUserAction(token, userNames) {
+export default (token, userNames) => {
   return function (dispatch) {
     return axios.get(`/api/v1/search/users?query=${userNames}`, {
       headers: {
@@ -22,4 +22,4 @@ export default function searchUserAction(token, userNames) {
         });
       });
   };
-}
+};

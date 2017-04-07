@@ -26,7 +26,7 @@ const confirmDeletion = (callback, roleId) => {
 
 const RoleList = ({ roles, deleteRole }) => {
   return (
-    <table className="highlight doc_list z-depth-4 panel pagination">
+    <table id="role_list" className="highlight doc_list z-depth-4 panel pagination">
       <thead>
         <tr>
           <th>Title</th>
@@ -37,12 +37,12 @@ const RoleList = ({ roles, deleteRole }) => {
       <tbody>
         {roles.map(role =>
           <tr key={role.id}>
-            <td>{role.title}</td>
+            <td className="role-title">{role.title}</td>
             <td>{moment(role.created_on).format('L')}</td>
             {
                 (role.title !== 'admin' && role.title !== 'regular' ?
                   <td><Link onClick={() => confirmDeletion(deleteRole, role.id)}>
-                    <i className="small material-icons">delete</i></Link></td>
+                    <i className="small material-icons delete-btn">delete</i></Link></td>
                   : <td />
                 )}
           </tr>

@@ -1,8 +1,8 @@
 import axios from 'axios';
 import actionTypes from '../actionTypes';
 
-export default function searchRoleAction(token, roleName) {
-  return function (dispatch) {
+export default (token, roleName) => {
+  return (dispatch) => {
     return axios.get(`/api/v1/search/roles?query=${roleName}`, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -22,4 +22,5 @@ export default function searchRoleAction(token, roleName) {
         });
       });
   };
-}
+};
+

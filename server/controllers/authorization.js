@@ -14,7 +14,6 @@ const AuthorizationController = {
       return err ? res.status(401).json({ err: 'Token expired' }) : res.status(200).json({ message: 'token ok' });
     });
   },
-
   isAuthorized: (req, res, next) => {
     jwt.verify(AuthorizationController.getToken(req), process.env.SECRET_KEY,
      (err, decoded) => {

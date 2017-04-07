@@ -1,8 +1,8 @@
 import axios from 'axios';
 import actionTypes from '../actionTypes';
 
-export default function viewUserAction(token, userid) {
-  return function (dispatch) {
+export default (token, userid) => {
+  return (dispatch) => {
     return axios.get(`/api/v1/users/${userid}`, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -21,5 +21,6 @@ export default function viewUserAction(token, userid) {
         });
       });
   };
-}
+};
+
 

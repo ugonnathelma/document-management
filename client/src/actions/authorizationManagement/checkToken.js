@@ -1,25 +1,24 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 
-export const documentCreated = document => ({ type: 'DOCUMENT_CREATED', document });
-const token = window.localStorage.getItem('token');
-
 const redirect = () => {
   browserHistory.push('/');
 };
 
 
-export default function checkTokenAction() {
-  return function (dispatch) {
+export default () => {
+  const token = window.localStorage.getItem('token');
+  return () => {
     return token ? axios.get('/api/v1/tokenHealth', {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
-      .then((response) => {
+      .then(() => {
         // do nothing
-      }).catch(error => redirect())
+      }).catch(() => redirect())
       : redirect();
   };
-}
+};
+
 

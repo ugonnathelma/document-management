@@ -28,11 +28,8 @@ class LoginPage extends Component {
 
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
-    this.state.error = nextProps.error;
-    this.state.success = nextProps.success;
-    if (nextProps.token) {
-      window.localStorage.setItem('token', nextProps.token);
-    }
+    this.state.error = nextProps.loginError;
+    this.state.success = nextProps.loginSuccess;
     setTimeout(() => {
       this.redirectIfLoggedIn();
     }, 1000);
@@ -152,8 +149,8 @@ LoginPage.contextTypes = {
 const mapStoreToProps = (state) => {
   return {
     user: state.loginReducer.user,
-    success: state.loginReducer.success,
-    error: state.loginReducer.error,
+    loginSuccess: state.loginReducer.success,
+    loginError: state.loginReducer.error,
     token: state.loginReducer.token
   };
 };
