@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 import actionTypes from '../actionTypes';
+
 const token = window.localStorage.getItem('token');
 
-export default function createRoleAction(details) {
-  return function (dispatch) {
+export default (details) => {
+  return (dispatch) => {
     return axios.post('/api/v1/roles', details, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -25,5 +26,6 @@ export default function createRoleAction(details) {
         });
       });
   };
-}
+};
+
 

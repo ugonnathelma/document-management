@@ -1,8 +1,7 @@
 import axios from 'axios';
-import jwtDecode from 'jwt-decode';
 import actionTypes from '../actionTypes';
 
-export default function viewDocumentAction(token, documentid) {
+export default (token, documentid) =>  {
   return function (dispatch) {
     return axios.get(`/api/v1/documents/${documentid}`, {
       headers: {
@@ -22,5 +21,6 @@ export default function viewDocumentAction(token, documentid) {
         });
       });
   };
-}
+};
+
 

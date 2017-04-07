@@ -12,27 +12,31 @@ const UserController = {
   login(req, res) {
     User.findOne({ where: { email: req.body.email } })
       .then((user) => {
-        bcrypt.compare(req.body.password, user.password_digest, (err, same) => {
-          const userData = {
-            id: user.dataValues.id,
-            username: user.dataValues.username,
-            first_name: user.dataValues.first_name,
-            last_name: user.dataValues.last_name,
-            email: user.dataValues.email,
-            role_id: user.dataValues.role_id
-          };
-          const token = jwt.sign({ user: userData }, process.env.SECRET_KEY,
-            { expiresIn: '1h' });
-          if (same) {
-            res.status(200).json({ success: same, token });
-          } else {
-            res.status(401)
-            .json({ error: 'Email and Password combination not correct' });
-          }
-        });
+        if (user) {
+          bcrypt.compare(req.body.password, user.password_digest, (err, same) => {
+            const userData = {
+              id: user.dataValues.id,
+              username: user.dataValues.username,
+              first_name: user.dataValues.first_name,
+              last_name: user.dataValues.last_name,
+              email: user.dataValues.email,
+              role_id: user.dataValues.role_id
+            };
+            const token = jwt.sign({ user: userData }, process.env.SECRET_KEY,
+              { expiresIn: '1h' });
+            if (same) {
+              res.status(200).json({ success: same, token });
+            } else {
+              res.status(401)
+              .json({ error: 'Email and Password combination not correct' });
+            }
+          });
+        } else {
+          res.status(404).json({ error: 'User not found' });
+        }
       })
       .catch((err) => {
-        res.status(404).json({ error: err.message });
+        res.status(500).json({ error: err.message });
       });
   },
   createUser(req, res) {

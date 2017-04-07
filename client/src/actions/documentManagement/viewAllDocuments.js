@@ -1,8 +1,8 @@
 import axios from 'axios';
 import actionTypes from '../actionTypes';
 
-export default function viewAllDocumentsAction(token) {
-  return function (dispatch) {
+export default (token) => {
+  return (dispatch) => {
     return axios.get('/api/v1/documents', {
       headers: {
         Authorization: `Bearer ${token}`
@@ -22,5 +22,6 @@ export default function viewAllDocumentsAction(token) {
         });
       });
   };
-}
+};
+
 

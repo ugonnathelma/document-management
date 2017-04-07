@@ -1,8 +1,8 @@
 import axios from 'axios';
 import actionTypes from '../actionTypes';
 
-export default function paginateUserAction(token, offset, limit) {
-  return function (dispatch) {
+export default (token, offset, limit) => {
+  return (dispatch) => {
     return axios.get(`/api/v1/users?limit=${limit}&offset=${offset}`, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -22,5 +22,6 @@ export default function paginateUserAction(token, offset, limit) {
         });
       });
   };
-}
+};
+
 

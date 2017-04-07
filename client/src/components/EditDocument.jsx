@@ -47,7 +47,6 @@ class EditDocument extends Component {
   componentWillMount() {
     const token = window.localStorage.getItem('token');
     if (token) {
-      this.setState({ userid: jwtDecode(token).user.id });
       this.props.viewDocument(token, this.props.params.id);
     }
   }
@@ -57,6 +56,7 @@ class EditDocument extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps, nextProps);
     this.setState({
       title: nextProps.document.title,
       access: nextProps.document.access,
@@ -81,6 +81,7 @@ class EditDocument extends Component {
 
   render() {
     if (!window.localStorage.getItem('token')) {
+      console.log("no token");
       browserHistory.push('/');
     }
     return (

@@ -1,9 +1,9 @@
 import axios from 'axios';
 import actionTypes from '../actionTypes';
 
-export default function getRoleTitleAction(roleid) {
+export default (roleid) => {
   const token = window.localStorage.getItem('token');
-  return function (dispatch) {
+  return (dispatch) => {
     return axios.get(`/api/v1/roles/${roleid}`, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -22,4 +22,5 @@ export default function getRoleTitleAction(roleid) {
         });
       });
   };
-}
+};
+

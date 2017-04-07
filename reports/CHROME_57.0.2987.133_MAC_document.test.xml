@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="3"
+            failures="1"
+            tests="1">
+
+  <testsuite name="document.test"
+    errors="3" failures="1" hostname="" id="" package="document.test" skipped="0"
+    tests="1" time="9.197" timestamp="Thu, 06 Apr 2017 19:27:42 GMT">
+  
+    <testcase name="Documents Page" classname="document.test" time="9.197" assertions="3">
+
+    
+<system-out>[[ATTACHMENT|/Users/tugonna/Desktop/DocManagement/screenshots/document.test/Documents-Page_ERROR_Apr-06-2017-202750-GMT+0100.png]][[ATTACHMENT|/Users/tugonna/Desktop/DocManagement/screenshots/document.test/Documents-Page_ERROR_Apr-06-2017-202750-GMT+0100.png]][[ATTACHMENT|/Users/tugonna/Desktop/DocManagement/screenshots/document.test/Documents-Page_ERROR_Apr-06-2017-202750-GMT+0100.png]]</system-out>
+      <failure message="Testing if the URL equals &quot;http://localhost:3000/dashboard&quot;.">    at Object.DocumentsPage [as Documents Page] (/Users/tugonna/Desktop/DocManagement/test/e2e/document.test.js:13:15)
+    at _combinedTickCallback (internal/process/next_tick.js:67:7)</failure>
+
+    
+    </testcase>
+      <system-err>
+        ERROR: Unable to locate element: &quot;input#title&quot; using: css selector
+    at Object.DocumentsPage [as Documents Page] (/Users/tugonna/Desktop/DocManagement/test/e2e/document.test.js:9:8)
+    at Module.call (/Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/lib/runner/module.js:62:34)
+    at /Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/lib/runner/testcase.js:70:29
+    at _fulfilled (/Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/node_modules/q/q.js:834:54)
+    at self.promiseDispatch.done (/Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/node_modules/q/q.js:863:30)
+    at Promise.promise.promiseDispatch (/Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/node_modules/q/q.js:796:13)
+    at /Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/node_modules/q/q.js:556:49
+    at runSingle (/Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/node_modules/q/q.js:137:13)
+    at flush (/Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/node_modules/q/q.js:125:13)
+    at _combinedTickCallback (internal/process/next_tick.js:67:7)
+ERROR: Unable to locate element: &quot;textarea#content&quot; using: css selector
+    at Object.DocumentsPage [as Documents Page] (/Users/tugonna/Desktop/DocManagement/test/e2e/document.test.js:10:8)
+    at Module.call (/Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/lib/runner/module.js:62:34)
+    at /Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/lib/runner/testcase.js:70:29
+    at _fulfilled (/Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/node_modules/q/q.js:834:54)
+    at self.promiseDispatch.done (/Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/node_modules/q/q.js:863:30)
+    at Promise.promise.promiseDispatch (/Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/node_modules/q/q.js:796:13)
+    at /Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/node_modules/q/q.js:556:49
+    at runSingle (/Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/node_modules/q/q.js:137:13)
+    at flush (/Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/node_modules/q/q.js:125:13)
+    at _combinedTickCallback (internal/process/next_tick.js:67:7)
+ERROR: Unable to locate element: &quot;button[type=&quot;submit&quot;]&quot; using: css selector
+    at Object.DocumentsPage [as Documents Page] (/Users/tugonna/Desktop/DocManagement/test/e2e/document.test.js:11:8)
+    at Module.call (/Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/lib/runner/module.js:62:34)
+    at /Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/lib/runner/testcase.js:70:29
+    at _fulfilled (/Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/node_modules/q/q.js:834:54)
+    at self.promiseDispatch.done (/Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/node_modules/q/q.js:863:30)
+    at Promise.promise.promiseDispatch (/Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/node_modules/q/q.js:796:13)
+    at /Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/node_modules/q/q.js:556:49
+    at runSingle (/Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/node_modules/q/q.js:137:13)
+    at flush (/Users/tugonna/Desktop/DocManagement/node_modules/nightwatch/node_modules/q/q.js:125:13)
+    at _combinedTickCallback (internal/process/next_tick.js:67:7)
+      </system-err>
+  
+  
+  </testsuite>
+</testsuites>

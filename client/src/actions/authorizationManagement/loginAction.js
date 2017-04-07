@@ -2,12 +2,13 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import actionTypes from '../actionTypes';
 
-export default function loginAction(credentials) {
-  return function (dispatch) {
+export default (credentials) => {
+  return (dispatch) => {
     return axios.post('/api/v1/users/login', credentials)
       .then((response) => {
         const token = response.data.token;
         const user = jwtDecode(token).user;
+        window.localStorage.setItem('token', token);
         dispatch({
           type: actionTypes.LOGIN_SUCCESSFUL,
           user,
@@ -21,5 +22,6 @@ export default function loginAction(credentials) {
         });
       });
   };
-}
+};
+
 

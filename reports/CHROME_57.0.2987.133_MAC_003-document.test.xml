@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="1"
+            tests="3">
+
+  <testsuite name="003-document.test"
+    errors="0" failures="1" hostname="" id="" package="003-document.test" skipped="0"
+    tests="3" time="32.07" timestamp="Fri, 07 Apr 2017 00:10:35 GMT">
+  
+    <testcase name="Create Document" classname="003-document.test" time="7.673" assertions="11">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Edit Document" classname="003-document.test" time="6.800" assertions="9">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Delete Document" classname="003-document.test" time="17.59" assertions="8">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+      <failure message="Expected element &lt;table#document-list tr:first-of-type&gt;td.doc-title&gt; text to not equal: &quot;Chosen One&quot;">    at Object.DeleteDocument [as Delete Document] (/Users/tugonna/Desktop/DocManagement/test/e2e/003-document.test.js:75:15)
+    at _combinedTickCallback (internal/process/next_tick.js:67:7)</failure>
+
+    
+    </testcase>
+  
+  
+  </testsuite>
+</testsuites>

@@ -1,8 +1,8 @@
 import axios from 'axios';
 import actionTypes from '../actionTypes';
 
-export default function paginateRoleAction(token, offset, limit) {
-  return function (dispatch) {
+export default (token, offset, limit) => {
+  return (dispatch) => {
     return axios.get(`/api/v1/roles?limit=${limit}&offset=${offset}`, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -22,5 +22,6 @@ export default function paginateRoleAction(token, offset, limit) {
         });
       });
   };
-}
+};
+
 
