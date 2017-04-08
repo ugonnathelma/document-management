@@ -19,7 +19,7 @@
   "test_settings": {
     "default": {
       "screenshots": {
-        "enabled": true,
+        "enabled": false,
         "path": "./screenshots/"
       },
       "launch_url": "https://localhost:3000",

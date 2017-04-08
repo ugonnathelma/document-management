@@ -37,6 +37,7 @@ module.exports = {
       .assert.containsText('div.login-feedback', 'Login Successful')
       .pause(1000)
       .url('http://localhost:3000/roles')
+      .pause(2000)
       .click('table#role_list tbody tr:last-of-type i.delete-btn')
       .pause(500)
       .waitForElementVisible('button.confirm')

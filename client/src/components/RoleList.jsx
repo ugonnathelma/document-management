@@ -43,7 +43,7 @@ const RoleList = ({ roles, deleteRole }) => {
                 (role.title !== 'admin' && role.title !== 'regular' ?
 
                   <td><Link to={`/edit-role/${role.id}`}>
-                    <i className="small material-icons delete-btn">mode_edit</i></Link></td>
+                    <i className="small material-icons">mode_edit</i></Link></td>
                   : <td />
                 )}
             {
