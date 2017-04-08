@@ -27,6 +27,7 @@ class ViewAllUsers extends Component {
     this.searchUser = this.searchUser.bind(this);
     this.refreshUsers = this.refreshUsers.bind(this);
     this.updateUserRole = this.updateUserRole.bind(this);
+    this.changeLimit = this.changeLimit.bind(this);
   }
 
   componentWillMount() {
@@ -41,9 +42,14 @@ class ViewAllUsers extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-updateUserRole (newRoleId, userId) {
-  this.props.editUserRole(this.state.token, { role_id: newRoleId }, userId);
-}
+  updateUserRole(newRoleId, userId) {
+    this.props.editUserRole(this.state.token, { role_id: newRoleId }, userId);
+  }
+
+  changeLimit(value) {
+    this.setState({ limit: value });
+    this.refreshUsers();
+  }
 
   searchUser() {
     this.props.searchUser(this.state.token, this.state.searchTerms);
@@ -78,7 +84,12 @@ updateUserRole (newRoleId, userId) {
                 onChange={this.handleChange}
               /><button className="btn col s2" onClick={this.searchUser}>
                 <i className="material-icons">search</i></button></div></div>
-          <div className="col m10" /><div className="col m2">
+          <div className="col m1" />
+          <div className="col m4 pagination-links">
+            <Link onClick={() => this.changeLimit(5)}>View 5 per page</Link>
+            <Link onClick={() => this.changeLimit(10)}>View 10 per page</Link>
+            <Link onClick={() => this.changeLimit(20)} >View 20 per page</Link></div>
+          <div className="col m5" /><div className="col m2">
             <Link onClick={this.refreshUsers}>
               <i className="material-icons refresh-list-btn">
                 settings_backup_restore</i></Link></div>

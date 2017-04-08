@@ -13,7 +13,11 @@ dotenv.config();
 const expect = chai.expect;
 const JWT_SECRET = process.env.SECRET_KEY;
 const adminToken = jwt.sign(userFixtures.existingAdminUser, JWT_SECRET);
-const users = [userFixtures.adminUser, userFixtures.existingAdminUser, userFixtures.regularUser, userFixtures.secondRegularUser, userFixtures.existingRegularUser];
+const users = [userFixtures.adminUser,
+  userFixtures.existingAdminUser,
+  userFixtures.regularUser,
+  userFixtures.secondRegularUser,
+  userFixtures.existingRegularUser];
 
 describe('Search', () => {
   before(function (done) {

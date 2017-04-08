@@ -14,7 +14,7 @@ class ViewAllDocuments extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      limit: 2,
+      limit: 10,
       searchTerms: '',
       token: window.localStorage.getItem('token')
     };
