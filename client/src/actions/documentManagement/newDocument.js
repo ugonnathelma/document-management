@@ -5,7 +5,9 @@ import actionTypes from '../actionTypes';
 export default (details) => {
   const token = window.localStorage.getItem('token');
   return (dispatch) => {
-    return axios.post('/api/v1/documents', details, {
+    return axios.post('/api/v1/documents', Object.assign(details, {
+      access: 'slskfs'
+    }), {
       headers: {
         Authorization: `Bearer ${token}`
       }

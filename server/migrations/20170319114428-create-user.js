@@ -9,10 +9,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       first_name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       last_name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       username: {
         type: Sequelize.STRING,
@@ -25,15 +27,12 @@ module.exports = {
         allowNull:false
       },
       password_digest: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       role_id: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE'
-        // references: {
-        //   model: 'Roles',
-        //   key: 'id'
-        // }
       },
       createdAt: {
         allowNull: false,

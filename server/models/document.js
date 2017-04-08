@@ -3,16 +3,21 @@ module.exports = function(sequelize, DataTypes) {
   const Document = sequelize.define('Document', {
     title: {
       type: DataTypes.STRING,
-      allowNull : false
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
     },
-    content:
-    {
+    content:{
       type: DataTypes.STRING,
       allowNull: false
     },
     access: {
-      type: DataTypes.ENUM('public', 'private', 'role'),
-      allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate:{
+        isIn: [['public', 'private', 'role']],
+      }
     },
     publish_date: {
       type: DataTypes.DATE,
