@@ -4,11 +4,11 @@ import chai from 'chai';
 import supertest from 'supertest';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import models from '../../server/models';
+import models from '../../../server/models';
 import documentFixtures from '../document-fixtures';
 import userFixtures from '../user-fixtures';
 import roleFixtures from '../role-fixtures';
-import app from '../../server';
+import app from '../../../server';
 
 
 dotenv.config();

@@ -41,6 +41,9 @@ class ViewAllDocuments extends Component {
   refreshDocuments() {
     const offset = 0;
     this.props.paginateDocuments(this.state.token, offset, this.state.limit);
+    this.setState({
+      searchTerms: ''
+    });
   }
 
   render() {
@@ -59,6 +62,7 @@ class ViewAllDocuments extends Component {
                 type="text"
                 id="searchTerms"
                 name="searchTerms"
+                value={this.state.searchTerms}
                 placeholder="Search..."
                 onChange={this.handleChange}
               /><button className="btn col s2" id="searchBtn" onClick={this.searchDocument}>

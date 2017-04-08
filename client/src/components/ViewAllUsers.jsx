@@ -52,6 +52,9 @@ updateUserRole (newRoleId, userId) {
   refreshUsers() {
     const offset = 0;
     this.props.paginateUsers(this.state.token, offset, this.state.limit);
+    this.setState({
+      searchTerms: ''
+    });
   }
 
   render() {
@@ -70,6 +73,7 @@ updateUserRole (newRoleId, userId) {
                 type="text"
                 id="searchTerms"
                 name="searchTerms"
+                value={this.state.searchTerms}
                 placeholder="Search..."
                 onChange={this.handleChange}
               /><button className="btn col s2" onClick={this.searchUser}>

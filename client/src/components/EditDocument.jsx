@@ -23,9 +23,8 @@ const ResponseMessage = (props) => {
         Document not Updated
       </div>
     );
-  } else {
-    return (<span />);
   }
+  return (<span />);
 };
 
 
@@ -87,7 +86,7 @@ class EditDocument extends Component {
         <Header />
         <Sidebar />
         <div className="col s12 workspace">
-          <div className="row workspace-header"><h4></h4></div>
+          <div className="row workspace-header"><h4>Edit Document</h4></div>
           <form onSubmit={this.handleSubmit} className="panel">
             <div className="field row">
               <div className="col m9 s12 document-name-field">

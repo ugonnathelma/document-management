@@ -1,4 +1,4 @@
-const config = require('../../nightwatch.conf.js');
+const config = require('../../../nightwatch.conf.js');
 
 module.exports = { // adapted from: https://git.io/vodU0
   'Login Page': function (browser) {

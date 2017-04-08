@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import dotenv from 'dotenv';
-import db from '../../server/models';
+import db from '../../../server/models';
 import documentFixtures from '../document-fixtures';
 
 dotenv.config();

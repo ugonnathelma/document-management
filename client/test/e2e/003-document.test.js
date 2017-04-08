@@ -1,4 +1,4 @@
-const config = require('../../nightwatch.conf.js');
+const config = require('../../../nightwatch.conf.js');
 
 module.exports = {
   'Create Document': function (browser) {
