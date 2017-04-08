@@ -2,23 +2,21 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 import actionTypes from '../actionTypes';
 
-export default (details, token, documentid) => {
+export default (details, token, roleid) => {
   return (dispatch) => {
-    return axios.put(`/api/v1/documents/${documentid}`, details, {
+    return axios.put(`/api/v1/roles/${roleid}`, details, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
-    .then(() => {
-      browserHistory.push('/');
+    .then((res) => {
+      browserHistory.push('/roles');
     }).catch((err) => {
       dispatch({
-        type: actionTypes.DOCUMENT_UPDATE_FAILED,
+        type: actionTypes.ROLE_UPDATE_FAILED,
         status: 'failed',
         error: err.message
       });
     });
   };
 };
-
-

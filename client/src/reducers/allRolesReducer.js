@@ -14,13 +14,13 @@ export default function allRolesReducer(state = initialState, action) {
           return role.id !== action.roleId;
         })
       };
+    case actionTypes.VIEW_ROLE:
+      return { ...state, role: action.role };
     case actionTypes.CLEAR_ALL:
       return {
         ...state,
         roles: action.roles
       };
-    case actionTypes.FIND_ROLE:
-      return { ...state, roles: action.roles, pageCount: action.pageCount };
     default:
       return state;
   }

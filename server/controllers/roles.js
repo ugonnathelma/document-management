@@ -28,6 +28,27 @@ const RoleController = {
       });
   },
 
+  editRole: (req, res) => {
+    Role.findOne({
+      where: {
+        id: req.params.id
+      }
+    })
+      .then((role) => {
+        role.title = req.body.title;
+        role.save()
+        .then(() => {
+          res.status(200, 'Role Updated').json(role);
+        })
+        .catch((err) => {
+          res.status(500).json({ error: err.message });
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  },
+
   findRole: (req, res) => {
     Role.findOne({ where: { id: req.params.id } })
     .then((role) => {

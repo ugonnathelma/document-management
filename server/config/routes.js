@@ -23,6 +23,7 @@ router.get('/api/v1/search/documents/', Authorization.isAuthorized, Documents.se
 
 router.post('/api/v1/roles', Authorization.isAuthorized, Authorization.isAdmin, Roles.createRole);
 router.get('/api/v1/roles', Authorization.isAuthorized, Authorization.isAdmin, Roles.getRoles);
+router.put('/api/v1/roles/:id', Authorization.isAuthorized, Authorization.isAdmin, Roles.editRole);
 router.delete('/api/v1/roles/:id', Authorization.isAuthorized, Authorization.isAdmin, Roles.deleteRole);
 router.get('/api/v1/roles/:id', Authorization.isAuthorized, Roles.findRole);
 

@@ -10,6 +10,7 @@ import ViewAllRoles from './components/ViewAllRoles.jsx';
 import ViewAllUsers from './components/ViewAllUsers.jsx';
 import CreateRole from './components/CreateRole.jsx';
 import About from './components/About.jsx';
+import EditRole from './components/EditRole.jsx';
 
 export default(
   <Route path="/">
@@ -22,6 +23,7 @@ export default(
     <Route path="/edit-document/:id" component={EditDocument} />
     <Route path="/view-document/:id" component={ViewDocument} />
     <Route path="/create-role" component={CreateRole} />
+    <Route path="/edit-role/:id" component={EditRole} />
     <Route path="/users" component={ViewAllUsers} />
     <Route path="/roles" component={ViewAllRoles} />
     <Route path="/about" component={About} />

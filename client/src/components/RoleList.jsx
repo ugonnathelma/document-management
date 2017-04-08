@@ -41,6 +41,14 @@ const RoleList = ({ roles, deleteRole }) => {
             <td>{moment(role.created_on).format('L')}</td>
             {
                 (role.title !== 'admin' && role.title !== 'regular' ?
+
+                  <td><Link to={`/edit-role/${role.id}`}>
+                    <i className="small material-icons delete-btn">mode_edit</i></Link></td>
+                  : <td />
+                )}
+            {
+                (role.title !== 'admin' && role.title !== 'regular' ?
+
                   <td><Link onClick={() => confirmDeletion(deleteRole, role.id)}>
                     <i className="small material-icons delete-btn">delete</i></Link></td>
                   : <td />
