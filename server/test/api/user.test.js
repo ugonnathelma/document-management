@@ -5,7 +5,7 @@ import supertest from 'supertest';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import models from '../../../server/models';
-import userFixtures from '../user-fixtures';
+import userFixtures from '../helpers/user-fixtures';
 import app from '../../../server';
 
 dotenv.config();

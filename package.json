@@ -5,7 +5,7 @@
   "scripts": {
     "start": "concurrently \"npm run bundle\" \"babel-watch server\"",
     "start:dev": "concurrently \"npm run bundle\" \"babel-watch server\"",
-    "test": "NODE_ENV=test mocha --compilers js:babel-core/register test/**/*.test.js",
+    "test": "NODE_ENV=test mocha --compilers js:babel-core/register server/test/**/*.test.js",
     "bundle": "webpack --watch",
     "bundle:prod": "webpack",
     "build:client": "webpack-dev-server --progress --inline",

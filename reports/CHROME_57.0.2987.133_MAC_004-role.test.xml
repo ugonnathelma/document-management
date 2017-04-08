@@ -5,9 +5,9 @@
 
   <testsuite name="004-role.test"
     errors="0" failures="0" hostname="" id="" package="004-role.test" skipped="0"
-    tests="2" time="17.09" timestamp="Fri, 07 Apr 2017 19:00:11 GMT">
+    tests="2" time="15.12" timestamp="Sat, 08 Apr 2017 15:35:49 GMT">
   
-    <testcase name="Create Role" classname="004-role.test" time="10.15" assertions="10">
+    <testcase name="Create Role" classname="004-role.test" time="8.604" assertions="10">
 
     
 
@@ -30,7 +30,7 @@
     
     </testcase>
   
-    <testcase name="Delete Role" classname="004-role.test" time="6.941" assertions="5">
+    <testcase name="Delete Role" classname="004-role.test" time="6.514" assertions="5">
 
     
 

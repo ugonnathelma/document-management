@@ -5,9 +5,9 @@
 
   <testsuite name="003-document.test"
     errors="0" failures="0" hostname="" id="" package="003-document.test" skipped="0"
-    tests="3" time="28.72" timestamp="Fri, 07 Apr 2017 18:59:42 GMT">
+    tests="3" time="23.97" timestamp="Sat, 08 Apr 2017 15:35:25 GMT">
   
-    <testcase name="Create Document" classname="003-document.test" time="10.36" assertions="11">
+    <testcase name="Create Document" classname="003-document.test" time="7.792" assertions="11">
 
     
 
@@ -32,7 +32,7 @@
     
     </testcase>
   
-    <testcase name="Edit Document" classname="003-document.test" time="8.304" assertions="9">
+    <testcase name="Edit Document" classname="003-document.test" time="7.351" assertions="9">
 
     
 
@@ -53,7 +53,7 @@
     
     </testcase>
   
-    <testcase name="Delete Document" classname="003-document.test" time="10.06" assertions="8">
+    <testcase name="Delete Document" classname="003-document.test" time="8.823" assertions="8">
 
     
 
@@ -68,7 +68,7 @@
     
 
     
-<system-out>[[ATTACHMENT|/Users/tugonna/Desktop/DocManagement/screenshots/003-document.test/Delete-Document_ERROR_Apr-07-2017-200011-GMT+0100.png]]</system-out>
+<system-out>[[ATTACHMENT|/Users/tugonna/Desktop/DocManagement/screenshots/003-document.test/Delete-Document_ERROR_Apr-08-2017-163549-GMT+0100.png]]</system-out>
     
     </testcase>
   

@@ -14,13 +14,14 @@ class ViewAllDocuments extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      limit: 10,
+      limit: 2,
       searchTerms: '',
       token: window.localStorage.getItem('token')
     };
     this.handleChange = this.handleChange.bind(this);
     this.searchDocument = this.searchDocument.bind(this);
     this.refreshDocuments = this.refreshDocuments.bind(this);
+    this.changeLimit = this.changeLimit.bind(this);
   }
 
   componentWillMount() {
@@ -36,6 +37,11 @@ class ViewAllDocuments extends Component {
 
   searchDocument() {
     this.props.searchDocument(this.state.token, this.state.searchTerms);
+  }
+
+  changeLimit(value) {
+    this.setState({ limit: value });
+    this.refreshDocuments();
   }
 
   refreshDocuments() {
@@ -67,7 +73,13 @@ class ViewAllDocuments extends Component {
                 onChange={this.handleChange}
               /><button className="btn col s2" id="searchBtn" onClick={this.searchDocument}>
                 <i className="material-icons">search</i></button></div></div>
-          <div className="col m10" /><div className="col m2">
+          <div className="col m1" />
+          <div className="col m4 pagination-links">
+            <Link onClick={() => this.changeLimit(5)}>View 5 per page</Link>
+            <Link onClick={() => this.changeLimit(10)}>View 10 per page</Link>
+            <Link onClick={() => this.changeLimit(20)} >View 20 per page</Link></div>
+          <div className="col m5" />
+          <div className="col m2">
             <Link onClick={this.refreshDocuments}>
               <i className="material-icons  refresh-list-btn">
                 settings_backup_restore</i></Link></div>

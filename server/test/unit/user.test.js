@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import dotenv from 'dotenv';
 import db from '../../../server/models';
-import userFixtures from '../user-fixtures';
+import userFixtures from '../helpers/user-fixtures';
 
 dotenv.config();
 

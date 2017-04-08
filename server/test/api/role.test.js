@@ -4,8 +4,8 @@ import supertest from 'supertest';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import models from '../../../server/models';
-import userFixtures from '../user-fixtures';
-import roleFixtures from '../role-fixtures';
+import userFixtures from '../helpers/user-fixtures';
+import roleFixtures from '../helpers/role-fixtures';
 import app from '../../../server';
 
 dotenv.config();
@@ -20,7 +20,7 @@ const regularToken = jwt.sign(userFixtures.existingRegularUser, JWT_SECRET);
 describe('Role', () => {
   before((done) => {
     models.User.bulkCreate([userFixtures.existingAdminUser,
-    userFixtures.existingRegularUser])
+      userFixtures.existingRegularUser])
     .then(() => {
       done();
     });

@@ -4,8 +4,8 @@ import supertest from 'supertest';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import models from '../../../server/models';
-import documentFixtures from './../document-fixtures';
-import userFixtures from './../user-fixtures';
+import documentFixtures from '../helpers/document-fixtures';
+import userFixtures from '../helpers/user-fixtures';
 import app from '../../../server';
 
 dotenv.config();
