@@ -1,4 +1,5 @@
 import { Document, Role, sequelize, User } from '../models/index';
+import { generateGetDocumentQuery, generateSearchDocumentQuery } from '../helpers/helpers';
 
 const PAGE_LIMIT = 10;
 const PAGE_OFFSET = 0;
@@ -49,14 +50,8 @@ const DocumentController = {
             } : { documents: [], pageCount: 0 });
           });
         } else {
-          sequelize.query(`SELECT *, COUNT(*) OVER () FROM "Documents"
-            WHERE access = 'public'
-            OR (access = 'role' AND role_id = ${role.id})
-            OR (access = 'private' AND user_id = ${req.decoded.id})
-            ORDER BY publish_date ${orderDirection}
-            LIMIT ${queryParams.limit} OFFSET ${queryParams.offset};`,
-            { type: sequelize.QueryTypes.SELECT }
-            )
+          sequelize.query(generateGetDocumentQuery(req.decoded.id, role.id, orderDirection, queryParams),
+            { type: sequelize.QueryTypes.SELECT })
             .then((results) => {
               return res.status(200).json(results.length ?
               { documents: results, pageCount: Math.ceil(results[0].count / queryParams.limit) } :
@@ -168,13 +163,7 @@ const DocumentController = {
             } : { documents: [], pageCount: 0 });
           });
         } else {
-          sequelize.query(`SELECT *, COUNT(*) OVER () FROM "Documents"
-            WHERE title ILIKE '%${title}%'
-            AND (access = 'public'
-            OR (access = 'role' AND role_id = ${role.id})
-            OR (access = 'private' AND user_id = ${req.decoded.id}))
-            ORDER BY publish_date ${orderDirection}
-            LIMIT ${queryParams.limit} OFFSET ${queryParams.offset};`,
+          sequelize.query(generateSearchDocumentQuery(title, req.decoded.id, role.id, orderDirection, queryParams),
             { type: sequelize.QueryTypes.SELECT }
             )
             .then((results) => {
