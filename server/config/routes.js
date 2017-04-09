@@ -12,6 +12,8 @@ router.get('/api/v1/users/:id', Authorization.isAuthorized, Users.findUser);
 router.put('/api/v1/users/:id', Authorization.isAuthorized, Users.updateUserInfo);
 router.delete('/api/v1/users/:id', Authorization.isAuthorized, Authorization.isAdmin, Users.deleteUser);
 router.get('/api/v1/search/users/', Authorization.isAuthorized, Authorization.isAdmin, Users.searchUsers);
+router.put('/api/v1/user/change-password/:id', Authorization.isAuthorized, Users.changePassword);
+
 
 router.post('/api/v1/documents', Authorization.isAuthorized, Documents.createDocument);
 router.get('/api/v1/documents', Authorization.isAuthorized, Documents.getDocuments);

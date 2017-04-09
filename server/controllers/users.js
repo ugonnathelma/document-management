@@ -137,6 +137,35 @@ const UserController = {
         });
     }
   },
+  changePassword(req, res) {
+    if (req.decoded) {
+      User.find({
+        where: {
+          id: req.params.id
+        }
+      })
+        .then((user) => {
+          if (user) {
+            bcrypt.compare(req.body.oldPassword, user.password_digest, (err, same) => {
+              if (err) {
+                res.status(500).json({ error: err.message });
+              }
+              if (req.body.password && req.body.password_confirmation) {
+                user.password = req.body.password;
+                user.password_confirmation = req.body.password_confirmation;
+              }
+              user.save()
+              .then(() => {
+                return res.status(200).json(req.body);
+              })
+              .catch((err) => {
+                res.status(500).json({ error: err.message });
+              });
+            });
+          }
+        });
+    }
+  },
 
   deleteUser(req, res) {
     User.destroy({

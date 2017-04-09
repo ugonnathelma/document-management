@@ -32,5 +32,7 @@ export default keymirror({
   ROLE_CREATE_FAILED: null,
   ROLE_UPDATE_FAILED: null,
   VIEW_ROLE: null,
-  VIEW_USER: null
+  VIEW_USER: null,
+  PASSWORD_UPDATED: null,
+  PASSWORD_UPDATE_FAILED: null
 });

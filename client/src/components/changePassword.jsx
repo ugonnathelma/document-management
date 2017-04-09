@@ -1,16 +1,20 @@
 import { connect } from 'react-redux';
+import jwtDecode from 'jwt-decode';
 import { browserHistory } from 'react-router';
 import React, { Component, PropTypes } from 'react';
 import Header from './Header.jsx';
 import Sidebar from './Sidebar.jsx';
-import createRoleAction from '../actions/roleManagement/newRole.js';
+import changePasswordAction from '../actions/userManagement/changePassword.js';
 import checkTokenAction from '../actions/authorizationManagement/checkToken.js';
 
-class CreateRole extends Component {
+
+class ChangePassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: ''
+      id: '',
+      password: '',
+      password_confirmation: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -18,13 +22,11 @@ class CreateRole extends Component {
     this.props.CheckToken();
   }
 
-  componentDidMount() {
-    $(this.refs.access).material_select(this.handleChange.bind(this));
-  }
-
   componentWillReceiveProps(nextProps) {
-    if (nextProps.status === 'success') {
-      browserHistory.push('/roles');
+    if (nextProps.status === 'updated') {
+      swal('Password Updated!', 'Your password has been updated. Please sign in again', 'success');
+      localStorage.removeItem('token');
+      browserHistory.push('/');
     }
   }
 
@@ -34,7 +36,8 @@ class CreateRole extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.changePassword(this.state);
+    const token = localStorage.getItem('token');
+    this.props.changePassword(token, this.state, jwtDecode(token).user.id);
   }
 
   render() {
@@ -51,8 +54,8 @@ class CreateRole extends Component {
             <div className="field row">
               <div className="col m9 s12 document-name-field">
                 <input
-                  type="text" name="old-password"
-                  id="old-password"
+                  type="password" name="oldPassword"
+                  id="oldPassword"
                   onChange={this.handleChange}
                   placeholder="Enter Old Password"
                 />
@@ -61,10 +64,20 @@ class CreateRole extends Component {
             <div className="field row">
               <div className="col m9 s12 document-name-field">
                 <input
-                  type="text" name="new-password"
-                  id="new-password"
+                  type="password" name="password"
+                  id="password"
                   onChange={this.handleChange}
                   placeholder="Enter New Password"
+                />
+              </div>
+            </div>
+            <div className="field row">
+              <div className="col m9 s12 document-name-field">
+                <input
+                  type="password" name="password_confirmation"
+                  id="password_confirmation"
+                  onChange={this.handleChange}
+                  placeholder="Enter New Password Confirmation"
                 />
               </div>
             </div>
@@ -79,21 +92,27 @@ class CreateRole extends Component {
 }
 
 
-CreateRole.PropTypes = {
-  role: PropTypes.object.isRequired,
+ChangePassword.PropTypes = {
   CheckToken: PropTypes.func
 };
 
-CreateRole.contextTypes = {
+ChangePassword.contextTypes = {
   router: PropTypes.object
+};
+
+const mapStoretoProps = (state, ownProps) => {
+  return {
+    status: state.allUsersReducer.status
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changePassword: roleDetails => dispatch(changePasswordAction(roleDetails)),
+    changePassword: (usertoken, passwordDetails, userid) =>
+    dispatch(changePasswordAction(usertoken, passwordDetails, userid)),
     CheckToken: () => dispatch(checkTokenAction())
   };
 };
 
-export default connect(null, mapDispatchToProps)(CreateRole);
+export default connect(mapStoretoProps, mapDispatchToProps)(ChangePassword);
 
