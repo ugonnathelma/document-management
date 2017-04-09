@@ -81,7 +81,7 @@ nav {
 .workspace {
 	height:auto;
 	padding:20px;
-	background: white;
+	background: transparent !important;
 		min-height:450px;
 }
 
@@ -91,6 +91,7 @@ nav {
 	margin-top:40px;
 	padding:40px;
 	margin-bottom: 40px;
+	background: white;
 }
 .loginerror {
 	color: $white_80;
@@ -274,4 +275,13 @@ padding-top:50px !important;
 #changePassword {
 	color: white !important;
 	font-weight: bold;
+}
+
+.tab a{
+	color:teal !important;
+}
+
+.indicator{
+background: lightseagreen !important;
+color: lightseagreen !important;
 }

@@ -41,10 +41,9 @@ const DocumentController = {
     })
       .then((role) => {
         if (role.title === 'admin') {
-          Document.findAndCountAll(
-            { include: [{ model: User }] },
-              queryParams)
+          Document.findAndCountAll(Object.assign({}, { include: [{ model: User }] }, queryParams))
           .then((result) => {
+              console.log(result.rows, queryParams, result.rows.length, result.count);
             return res.status(200)
             .json(result.rows.length ? {
               documents: result.rows,
@@ -158,7 +157,6 @@ const DocumentController = {
         if (role.title === 'admin') {
           Document.findAndCountAll(Object.assign({}, { where: { title: { $iLike: `%${title}%` } }, include: [{ model: User }] }, queryParams))
           .then((result) => {
-            console.log(result);
             return res.status(200)
             .json(result.rows.length ? {
               documents: result.rows,

@@ -82,11 +82,32 @@ class ViewAllDocuments extends Component {
             <Link onClick={this.refreshDocuments}>
               <i className="material-icons  refresh-list-btn">
                 settings_backup_restore</i></Link></div>
-          <DocumentList
-            deleteDocument={this.props.deleteDocument}
-            userid={this.state.userid}
-            documents={this.props.paginated || this.props.documents || []}
-          />
+          <div className="doc_list z-depth-4 panel">
+            <ul id="tabs-swipe-demo" className="tabs">
+              <li className="tab col s6"><Link to="#test-swipe-1">My Documents</Link></li>
+              <li className="tab col s6">
+                <Link className="active" to="#test-swipe-2">Other Documents</Link></li>
+            </ul>
+          </div>
+          <div id="test-swipe-1" className="">
+            <DocumentList
+              deleteDocument={this.props.deleteDocument}
+              userid={this.state.userid}
+              documents={this.props.documents ?
+              this.props.documents.filter(document => document.user_id === this.state.userid) : []}
+            />
+          </div>
+          <div id="test-swipe-2" className="">
+            <DocumentList
+              deleteDocument={this.props.deleteDocument}
+              userid={this.state.userid}
+              documents={this.props.documents ?
+              this.props.documents.filter(document => document.user_id !== this.state.userid) : []}
+            />
+          </div>
+
+
+
           <center>
             <Pagination
               items={this.props.pageCount}
@@ -119,11 +140,11 @@ const mapStoreToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteDocument: documentid =>
-    dispatch(deleteDocumentAction(documentid)),
+      dispatch(deleteDocumentAction(documentid)),
     paginateDocuments: (usertoken, offset, limit) =>
-    dispatch(paginateDocumentAction(usertoken, offset, limit)),
+      dispatch(paginateDocumentAction(usertoken, offset, limit)),
     searchDocument: (usertoken, documentName) =>
-    dispatch(searchDocumentAction(usertoken, documentName))
+      dispatch(searchDocumentAction(usertoken, documentName))
   };
 };
 

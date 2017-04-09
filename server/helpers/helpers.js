@@ -18,7 +18,7 @@ export default {
             AND (access = 'public'
             OR (access = 'role' AND "Documents".role_id = ${roleId})
             OR (access = 'private' AND "Documents".user_id = ${userId}))
-            ORDER BY publish_date DESC
+            ORDER BY publish_date ${orderDirection}
             LIMIT ${queryParams.limit} OFFSET ${queryParams.offset};`;
   }
 };
