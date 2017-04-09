@@ -91,6 +91,7 @@ class LoginPage extends Component {
                 name="email"
                 id="email"
                 onChange={this.handleChange}
+                required
               />
               <label htmlFor="email">Enter your email</label>
             </div>
@@ -104,6 +105,7 @@ class LoginPage extends Component {
                 name="password"
                 id="password"
                 onChange={this.handleChange}
+                required
               />
               <label htmlFor="password">Enter your password</label>
             </div>

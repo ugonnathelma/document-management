@@ -4,7 +4,6 @@ import signupAction from '../actions/authorizationManagement/signUpAction';
 import React, { Component } from 'react';
 import Header from '../components/Header.jsx';
 
-
 class SignUpPage extends Component {
 
   constructor(props) {
@@ -15,11 +14,21 @@ class SignUpPage extends Component {
       last_name: '',
       email: '',
       password: '',
-      password_confirmation: ''
+      password_confirmation: '',
+      success: null,
+      error: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.error === 'unique violation') {
+    this.setState({
+      error: 'User already exists'
+    });
+    }
   }
 
   handleChange(event) {
@@ -28,10 +37,12 @@ class SignUpPage extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.Signup(this.state)
+    // if (this.validateInput(this.state)) {
+      this.props.Signup(this.state)
       .then(() => {
         browserHistory.push('/dashboard');
       });
+    // }
   }
 
   render() {
@@ -43,6 +54,19 @@ class SignUpPage extends Component {
         <Header />
         <div className="col s2 l4 " />
         <form className="col s8 l4 loginForm" onSubmit={this.handleSubmit} >
+          { this.state.error ?
+            <div className="login-feedback error">
+              { this.state.error }
+            </div>
+            : <span />
+          }
+
+          { this.state.success ?
+            <div className="login-feedback success">
+              { this.state.success }
+            </div>
+            : <span />
+          }
           <div className="row">
             <div className="input-field col s12">
               <input
@@ -51,6 +75,7 @@ class SignUpPage extends Component {
                 name="username"
                 id="username"
                 onChange={this.handleChange}
+                required
               />
               <label htmlFor="username">Username</label>
             </div>
@@ -63,6 +88,7 @@ class SignUpPage extends Component {
                 name="first_name"
                 id="first_name"
                 onChange={this.handleChange}
+                required
               />
               <label htmlFor="first_name">Firstname</label>
             </div>
@@ -76,6 +102,7 @@ class SignUpPage extends Component {
                 name="last_name"
                 id="last_name"
                 onChange={this.handleChange}
+                required
               />
               <label htmlFor="last_name">Lastname</label>
             </div>
@@ -89,6 +116,7 @@ class SignUpPage extends Component {
                 name="email"
                 id="email"
                 onChange={this.handleChange}
+                required
               />
               <label htmlFor="email">Enter your email</label>
             </div>
@@ -102,6 +130,7 @@ class SignUpPage extends Component {
                 name="password"
                 id="password"
                 onChange={this.handleChange}
+                required
               />
               <label htmlFor="password">Enter your password</label>
             </div>
@@ -114,6 +143,7 @@ class SignUpPage extends Component {
                   name="password_confirmation"
                   id="password_confirmation"
                   onChange={this.handleChange}
+                  required
                 />
                 <label htmlFor="password_confirmation">Re-enter your password</label>
               </div>
@@ -156,7 +186,8 @@ SignUpPage.contextTypes = {
 
 const mapStoreToProps = (state) => {
   return {
-    user: state.user
+    user: state.signUpReducer.user,
+    error: state.signUpReducer.error
   };
 };
 const mapDispatchToProps = (dispatch) => {
