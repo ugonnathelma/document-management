@@ -13,6 +13,7 @@ import About from './components/About.jsx';
 import EditRole from './components/EditRole.jsx';
 import Profile from './components/ViewUser.jsx';
 import EditProfile from './components/EditUser.jsx';
+import ChangePassword from './components/changePassword.jsx';
 
 export default(
   <Route path="/">
@@ -31,5 +32,6 @@ export default(
     <Route path="/about" component={About} />
     <Route path="/profile/:id" component={Profile} />
     <Route path="/edit-profile" component={EditProfile} />
+    <Route path="/change-password" component={ChangePassword} />
   </Route>
 );
