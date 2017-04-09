@@ -9,9 +9,9 @@ const DocumentController = {
   /**
    * createDocument
    * Create a new document
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   createDocument: (req, res) => {
     let roleId;
@@ -38,9 +38,9 @@ const DocumentController = {
   /**
    * getDocuments
    * Get all documents
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   getDocuments: (req, res) => {
     const orderDirection = req.query.order || 'DESC';
@@ -78,9 +78,9 @@ const DocumentController = {
   /**
    * findDocument
    * Get a particular document
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   findDocument: (req, res) => {
     let queryParams = {};
@@ -114,9 +114,9 @@ const DocumentController = {
   /**
    * updateDocumentInfo
    * Change document details
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   updateDocumentInfo: (req, res) => {
     Document.find({
@@ -148,9 +148,9 @@ const DocumentController = {
   /**
    * deleteDocument
    * Delete a document
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   deleteDocument: (req, res) => {
     if (req.decoded) {
@@ -171,9 +171,9 @@ const DocumentController = {
   /**
    * findUserDocuments
    * Find all documents of a particular user
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   findUserDocuments: (req, res) => {
     Document.all({
@@ -189,9 +189,9 @@ const DocumentController = {
   /**
    * searchDocuments
    * Search for documents with title
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   searchDocuments: (req, res) => {
     const title = req.query.query;

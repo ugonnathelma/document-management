@@ -16,12 +16,14 @@ class ViewUser extends Component {
       email: '',
       password: '',
       role: '',
-      id: jwtDecode(localStorage.getItem('token')).user.id
+      id: jwtDecode(window.localStorage.getItem('token')).user.id,
+      pageId: parseInt(props.params.id, 10)
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentWillMount() {
+    console.log(this.state, this.props, "issa log");
     if (!window.localStorage.getItem('token')) {
       browserHistory.push('/');
     }
@@ -65,10 +67,10 @@ class ViewUser extends Component {
                 <label htmlFor="last_name">Last Name: </label>
                 <span>{this.state.last_name}</span>
               </div>
-              {this.state.id === this.props.params.id ? (
+              {this.state.id === this.state.pageId ? (
                 <div className="row">
                   <label htmlFor="password">Password: </label>
-                  <span>********</span>
+                  <span>******** {this.state.id} {this.state.pageId}</span>
                 </div>
               ) : <span />}
 
@@ -77,14 +79,14 @@ class ViewUser extends Component {
                 <span className="userRole">{this.state.role}</span>
               </div>
 
-              {this.state.id === this.props.params.id ? (
+              {this.state.id === this.state.pageId ?
                 <div className="row">
                   <Link
                     to="/edit-profile"
                     className="btn updateUser"
                   >Edit</Link>
                 </div>
-              ) : <span />}
+               : <span />}
             </form>
             <div />
           </div>

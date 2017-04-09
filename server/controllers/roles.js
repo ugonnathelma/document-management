@@ -5,9 +5,9 @@ const RoleController = {
   /**
    * createRole
    * Create a new role
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   createRole: (req, res) => {
     Role.create({
@@ -24,9 +24,9 @@ const RoleController = {
   /**
    * deleteRole
    * Delete a role
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   deleteRole: (req, res) => {
     Role.destroy({
@@ -45,9 +45,9 @@ const RoleController = {
   /**
    * editRole
    * Change role title
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   editRole: (req, res) => {
     Role.findOne({
@@ -73,9 +73,9 @@ const RoleController = {
   /**
    * findRole
    * Get a particular role
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   findRole: (req, res) => {
     Role.findOne({ where: { id: req.params.id } })
@@ -89,9 +89,9 @@ const RoleController = {
   /**
    * getRoles
    * Get all roles
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   getRoles: (req, res) => {
     Role.all()

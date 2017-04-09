@@ -12,9 +12,9 @@ const UserController = {
   /**
    * login
    * Login a user
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   login(req, res) {
     User.findOne({ where: { email: req.body.email } })
@@ -49,9 +49,9 @@ const UserController = {
   /**
    * createUser
    * Create a new user
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   createUser(req, res) {
     User.create({
@@ -84,9 +84,9 @@ const UserController = {
   /**
    * getUsers
    * Get all users
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   getUsers(req, res) {
     let queryParams = {
@@ -112,9 +112,9 @@ const UserController = {
   /**
    * findUser
    * Get a particular user
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   findUser(req, res) {
     User.findOne({
@@ -139,9 +139,9 @@ const UserController = {
   /**
    * updateUserInfo
    * Change details of a user
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   updateUserInfo(req, res) {
     if (req.decoded) {
@@ -175,9 +175,9 @@ const UserController = {
   /**
    * changePassword
    * Change user password
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   changePassword(req, res) {
     if (req.decoded) {
@@ -212,9 +212,9 @@ const UserController = {
   /**
    * deleteUser
    * Delete a user
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   deleteUser(req, res) {
     User.destroy({
@@ -233,9 +233,9 @@ const UserController = {
   /**
    * searchUsers
    * Search for users
-   * @param {any} req
-   * @param {any} res
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
    */
   searchUsers(req, res) {
     const queryParams = {

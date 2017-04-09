@@ -19,10 +19,10 @@ const AuthorizationController = {
   /**
    * isAuthorized
    * Check if user is logged in
-   * @param {any} req
-   * @param {any} res
-   * @param {any} next
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @param {any} next Pass control to the next function
+   * @return {any} Response Status
    */
   isAuthorized: (req, res, next) => {
     jwt.verify(AuthorizationController.getToken(req), process.env.SECRET_KEY,
@@ -38,10 +38,10 @@ const AuthorizationController = {
    /**
    * isAdmin
    * Check if user is administrator
-   * @param {any} req
-   * @param {any} res
-   * @param {any} next
-   * @return {any} none
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @param {any} next Pass control to the next function
+   * @return {any} Response Status
    */
   isAdmin: (req, res, next) => {
     User.findOne({
