@@ -23,7 +23,6 @@ class ViewUser extends Component {
   }
 
   componentWillMount() {
-    console.log(this.state, this.props, "issa log");
     if (!window.localStorage.getItem('token')) {
       browserHistory.push('/');
     }

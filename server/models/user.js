@@ -76,7 +76,6 @@ module.exports = (sequelize, DataTypes) => {
 
     bcrypt.hash(user.get('password'), null, null, (err, hash) => {
       if (err) return callback(err);
-      console.log(hash, 'hash');
       user.set('password_digest', hash);
       return callback(null, options);
     });
