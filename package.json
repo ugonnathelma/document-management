@@ -10,7 +10,8 @@
     "bundle:prod": "webpack",
     "build:client": "webpack-dev-server --progress --inline",
     "e2e-setup": "node_modules/selenium-standalone/bin/selenium-standalone install",
-    "e2e-test": "node_modules/.bin/nightwatch --config nightwatch.conf.js"
+    "e2e-test": "node_modules/.bin/nightwatch --config nightwatch.conf.js",
+    "postinstall": "npm run bundle:prod"
   },
   "author": "",
   "license": "ISC",
