@@ -7,8 +7,15 @@ require('dotenv').config();
 const PAGE_LIMIT = 10;
 const PAGE_OFFSET = 0;
 
+/** Class to manage user database requests. */
 const UserController = {
-
+  /**
+   * login
+   * Login a user
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   login(req, res) {
     User.findOne({ where: { email: req.body.email } })
       .then((user) => {
@@ -39,6 +46,13 @@ const UserController = {
         res.status(500).json({ error: err.message });
       });
   },
+  /**
+   * createUser
+   * Create a new user
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   createUser(req, res) {
     User.create({
       first_name: req.body.first_name,
@@ -67,6 +81,13 @@ const UserController = {
       });
   },
 
+  /**
+   * getUsers
+   * Get all users
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   getUsers(req, res) {
     let queryParams = {
       limit: 10,
@@ -88,6 +109,13 @@ const UserController = {
       });
   },
 
+  /**
+   * findUser
+   * Get a particular user
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   findUser(req, res) {
     User.findOne({
       where: { id: req.params.id },
@@ -108,6 +136,13 @@ const UserController = {
     });
   },
 
+  /**
+   * updateUserInfo
+   * Change details of a user
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   updateUserInfo(req, res) {
     if (req.decoded) {
       User.find({
@@ -137,6 +172,13 @@ const UserController = {
         });
     }
   },
+  /**
+   * changePassword
+   * Change user password
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   changePassword(req, res) {
     if (req.decoded) {
       User.find({
@@ -167,6 +209,13 @@ const UserController = {
     }
   },
 
+  /**
+   * deleteUser
+   * Delete a user
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   deleteUser(req, res) {
     User.destroy({
       where: {
@@ -181,6 +230,13 @@ const UserController = {
       });
   },
 
+  /**
+   * searchUsers
+   * Search for users
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   searchUsers(req, res) {
     const queryParams = {
       limit: req.query.limit || PAGE_LIMIT,

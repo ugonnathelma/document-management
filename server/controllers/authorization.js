@@ -3,6 +3,7 @@ import { User } from '../models/index';
 
 require('dotenv').config();
 
+/** Class to authorize user before access is given. */
 const AuthorizationController = {
   // eslint-disable-next-line arrow-body-style
   getToken: (req) => {
@@ -14,6 +15,15 @@ const AuthorizationController = {
       return err ? res.status(401).json({ err: 'Token expired' }) : res.status(200).json({ message: 'token ok' });
     });
   },
+
+  /**
+   * isAuthorized
+   * Check if user is logged in
+   * @param {any} req
+   * @param {any} res
+   * @param {any} next
+   * @return {any} none
+   */
   isAuthorized: (req, res, next) => {
     jwt.verify(AuthorizationController.getToken(req), process.env.SECRET_KEY,
      (err, decoded) => {
@@ -25,6 +35,14 @@ const AuthorizationController = {
      });
   },
 
+   /**
+   * isAdmin
+   * Check if user is administrator
+   * @param {any} req
+   * @param {any} res
+   * @param {any} next
+   * @return {any} none
+   */
   isAdmin: (req, res, next) => {
     User.findOne({
       where: {

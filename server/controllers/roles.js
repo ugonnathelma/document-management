@@ -1,7 +1,14 @@
 import { Role } from '../models/index';
 
+/** Class to manage role database requests. */
 const RoleController = {
-
+  /**
+   * createRole
+   * Create a new role
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   createRole: (req, res) => {
     Role.create({
       title: req.body.title
@@ -14,6 +21,13 @@ const RoleController = {
       });
   },
 
+  /**
+   * deleteRole
+   * Delete a role
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   deleteRole: (req, res) => {
     Role.destroy({
       where: {
@@ -28,6 +42,13 @@ const RoleController = {
       });
   },
 
+  /**
+   * editRole
+   * Change role title
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   editRole: (req, res) => {
     Role.findOne({
       where: {
@@ -49,6 +70,13 @@ const RoleController = {
       });
   },
 
+  /**
+   * findRole
+   * Get a particular role
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   findRole: (req, res) => {
     Role.findOne({ where: { id: req.params.id } })
     .then((role) => {
@@ -58,6 +86,13 @@ const RoleController = {
     });
   },
 
+  /**
+   * getRoles
+   * Get all roles
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   getRoles: (req, res) => {
     Role.all()
       .then((roles) => {
@@ -68,6 +103,4 @@ const RoleController = {
       });
   }
 };
-
-
 module.exports = RoleController;

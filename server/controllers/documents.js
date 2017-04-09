@@ -4,8 +4,15 @@ import { generateGetDocumentQuery, generateSearchDocumentQuery } from '../helper
 const PAGE_LIMIT = 10;
 const PAGE_OFFSET = 0;
 
+/** Class to manage document database requests. */
 const DocumentController = {
-
+  /**
+   * createDocument
+   * Create a new document
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   createDocument: (req, res) => {
     let roleId;
     if (req.body.access !== 'role') {
@@ -27,6 +34,14 @@ const DocumentController = {
         res.status(500).json({ error: err.message });
       });
   },
+
+  /**
+   * getDocuments
+   * Get all documents
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   getDocuments: (req, res) => {
     const orderDirection = req.query.order || 'DESC';
     const queryParams = {
@@ -43,7 +58,6 @@ const DocumentController = {
         if (role.title === 'admin') {
           Document.findAndCountAll(Object.assign({}, { include: [{ model: User }] }, queryParams))
           .then((result) => {
-              console.log(result.rows, queryParams, result.rows.length, result.count);
             return res.status(200)
             .json(result.rows.length ? {
               documents: result.rows,
@@ -61,6 +75,13 @@ const DocumentController = {
         }
       });
   },
+  /**
+   * findDocument
+   * Get a particular document
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   findDocument: (req, res) => {
     let queryParams = {};
     Role.find({
@@ -89,6 +110,14 @@ const DocumentController = {
         });
       });
   },
+
+  /**
+   * updateDocumentInfo
+   * Change document details
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   updateDocumentInfo: (req, res) => {
     Document.find({
       where: {
@@ -115,6 +144,14 @@ const DocumentController = {
         }
       });
   },
+
+  /**
+   * deleteDocument
+   * Delete a document
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   deleteDocument: (req, res) => {
     if (req.decoded) {
       Document.destroy({
@@ -130,6 +167,14 @@ const DocumentController = {
         });
     }
   },
+
+  /**
+   * findUserDocuments
+   * Find all documents of a particular user
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   findUserDocuments: (req, res) => {
     Document.all({
       where: { user_id: req.params.id }
@@ -140,6 +185,14 @@ const DocumentController = {
         res.status(500).json({ error: err.message });
       });
   },
+
+  /**
+   * searchDocuments
+   * Search for documents with title
+   * @param {any} req
+   * @param {any} res
+   * @return {any} none
+   */
   searchDocuments: (req, res) => {
     const title = req.query.query;
     const orderDirection = req.query.order || 'DESC';
