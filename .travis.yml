@@ -4,10 +4,9 @@ language: node_js
 node_js:
   - "6"
 before_script:
-
+  - psql -c 'DROP DATABASE IF EXISTS database_test;' -U postgres
   - psql -c 'create database database_test;' -U postgres
   - npm i -g sequelize-cli
-  - sequelize db:migrate:undo:all --env=test
   - sequelize db:migrate --env=test
   - sequelize db:seed:all --env=test
 script:
