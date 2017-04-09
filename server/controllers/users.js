@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt-nodejs';
 import jwt from 'jsonwebtoken';
 import { User, Role } from '../models/index';
 
