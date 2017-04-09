@@ -1,7 +1,7 @@
 import { browserHistory, Link } from 'react-router';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import signupAction from '../actions/authorizationManagement/signUpAction';
-import React, { Component } from 'react';
 import Header from '../components/Header.jsx';
 
 class SignUpPage extends Component {
@@ -23,11 +23,17 @@ class SignUpPage extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentWillMount() {
+    if (window.localStorage.getItem('token')) {
+      browserHistory.push('/dashboard');
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
-    if(nextProps.error === 'unique violation') {
-    this.setState({
-      error: 'User already exists'
-    });
+    if (nextProps.error === 'unique violation') {
+      this.setState({
+        error: 'User already exists'
+      });
     }
   }
 
@@ -38,17 +44,11 @@ class SignUpPage extends Component {
   handleSubmit(event) {
     event.preventDefault();
     // if (this.validateInput(this.state)) {
-      this.props.Signup(this.state)
-      .then(() => {
-        browserHistory.push('/dashboard');
-      });
+    this.props.signup(this.state);
     // }
   }
 
   render() {
-    if (window.localStorage.getItem('token')) {
-      browserHistory.push('/dashboard');
-    }
     return (
       <div className="row">
         <Header />
@@ -192,7 +192,7 @@ const mapStoreToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    Signup: userDetails => dispatch(signupAction(userDetails))
+    signup: userDetails => dispatch(signupAction(userDetails))
   };
 };
 

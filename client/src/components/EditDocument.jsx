@@ -44,6 +44,9 @@ class EditDocument extends Component {
   }
 
   componentWillMount() {
+    if (!window.localStorage.getItem('token')) {
+      browserHistory.push('/');
+    }
     const token = window.localStorage.getItem('token');
     if (token) {
       this.props.viewDocument(token, this.props.params.id);
@@ -78,9 +81,6 @@ class EditDocument extends Component {
   }
 
   render() {
-    if (!window.localStorage.getItem('token')) {
-      browserHistory.push('/');
-    }
     return (
       <div className="row dashboardContainer col s12">
         <Header />

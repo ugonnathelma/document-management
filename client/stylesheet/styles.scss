@@ -82,6 +82,7 @@ nav {
 	height:auto;
 	padding:20px;
 	background: white;
+		min-height:450px;
 }
 
 .workspace .panel{
@@ -90,8 +91,6 @@ nav {
 	margin-top:40px;
 	padding:40px;
 	margin-bottom: 40px;
-	min-height:450px;
-
 }
 .loginerror {
 	color: $white_80;

@@ -29,6 +29,8 @@ class ViewAllDocuments extends Component {
       this.setState({ userid: jwtDecode(this.state.token).user.id });
       const offset = 0;
       this.props.paginateDocuments(this.state.token, offset, this.state.limit);
+    } else {
+      browserHistory.push('/');
     }
   }
   handleChange(event) {
@@ -53,9 +55,6 @@ class ViewAllDocuments extends Component {
   }
 
   render() {
-    if (!window.localStorage.getItem('token')) {
-      browserHistory.push('/');
-    }
     return (
       <div className="row dashboardContainer col s12">
         <Header />

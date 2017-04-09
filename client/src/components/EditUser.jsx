@@ -23,6 +23,9 @@ class EditUser extends Component {
   }
 
   componentWillMount() {
+    if (!window.localStorage.getItem('token')) {
+      browserHistory.push('/');
+    }
     const token = window.localStorage.getItem('token');
     if (token) {
       this.setState({ userid: jwtDecode(token).user.id });
@@ -44,9 +47,6 @@ class EditUser extends Component {
   }
 
   render() {
-    if (!window.localStorage.getItem('token')) {
-      browserHistory.push('/');
-    }
     return (
       <div className="row dashboardContainer col s12">
         <Header />

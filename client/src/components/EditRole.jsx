@@ -20,6 +20,9 @@ class EditRole extends Component {
   }
 
   componentWillMount() {
+    if (!window.localStorage.getItem('token')) {
+      browserHistory.push('/');
+    }
     const token = window.localStorage.getItem('token');
     if (token) {
       this.props.viewRole(token, this.props.params.id);
@@ -45,9 +48,6 @@ class EditRole extends Component {
   }
 
   render() {
-    if (!window.localStorage.getItem('token')) {
-      browserHistory.push('/');
-    }
     return (
       <div className="row dashboardContainer col s12">
         <Header />

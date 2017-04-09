@@ -26,16 +26,20 @@ class LoginPage extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.state.error = nextProps.loginError;
-    this.state.success = nextProps.loginSuccess;
-    setTimeout(() => {
-      this.redirectIfLoggedIn();
-    }, 1000);
-  }
 
   componentWillMount() {
     this.redirectIfLoggedIn();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      error: nextProps.loginError,
+      success: nextProps.loginSuccess
+    });
+
+    setTimeout(() => {
+      this.redirectIfLoggedIn();
+    }, 1000);
   }
 
   redirectIfLoggedIn (){
@@ -54,7 +58,6 @@ class LoginPage extends Component {
   handleSubmit(event) {
     // prevent default submit action
     event.preventDefault();
-
     // clear any error or success messages showing
     this.setState({
       success: null,

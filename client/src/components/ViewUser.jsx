@@ -15,12 +15,16 @@ class ViewUser extends Component {
       last_name: '',
       email: '',
       password: '',
-      role: ''
+      role: '',
+      id: jwtDecode(localStorage.getItem('token')).user.id
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentWillMount() {
+    if (!window.localStorage.getItem('token')) {
+      browserHistory.push('/');
+    }
     const token = window.localStorage.getItem('token');
     if (token) {
       this.setState({ userid: jwtDecode(token).user.id });
@@ -37,9 +41,6 @@ class ViewUser extends Component {
   }
 
   render() {
-    if (!window.localStorage.getItem('token')) {
-      browserHistory.push('/');
-    }
     return (
       <div className="row dashboardContainer col s12">
         <Header />
@@ -64,20 +65,26 @@ class ViewUser extends Component {
                 <label htmlFor="last_name">Last Name: </label>
                 <span>{this.state.last_name}</span>
               </div>
-              <div className="row">
-                <label htmlFor="password">Password: </label>
-                <span>********</span>
-              </div>
+              {this.state.id === this.props.params.id ? (
+                <div className="row">
+                  <label htmlFor="password">Password: </label>
+                  <span>********</span>
+                </div>
+              ) : <span />}
+
               <div className="row">
                 <label htmlFor="role">Role: </label>
                 <span className="userRole">{this.state.role}</span>
               </div>
-              <div className="row">
-                <Link
-                  to="/edit-profile"
-                  className="btn updateUser"
-                >Edit</Link>
-              </div>
+
+              {this.state.id === this.props.params.id ? (
+                <div className="row">
+                  <Link
+                    to="/edit-profile"
+                    className="btn updateUser"
+                  >Edit</Link>
+                </div>
+              ) : <span />}
             </form>
             <div />
           </div>

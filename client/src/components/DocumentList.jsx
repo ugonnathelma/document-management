@@ -29,6 +29,7 @@ const DocumentList = ({ documents, userid, deleteDocument }) => {
         <thead>
           <tr>
             <th>Title</th>
+            <th>Creator</th>
             <th>Access</th>
             <th>Published on</th>
           </tr>
@@ -38,6 +39,7 @@ const DocumentList = ({ documents, userid, deleteDocument }) => {
           {documents.map(document =>
             <tr key={document.id}>
               <td className="doc-title"> <Link to={`/view-document/${document.id}`}>{document.title}</Link></td>
+              <td className="doc-title"> <Link to={`/profile/${document.user_id}`}>{document.first_name || document.User.first_name } {document.last_name || document.User.last_name }</Link></td>
               <td>{document.access}</td>
               <td>{moment(document.publish_date).format('L')}</td>
               {

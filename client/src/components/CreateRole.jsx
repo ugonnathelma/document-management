@@ -18,6 +18,12 @@ class CreateRole extends Component {
     this.props.CheckToken();
   }
 
+  componentWillMount() {
+    if (!window.localStorage.getItem('token')) {
+      browserHistory.push('/');
+    }
+  }
+
   componentDidMount() {
     $(this.refs.access).material_select(this.handleChange.bind(this));
   }
@@ -38,9 +44,6 @@ class CreateRole extends Component {
   }
 
   render() {
-    if (!window.localStorage.getItem('token')) {
-      browserHistory.push('/');
-    }
     return (
       <div className="row dashboardContainer col s12">
         <Header />
