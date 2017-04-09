@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { User } from '../models/index';
+import { User, Role } from '../models/index';
 
 require('dotenv').config();
 
@@ -89,8 +89,20 @@ const UserController = {
   },
 
   findUser(req, res) {
-    User.findOne({ where: { id: req.params.id } }).then((user) => {
-      res.status(200).json(user);
+    User.findOne({
+      where: { id: req.params.id },
+      include: [{ model: Role }]
+    })
+    .then((user) => {
+      const userData = {
+        id: user.dataValues.id,
+        username: user.dataValues.username,
+        first_name: user.dataValues.first_name,
+        last_name: user.dataValues.last_name,
+        email: user.dataValues.email,
+        role: user.Role.dataValues.title
+      };
+      res.status(200).json(userData);
     }).catch((err) => {
       res.status(404).json({ error: err.message });
     });

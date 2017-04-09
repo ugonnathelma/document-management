@@ -31,5 +31,6 @@ export default keymirror({
   ROLE_DELETION_FAILED: null,
   ROLE_CREATE_FAILED: null,
   ROLE_UPDATE_FAILED: null,
-  VIEW_ROLE: null
+  VIEW_ROLE: null,
+  VIEW_USER: null
 });

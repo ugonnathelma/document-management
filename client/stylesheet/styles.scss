@@ -79,7 +79,7 @@ nav {
 	z-index:1000;
 }
 .workspace {
-	height:auto;;
+	height:auto;
 	padding:20px;
 	background: white;
 }
@@ -90,7 +90,7 @@ nav {
 	margin-top:40px;
 	padding:40px;
 	margin-bottom: 40px;
-	height:auto;
+	min-height:450px;
 
 }
 .loginerror {
@@ -252,4 +252,22 @@ padding-top:50px !important;
 .pagination-links a:hover{
 	color:lightseagreen;
 
+}
+
+.userProfile {
+	padding:45px !important;
+}
+
+#changePassword {
+	margin-left:30px;
+}
+
+.updateUser {
+	float:right;
+	color:white !important;
+	font-weight: bold;
+}
+
+.userRole {
+	text-transform: capitalize;
 }

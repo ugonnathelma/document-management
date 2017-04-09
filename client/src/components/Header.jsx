@@ -13,7 +13,7 @@ class Header extends Component {
     super(props);
     const token = (window.localStorage.getItem('token'));
     if (token) {
-      this.state = { username: jwtDecode(token).user.username };
+      this.state = { id: jwtDecode(token).user.id, username: jwtDecode(token).user.username };
       this.logout = this.logout.bind(this);
     }
   }
@@ -40,12 +40,10 @@ class Header extends Component {
             <div className="nav-wrapper">
               <Link to="/" className="brand-logo"><img src={logoName} alt="logo" /></Link>
               <ul id="loggedinNav">
-                <li>{this.state.username}</li>
+                <li><Link to={`/profile/${this.state.id}`}>{this.state.username}</Link></li>
                 <li><Link id="logout" onClick={this.logout}>Sign Out</Link></li>
               </ul>
-              <ul id="nav-mobile" className="right hide-on-med-and-down">
-
-              </ul>
+                <ul id="nav-mobile" className="right hide-on-med-and-down" />
             </div>
             <Link data-activates="slide-out" className="btn" id="collapse_btn">
               <i className="material-icons">view_headline</i></Link>

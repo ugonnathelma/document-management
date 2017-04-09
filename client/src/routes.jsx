@@ -11,6 +11,8 @@ import ViewAllUsers from './components/ViewAllUsers.jsx';
 import CreateRole from './components/CreateRole.jsx';
 import About from './components/About.jsx';
 import EditRole from './components/EditRole.jsx';
+import Profile from './components/ViewUser.jsx';
+import EditProfile from './components/EditUser.jsx';
 
 export default(
   <Route path="/">
@@ -27,5 +29,7 @@ export default(
     <Route path="/users" component={ViewAllUsers} />
     <Route path="/roles" component={ViewAllRoles} />
     <Route path="/about" component={About} />
+    <Route path="/profile/:id" component={Profile} />
+    <Route path="/edit-profile" component={EditProfile} />
   </Route>
 );
