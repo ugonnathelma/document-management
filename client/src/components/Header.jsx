@@ -6,9 +6,7 @@ import { connect } from 'react-redux';
 import { browserHistory, Link } from 'react-router';
 import logoutAction from '../actions/authorizationManagement/logoutAction';
 
-const logoName = require('../../img/logo.png');
-
-class Header extends Component {
+export class Header extends Component {
   constructor(props) {
     super(props);
     const token = (window.localStorage.getItem('token'));
@@ -38,7 +36,7 @@ class Header extends Component {
         <div className="navbar-fixed">
           <nav>
             <div className="nav-wrapper">
-              <Link to="/" className="brand-logo"><img src={logoName} alt="logo" /></Link>
+              <Link to="/" className="brand-logo"></Link>
               <ul id="loggedinNav">
                 <li><Link to={`/profile/${this.state.id}`}>{this.state.username}</Link></li>
                 <li><Link id="logout" onClick={this.logout}>Sign Out</Link></li>
@@ -56,7 +54,7 @@ class Header extends Component {
       <div className="navbar-fixed">
         <nav>
           <div className="nav-wrapper">
-            <Link to="/" className="brand-logo"><img src={logoName} alt="logo" /></Link>
+            <Link to="/" className="brand-logo"></Link>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li><a href="./">Home</a></li>
               <li><Link to="/about">About Us</Link></li>

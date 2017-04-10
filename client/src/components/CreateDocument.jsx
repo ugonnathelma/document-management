@@ -26,7 +26,7 @@ const ResponseMessage = (props) => {
 };
 
 
-class CreateDocument extends Component {
+export class CreateDocument extends Component {
   constructor(props) {
     super(props);
     this.state = {

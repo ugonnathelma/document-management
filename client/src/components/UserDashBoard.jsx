@@ -10,7 +10,7 @@ import deleteDocumentAction from '../actions/documentManagement/deleteDocument.j
 import paginateDocumentAction from '../actions/documentManagement/paginateDocument.js';
 import searchDocumentAction from '../actions/documentManagement/searchDocument.js';
 
-class ViewAllDocuments extends Component {
+export class ViewAllDocuments extends Component {
   constructor(props) {
     super(props);
     this.state = {
