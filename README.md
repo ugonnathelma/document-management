@@ -141,4 +141,5 @@ POST /api/v1/roles               |   Creates a new role
 DELETE /api/v1/roles/:id         |   Deletes role
 GET /api/v1/roles/:id            |   Find role
 GET /api/v1/tokenHealth          |   Check token validity
-
+POST /api/v1/user/change-password|   Change password
+PUT /api/v1/roles/:id            |   Edit Role
