@@ -7,7 +7,7 @@ import Header from './Header.jsx';
 
 const ADMIN_ROLE_ID = 1;
 
-class LoginPage extends Component {
+export class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {

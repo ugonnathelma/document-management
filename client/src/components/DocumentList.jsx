@@ -63,7 +63,7 @@ const DocumentList = ({ documents, userid, deleteDocument }) => {
 
 
 DocumentList.propTypes = {
-  documents: React.PropTypes.array.isRequired,
+  documents: React.PropTypes.array,
   userid: React.PropTypes.number,
   deleteDocument: React.PropTypes.func
 };

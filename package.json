@@ -11,6 +11,7 @@
     "build:client": "webpack-dev-server --progress --inline",
     "e2e-setup": "node_modules/selenium-standalone/bin/selenium-standalone install",
     "e2e-test": "node_modules/.bin/nightwatch --config nightwatch.conf.js",
+    "frontend-test": "mocha --compilers js:babel-core/register --require client/test/component/setUp.js client/test/component/**/*.js*",
     "postinstall": "npm run bundle:prod"
   },
   "author": "",
@@ -99,7 +100,15 @@
     "webpack-dev-server": "^2.4.2",
     "webpack-hot-middleware": "^2.17.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-enzyme": "^0.6.1",
+    "enzyme": "^2.8.0",
+    "jsdom": "^9.12.0",
+    "mockery": "^2.0.0",
+    "react-addons-test-utils": "^15.5.1",
+    "sinon": "^2.1.0"
+  },
   "babel": {
     "presets": [
       "es2015",
