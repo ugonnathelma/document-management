@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt-nodejs';
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -74,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
       throw new Error('Password confirmation does not match Password');
     }
 
-    bcrypt.hash(user.get('password'), 10, (err, hash) => {
+    bcrypt.hash(user.get('password'), null, null, (err, hash) => {
       if (err) return callback(err);
       user.set('password_digest', hash);
       return callback(null, options);

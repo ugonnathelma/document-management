@@ -10,7 +10,7 @@ class AboutPage extends Component {
       <div className="row">
         <Header />
         <div className="col s2 l4 " />
-          <p className="about-us">doThis is an application that helps users manage their documents in an organized way. A User can be able to upload a document, edit it and share it with other users.</p>
+        <p className="about-us">doThis is an application that helps users manage their documents in an organized way. A User can be able to upload a document, edit it and share it with other users.</p>
         <div className="col s2 l4" />
       </div>
 

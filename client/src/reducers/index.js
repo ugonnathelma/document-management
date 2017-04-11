@@ -4,13 +4,15 @@ import signUpReducer from './signUpReducer';
 import allDocumentsReducer from './allDocumentsReducer';
 import allUsersReducer from './allUsersReducer';
 import allRolesReducer from './allRolesReducer';
+import viewUserReducer from './viewUserReducer';
 
 const rootReducer = combineReducers({
   loginReducer,
   signUpReducer,
   allDocumentsReducer,
   allUsersReducer,
-  allRolesReducer
+  allRolesReducer,
+  viewUserReducer
 });
 
 export default rootReducer;

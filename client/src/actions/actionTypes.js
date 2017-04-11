@@ -3,6 +3,7 @@ import keymirror from 'keymirror';
 export default keymirror({
   SIGNUP: null,
   LOGIN: null,
+  SIGNUP_FAILED: null,
   LOGIN_SUCCESSFUL: null,
   LOGIN_ERROR: null,
   DOCUMENT_CREATED: null,
@@ -29,5 +30,10 @@ export default keymirror({
   ROLE_CREATED: null,
   ROLE_DELETED: null,
   ROLE_DELETION_FAILED: null,
-  ROLE_CREATE_FAILED: null
+  ROLE_CREATE_FAILED: null,
+  ROLE_UPDATE_FAILED: null,
+  VIEW_ROLE: null,
+  VIEW_USER: null,
+  PASSWORD_UPDATED: null,
+  PASSWORD_UPDATE_FAILED: null
 });

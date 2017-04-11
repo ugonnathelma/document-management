@@ -10,11 +10,6 @@ export default (details, token, documentid) => {
       }
     })
     .then(() => {
-      // dispatch({
-      //   type: actionTypes.DOCUMENT_UPDATED,
-      //   document,
-      //   status: 'success'
-      // });
       browserHistory.push('/');
     }).catch((err) => {
       dispatch({

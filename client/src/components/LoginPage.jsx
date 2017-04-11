@@ -7,7 +7,7 @@ import Header from './Header.jsx';
 
 const ADMIN_ROLE_ID = 1;
 
-class LoginPage extends Component {
+export class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,16 +26,20 @@ class LoginPage extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.state.error = nextProps.loginError;
-    this.state.success = nextProps.loginSuccess;
-    setTimeout(() => {
-      this.redirectIfLoggedIn();
-    }, 1000);
-  }
 
   componentWillMount() {
     this.redirectIfLoggedIn();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      error: nextProps.loginError,
+      success: nextProps.loginSuccess
+    });
+
+    setTimeout(() => {
+      this.redirectIfLoggedIn();
+    }, 1000);
   }
 
   redirectIfLoggedIn (){
@@ -54,7 +58,6 @@ class LoginPage extends Component {
   handleSubmit(event) {
     // prevent default submit action
     event.preventDefault();
-
     // clear any error or success messages showing
     this.setState({
       success: null,
@@ -91,6 +94,7 @@ class LoginPage extends Component {
                 name="email"
                 id="email"
                 onChange={this.handleChange}
+                required
               />
               <label htmlFor="email">Enter your email</label>
             </div>
@@ -104,6 +108,7 @@ class LoginPage extends Component {
                 name="password"
                 id="password"
                 onChange={this.handleChange}
+                required
               />
               <label htmlFor="password">Enter your password</label>
             </div>

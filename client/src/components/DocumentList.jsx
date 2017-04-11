@@ -25,43 +25,45 @@ const confirmDeletion = (callback, documentId) => {
 
 const DocumentList = ({ documents, userid, deleteDocument }) => {
   return (
-      <table id="document-list" className="highlight doc_list z-depth-4 panel pagination">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Access</th>
-            <th>Published on</th>
-          </tr>
-        </thead>
+    <table id="document-list" className="highlight doc_list z-depth-4 panel pagination">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Creator</th>
+          <th>Access</th>
+          <th>Published on</th>
+        </tr>
+      </thead>
 
-        <tbody>
-          {documents.map(document =>
-            <tr key={document.id}>
-              <td className="doc-title"> <Link to={`/view-document/${document.id}`}>{document.title}</Link></td>
-              <td>{document.access}</td>
-              <td>{moment(document.publish_date).format('L')}</td>
-              {
+      <tbody>
+        {documents.map(document =>
+          <tr key={document.id}>
+            <td className="doc-title"> <Link to={`/view-document/${document.id}`}>{document.title}</Link></td>
+            <td className="doc-title"> <Link to={`/profile/${document.user_id}`}>{document.first_name || document.User.first_name } {document.last_name || document.User.last_name }</Link></td>
+            <td>{document.access}</td>
+            <td>{moment(document.publish_date).format('L')}</td>
+            {
                 (userid === document.user_id ?
                   <td><Link to={`/edit-document/${document.id}`}>
                     <i className="small material-icons edit-btn">mode_edit</i></Link></td>
                   : <td />
                 )}
-              {
+            {
                 (userid === document.user_id ?
                   <td><Link onClick={() => confirmDeletion(deleteDocument, document.id)}>
                     <i className="small material-icons delete-btn">delete</i></Link></td>
                   : <td />
                 )}
-            </tr>
+          </tr>
           )}
-        </tbody>
-      </table>
+      </tbody>
+    </table>
   );
 };
 
 
 DocumentList.propTypes = {
-  documents: React.PropTypes.array.isRequired,
+  documents: React.PropTypes.array,
   userid: React.PropTypes.number,
   deleteDocument: React.PropTypes.func
 };

@@ -1,14 +1,21 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt-nodejs';
 import jwt from 'jsonwebtoken';
-import { User } from '../models/index';
+import { User, Role } from '../models/index';
 
 require('dotenv').config();
 
 const PAGE_LIMIT = 10;
 const PAGE_OFFSET = 0;
 
+/** Class to manage user database requests. */
 const UserController = {
-
+  /**
+   * login
+   * Login a user
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
+   */
   login(req, res) {
     User.findOne({ where: { email: req.body.email } })
       .then((user) => {
@@ -39,6 +46,13 @@ const UserController = {
         res.status(500).json({ error: err.message });
       });
   },
+  /**
+   * createUser
+   * Create a new user
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
+   */
   createUser(req, res) {
     User.create({
       first_name: req.body.first_name,
@@ -63,10 +77,17 @@ const UserController = {
         res.status(201).json({ user: userData, token });
       })
       .catch((err) => {
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ error: err.errors[0].type });
       });
   },
 
+  /**
+   * getUsers
+   * Get all users
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
+   */
   getUsers(req, res) {
     let queryParams = {
       limit: 10,
@@ -88,14 +109,40 @@ const UserController = {
       });
   },
 
+  /**
+   * findUser
+   * Get a particular user
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
+   */
   findUser(req, res) {
-    User.findOne({ where: { id: req.params.id } }).then((user) => {
-      res.status(200).json(user);
+    User.findOne({
+      where: { id: req.params.id },
+      include: [{ model: Role }]
+    })
+    .then((user) => {
+      const userData = {
+        id: user.dataValues.id,
+        username: user.dataValues.username,
+        first_name: user.dataValues.first_name,
+        last_name: user.dataValues.last_name,
+        email: user.dataValues.email,
+        role: user.Role.dataValues.title
+      };
+      res.status(200).json(userData);
     }).catch((err) => {
       res.status(404).json({ error: err.message });
     });
   },
 
+  /**
+   * updateUserInfo
+   * Change details of a user
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
+   */
   updateUserInfo(req, res) {
     if (req.decoded) {
       User.find({
@@ -125,7 +172,50 @@ const UserController = {
         });
     }
   },
+  /**
+   * changePassword
+   * Change user password
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
+   */
+  changePassword(req, res) {
+    if (req.decoded) {
+      User.find({
+        where: {
+          id: req.params.id
+        }
+      })
+        .then((user) => {
+          if (user) {
+            bcrypt.compare(req.body.oldPassword, user.password_digest, (err, same) => {
+              if (err) {
+                res.status(500).json({ error: err.message });
+              }
+              if (req.body.password && req.body.password_confirmation) {
+                user.password = req.body.password;
+                user.password_confirmation = req.body.password_confirmation;
+              }
+              user.save()
+              .then(() => {
+                return res.status(200).json(req.body);
+              })
+              .catch((err) => {
+                res.status(500).json({ error: err.message });
+              });
+            });
+          }
+        });
+    }
+  },
 
+  /**
+   * deleteUser
+   * Delete a user
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
+   */
   deleteUser(req, res) {
     User.destroy({
       where: {
@@ -140,6 +230,13 @@ const UserController = {
       });
   },
 
+  /**
+   * searchUsers
+   * Search for users
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
+   */
   searchUsers(req, res) {
     const queryParams = {
       limit: req.query.limit || PAGE_LIMIT,

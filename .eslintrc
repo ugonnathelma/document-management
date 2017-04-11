@@ -11,6 +11,10 @@
     "swal": false
   },
   "rules": {
+    "react/no-string-refs":0,
+    "no-undef":0,
+    "no-unused-vars":0,
+    "react/prop-types":0,
     "import/extensions":0,
     "no-unused-expressions":0,
     "arrow-body-style":0,
@@ -24,16 +28,16 @@
     "curly": ["error", "multi-line"],
     "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
     "valid-jsdoc": ["error", {
-      "requireReturn": false,
-      "requireReturnType": false,
+      "requireReturn": true,
+      "requireReturnType": true,
       "requireParamDescription": false,
-      "requireReturnDescription": false
+      "requireReturnDescription": true
     }],
     "require-jsdoc": ["error", {
         "require": {
-            "FunctionDeclaration": false,
-            "MethodDefinition": false,
-            "ClassDeclaration": false
+            "FunctionDeclaration": true,
+            "MethodDefinition": true,
+            "ClassDeclaration": true
         }
     }]
   }

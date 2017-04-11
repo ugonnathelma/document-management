@@ -22,6 +22,9 @@ class ViewAllRoles extends Component {
   }
 
   componentWillMount() {
+    if (!window.localStorage.getItem('token')) {
+      browserHistory.push('/');
+    }
     if (this.state.token) {
       this.setState({ userid: jwtDecode(this.state.token).user.id });
       const offset = 0;
@@ -42,9 +45,6 @@ class ViewAllRoles extends Component {
   }
 
   render() {
-    if (!window.localStorage.getItem('token')) {
-      browserHistory.push('/');
-    }
     return (
       <div className="row dashboardContainer col s12">
         <Header />

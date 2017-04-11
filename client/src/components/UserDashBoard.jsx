@@ -10,7 +10,7 @@ import deleteDocumentAction from '../actions/documentManagement/deleteDocument.j
 import paginateDocumentAction from '../actions/documentManagement/paginateDocument.js';
 import searchDocumentAction from '../actions/documentManagement/searchDocument.js';
 
-class ViewAllDocuments extends Component {
+export class ViewAllDocuments extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,6 +21,7 @@ class ViewAllDocuments extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.searchDocument = this.searchDocument.bind(this);
     this.refreshDocuments = this.refreshDocuments.bind(this);
+    this.changeLimit = this.changeLimit.bind(this);
   }
 
   componentWillMount() {
@@ -28,6 +29,8 @@ class ViewAllDocuments extends Component {
       this.setState({ userid: jwtDecode(this.state.token).user.id });
       const offset = 0;
       this.props.paginateDocuments(this.state.token, offset, this.state.limit);
+    } else {
+      browserHistory.push('/');
     }
   }
   handleChange(event) {
@@ -38,15 +41,20 @@ class ViewAllDocuments extends Component {
     this.props.searchDocument(this.state.token, this.state.searchTerms);
   }
 
+  changeLimit(value) {
+    this.setState({ limit: value });
+    this.refreshDocuments();
+  }
+
   refreshDocuments() {
     const offset = 0;
     this.props.paginateDocuments(this.state.token, offset, this.state.limit);
+    this.setState({
+      searchTerms: ''
+    });
   }
 
   render() {
-    if (!window.localStorage.getItem('token')) {
-      browserHistory.push('/');
-    }
     return (
       <div className="row dashboardContainer col s12">
         <Header />
@@ -59,19 +67,47 @@ class ViewAllDocuments extends Component {
                 type="text"
                 id="searchTerms"
                 name="searchTerms"
+                value={this.state.searchTerms}
                 placeholder="Search..."
                 onChange={this.handleChange}
               /><button className="btn col s2" id="searchBtn" onClick={this.searchDocument}>
                 <i className="material-icons">search</i></button></div></div>
-          <div className="col m10" /><div className="col m2">
+          <div className="col m1" />
+          <div className="col m4 pagination-links">
+            <Link onClick={() => this.changeLimit(5)}>View 5 per page</Link>
+            <Link onClick={() => this.changeLimit(10)}>View 10 per page</Link>
+            <Link onClick={() => this.changeLimit(20)} >View 20 per page</Link></div>
+          <div className="col m5" />
+          <div className="col m2">
             <Link onClick={this.refreshDocuments}>
               <i className="material-icons  refresh-list-btn">
                 settings_backup_restore</i></Link></div>
-          <DocumentList
-            deleteDocument={this.props.deleteDocument}
-            userid={this.state.userid}
-            documents={this.props.paginated || this.props.documents || []}
-          />
+          <div className="doc_list z-depth-4 panel">
+            <ul id="tabs-swipe-demo" className="tabs">
+              <li className="tab col s6"><Link to="#test-swipe-1">My Documents</Link></li>
+              <li className="tab col s6">
+                <Link className="active" to="#test-swipe-2">Other Documents</Link></li>
+            </ul>
+          </div>
+          <div id="test-swipe-1" className="">
+            <DocumentList
+              deleteDocument={this.props.deleteDocument}
+              userid={this.state.userid}
+              documents={this.props.documents ?
+              this.props.documents.filter(document => document.user_id === this.state.userid) : []}
+            />
+          </div>
+          <div id="test-swipe-2" className="">
+            <DocumentList
+              deleteDocument={this.props.deleteDocument}
+              userid={this.state.userid}
+              documents={this.props.documents ?
+              this.props.documents.filter(document => document.user_id !== this.state.userid) : []}
+            />
+          </div>
+
+
+
           <center>
             <Pagination
               items={this.props.pageCount}
@@ -104,11 +140,11 @@ const mapStoreToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteDocument: documentid =>
-    dispatch(deleteDocumentAction(documentid)),
+      dispatch(deleteDocumentAction(documentid)),
     paginateDocuments: (usertoken, offset, limit) =>
-    dispatch(paginateDocumentAction(usertoken, offset, limit)),
+      dispatch(paginateDocumentAction(usertoken, offset, limit)),
     searchDocument: (usertoken, documentName) =>
-    dispatch(searchDocumentAction(usertoken, documentName))
+      dispatch(searchDocumentAction(usertoken, documentName))
   };
 };
 

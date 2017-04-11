@@ -1,10 +1,18 @@
 import { Document, Role, sequelize, User } from '../models/index';
+import { generateGetDocumentQuery, generateSearchDocumentQuery } from '../helpers/helpers';
 
 const PAGE_LIMIT = 10;
 const PAGE_OFFSET = 0;
 
+/** Class to manage document database requests. */
 const DocumentController = {
-
+  /**
+   * createDocument
+   * Create a new document
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
+   */
   createDocument: (req, res) => {
     let roleId;
     if (req.body.access !== 'role') {
@@ -26,6 +34,14 @@ const DocumentController = {
         res.status(500).json({ error: err.message });
       });
   },
+
+  /**
+   * getDocuments
+   * Get all documents
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
+   */
   getDocuments: (req, res) => {
     const orderDirection = req.query.order || 'DESC';
     const queryParams = {
@@ -40,7 +56,7 @@ const DocumentController = {
     })
       .then((role) => {
         if (role.title === 'admin') {
-          Document.findAndCountAll(queryParams)
+          Document.findAndCountAll(Object.assign({}, { include: [{ model: User }] }, queryParams))
           .then((result) => {
             return res.status(200)
             .json(result.rows.length ? {
@@ -49,14 +65,8 @@ const DocumentController = {
             } : { documents: [], pageCount: 0 });
           });
         } else {
-          sequelize.query(`SELECT *, COUNT(*) OVER () FROM "Documents"
-            WHERE access = 'public'
-            OR (access = 'role' AND role_id = ${role.id})
-            OR (access = 'private' AND user_id = ${req.decoded.id})
-            ORDER BY publish_date ${orderDirection}
-            LIMIT ${queryParams.limit} OFFSET ${queryParams.offset};`,
-            { type: sequelize.QueryTypes.SELECT }
-            )
+          sequelize.query(generateGetDocumentQuery(req.decoded.id, role.id, orderDirection, queryParams),
+            { type: sequelize.QueryTypes.SELECT })
             .then((results) => {
               return res.status(200).json(results.length ?
               { documents: results, pageCount: Math.ceil(results[0].count / queryParams.limit) } :
@@ -65,6 +75,13 @@ const DocumentController = {
         }
       });
   },
+  /**
+   * findDocument
+   * Get a particular document
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
+   */
   findDocument: (req, res) => {
     let queryParams = {};
     Role.find({
@@ -93,6 +110,14 @@ const DocumentController = {
         });
       });
   },
+
+  /**
+   * updateDocumentInfo
+   * Change document details
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
+   */
   updateDocumentInfo: (req, res) => {
     Document.find({
       where: {
@@ -119,6 +144,14 @@ const DocumentController = {
         }
       });
   },
+
+  /**
+   * deleteDocument
+   * Delete a document
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
+   */
   deleteDocument: (req, res) => {
     if (req.decoded) {
       Document.destroy({
@@ -134,6 +167,14 @@ const DocumentController = {
         });
     }
   },
+
+  /**
+   * findUserDocuments
+   * Find all documents of a particular user
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
+   */
   findUserDocuments: (req, res) => {
     Document.all({
       where: { user_id: req.params.id }
@@ -144,6 +185,14 @@ const DocumentController = {
         res.status(500).json({ error: err.message });
       });
   },
+
+  /**
+   * searchDocuments
+   * Search for documents with title
+   * @param {any} req Request Object
+   * @param {any} res Response Object
+   * @return {any} Response Status
+   */
   searchDocuments: (req, res) => {
     const title = req.query.query;
     const orderDirection = req.query.order || 'DESC';
@@ -159,7 +208,7 @@ const DocumentController = {
     })
       .then((role) => {
         if (role.title === 'admin') {
-          Document.findAndCountAll(Object.assign({}, { where: { title: { $iLike: `%${title}%` } } }, queryParams))
+          Document.findAndCountAll(Object.assign({}, { where: { title: { $iLike: `%${title}%` } }, include: [{ model: User }] }, queryParams))
           .then((result) => {
             return res.status(200)
             .json(result.rows.length ? {
@@ -168,13 +217,7 @@ const DocumentController = {
             } : { documents: [], pageCount: 0 });
           });
         } else {
-          sequelize.query(`SELECT *, COUNT(*) OVER () FROM "Documents"
-            WHERE title ILIKE '%${title}%'
-            AND (access = 'public'
-            OR (access = 'role' AND role_id = ${role.id})
-            OR (access = 'private' AND user_id = ${req.decoded.id}))
-            ORDER BY publish_date ${orderDirection}
-            LIMIT ${queryParams.limit} OFFSET ${queryParams.offset};`,
+          sequelize.query(generateSearchDocumentQuery(title, req.decoded.id, role.id, orderDirection, queryParams),
             { type: sequelize.QueryTypes.SELECT }
             )
             .then((results) => {

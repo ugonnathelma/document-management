@@ -26,7 +26,7 @@ const ResponseMessage = (props) => {
 };
 
 
-class CreateDocument extends Component {
+export class CreateDocument extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,8 +41,14 @@ class CreateDocument extends Component {
     this.props.CheckToken();
   }
 
-  componentDidMount(){
-     $(this.refs.access).material_select(this.handleChange.bind(this));
+  componentWillMount() {
+    if (!window.localStorage.getItem('token')) {
+      browserHistory.push('/');
+    }
+  }
+
+  componentDidMount() {
+    $(this.refs.access).material_select(this.handleChange.bind(this));
   }
 
   componentWillReceiveProps(nextProps) {
@@ -61,9 +67,6 @@ class CreateDocument extends Component {
   }
 
   render() {
-    if (!window.localStorage.getItem('token')) {
-      browserHistory.push('/');
-    }
     return (
       <div className="row dashboardContainer col s12">
         <Header />

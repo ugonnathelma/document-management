@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt-nodejs');
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
@@ -18,7 +18,7 @@ module.exports = {
         last_name: 'Ofoegbu',
         username: 'SuperAdmin',
         email: 'admin@admin.com',
-        password_digest: bcrypt.hashSync('123456', 10),
+        password_digest: bcrypt.hashSync('123456'),
         role_id: '1',
         createdAt: new Date(),
         updatedAt: new Date() },

@@ -9,7 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       user_id: {
         type: Sequelize.INTEGER,
@@ -28,13 +29,18 @@ module.exports = {
         },
       },
       content: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       access: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        isIn: [['public', 'private', 'role']],
+        allowNull: false
       },
       publish_date: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.NOW
       },
       createdAt: {
         allowNull: false,

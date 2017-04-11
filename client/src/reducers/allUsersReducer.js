@@ -15,6 +15,8 @@ export default function allUsersReducer(state = initialState, action) {
       const newUsers = state.users.slice();
       newUsers[userIndex] = Object.assign({}, newUsers[userIndex], action.user);
       return { ...state, users: newUsers };
+    case actionTypes.PASSWORD_UPDATED:
+      return { ...state, status: action.status };
     case actionTypes.USER_DELETED:
       return {
         ...state,

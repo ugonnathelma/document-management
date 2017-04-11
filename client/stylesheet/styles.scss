@@ -79,9 +79,10 @@ nav {
 	z-index:1000;
 }
 .workspace {
-	height:auto;;
+	height:auto;
 	padding:20px;
-	background: white;
+	background: transparent !important;
+		min-height:450px;
 }
 
 .workspace .panel{
@@ -90,8 +91,7 @@ nav {
 	margin-top:40px;
 	padding:40px;
 	margin-bottom: 40px;
-	height:auto;
-
+	background: white;
 }
 .loginerror {
 	color: $white_80;
@@ -103,10 +103,12 @@ nav {
 		padding: 0 !important;
 	}
 }
-.brand-logo img {
+.brand-logo{
 	width: 100px;
 	height: 50px;
 	margin: 6px;
+	background-image: url('../img/logo.png');
+	background-size: cover;
 }
 .useractions {
 	width:50px;
@@ -237,4 +239,51 @@ padding-top:50px !important;
 	margin: 0 auto;
 	font-size:18px;
 	margin-top:15%;
+}
+
+.pagination-links {
+	font-size:10px;
+}
+
+.pagination-links a{
+	margin-left:20px;
+	color:teal;
+
+}
+
+.pagination-links a:hover{
+	color:lightseagreen;
+
+}
+
+.userProfile {
+	padding:45px !important;
+}
+
+#changePassword {
+	margin-left:30px;
+}
+
+.updateUser {
+	float:right;
+	color:white !important;
+	font-weight: bold;
+}
+
+.userRole {
+	text-transform: capitalize;
+}
+
+#changePassword {
+	color: white !important;
+	font-weight: bold;
+}
+
+.tab a{
+	color:teal !important;
+}
+
+.indicator{
+background: lightseagreen !important;
+color: lightseagreen !important;
 }
